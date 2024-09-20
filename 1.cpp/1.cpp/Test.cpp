@@ -1,7 +1,23 @@
 #include"Stack."
 #define _CRT_SECURE_NO_WARNINGS 1
 
+#include<iostream>
+using namespace std;
 
+int main() {
+	int i = 1234;
+	int j = -1234;
+	std::cout << i << endl;
+	cout << i << endl;
+
+	int a = 0;
+	double b = 0.1;
+	char c = 'x';
+
+	cout << a << " " << b << endl;
+	cin >> a >> b >> c;
+
+}
 //#include<iostream>
 //using namespace std;
 //void f(int x)
