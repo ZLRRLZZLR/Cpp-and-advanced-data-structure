@@ -1,24 +1,99 @@
-#include"Stack."
+#include"Stack.h"
 #define _CRT_SECURE_NO_WARNINGS 1
 
 #include<iostream>
 using namespace std;
+typedef int STDataType;
+class Stack
+{
+public:
+	Stack(int n = 4)
+	{
+		_a = (STDataType*)malloc(sizeof(STDataType) * n);
+		if (nullptr == _a)
+		{
+			perror("malloc申请空间失败");
+			return;
+		}
+		_capacity = n;
+		_top = 0;
+	}
 
-int main() {
-	int i = 1234;
-	int j = -1234;
-	std::cout << i << endl;
-	cout << i << endl;
+	// st2(st1)
+	//Stack(const Stack& st)
+	//{
+	//	cout << "Stack(const Stack& st)" << endl;
 
-	int a = 0;
-	double b = 0.1;
-	char c = 'x';
+	//	// 需要对_a指向资源创建同样大的资源再拷贝值
+	//	_a = (STDataType*)malloc(sizeof(STDataType) * st._capacity);
+	//	if (nullptr == _a)
+	//	{
+	//		perror("malloc申请空间失败!!!");
+	//		return;
+	//	}
+	//	memcpy(_a, st._a, sizeof(STDataType) * st._top);
+	//	_top = st._top;
+	//	_capacity = st._capacity;
+	//}
 
-	cout << a << " " << b << endl;
-	cin >> a >> b >> c;
+	void Push(STDataType x)
+	{
+		if (_top == _capacity)
+		{
+			int newcapacity = _capacity * 2;
+			STDataType* tmp = (STDataType*)realloc(_a, newcapacity *
+				sizeof(STDataType));
+			if (tmp == NULL)
+			{
+				perror("realloc fail");
+				return;
+			}
+			_a = tmp;
+			_capacity = newcapacity;
+		}
+		_a[_top++] = x;
 
+	}
+	~Stack()
+	{
+		cout << "~Stack()" << endl;
+		free(_a);
+		_a = nullptr;
+		_top = _capacity = 0;
+	}
+private:
+	STDataType* _a;
+	size_t _capacity;
+	size_t _top;
+};
+
+int main()
+{
+	Stack st1;
+	st1.Push(1);
+	st1.Push(2);
+
+	// Stack不显示实现拷贝构造，用自动生成的拷贝构造完成浅拷贝
+	// 会导致st1和st2里面的_a指针指向同一块资源，析构时会析构两次，程序崩溃
+	Stack st2(st1);
+
+	return 0;
 }
-//#include<iostream>
+//int main() {
+//	int i = 1234;
+//	int j = -1234;
+//	std::cout << i << endl;
+//	cout << i << endl;
+//
+//	int a = 0;
+//	double b = 0.1;
+//	char c = 'x';
+//
+//	cout << a << " " << b << endl;
+//	cin >> a >> b >> c;
+//
+//}
+////#include<iostream>
 //using namespace std;
 //void f(int x)
 //{
