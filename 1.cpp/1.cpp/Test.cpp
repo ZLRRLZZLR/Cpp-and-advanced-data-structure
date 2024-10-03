@@ -2,29 +2,239 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 
 
-#include<iostream>
-using namespace std;
-int main()
-{
-	int a = 10;
-	// 编译报错：“ra”: 必须初始化引用
-	//int& ra;
-	int& b = a;
-	int c = 20;
-	cout << a << endl;
-	cout << b << endl;
-	cout << c << endl;
-	// 这里并非让b引用c，因为C++引用不能改变指向，
-	// 这里是一个赋值
-	b = c;
+class Date
 
-	cout << &a << endl;
-	cout << &b << endl;
-	cout << &c << endl;
-	cout << a << endl;
-	cout << b << endl;
-	cout << c << endl;
-}
+{
+
+public:
+
+	// 获取某年某月的天数
+
+	int GetMonthDay(int year, int month);
+
+
+
+	// 全缺省的构造函数
+
+	Date(int year = 1900, int month = 1, int day = 1);
+
+
+
+	// 拷贝构造函数
+
+  // d2(d1)
+
+	Date(const Date& d);
+
+
+
+	// 赋值运算符重载
+
+  // d2 = d3 -> d2.operator=(&d2, d3)
+
+	Date& operator=(const Date& d);
+
+
+
+	// 析构函数
+
+	~Date();
+
+
+
+	// 日期+=天数
+
+	Date& operator+=(int day);
+
+
+
+	// 日期+天数
+
+	Date operator+(int day);
+
+
+
+	// 日期-天数
+
+	Date operator-(int day);
+
+
+
+	// 日期-=天数
+
+	Date& operator-=(int day);
+
+
+
+	// 前置++
+
+	Date& operator++();
+
+
+
+	// 后置++
+
+	Date operator++(int);
+
+
+
+	// 后置--
+
+	Date operator--(int);
+
+
+
+	// 前置--
+
+	Date& operator--();
+
+
+
+	// >运算符重载
+
+	bool operator>(const Date& d);
+
+
+
+	// ==运算符重载
+
+	bool operator==(const Date& d);
+
+
+
+	// >=运算符重载
+
+	bool operator >= (const Date& d);
+
+
+
+	// <运算符重载
+
+	bool operator < (const Date& d);
+
+
+
+	// <=运算符重载
+
+	bool operator <= (const Date& d);
+
+
+
+	// !=运算符重载
+
+	bool operator != (const Date& d);
+
+
+
+	// 日期-日期 返回天数
+
+	int operator-(const Date& d);
+
+private:
+
+	int _year;
+
+	int _month;
+
+	int _day;
+
+};
+
+
+//int main()
+//{
+//	const int a = 10;
+//	//int rd = a;
+//	//int& ra = a;
+//
+//	const int& ra = a;
+//
+//	// 引用的时候权限可以缩小，但是不能放大
+//	int b = 20;
+//	const int& rb = b;
+//	b++;
+//	//rb++;
+//
+//	const int& rc = 30;
+//	const int& rd = (a + b);
+//
+//	double d = 12.34;
+//	int i = d;
+//	const int& ri = d;
+//	//double& rd = d;
+//
+//	return 0;
+//}
+
+////void STModityTop(ST& rs, int x)
+////{
+////	rs.a[rs.top-1] = x;
+////}
+//
+//
+////int& func()
+////{
+////	int a = 0;
+////	return a;
+////}
+//// 
+// //int STTop(ST& rs)
+//
+//int STTop(ST& rs)
+//{
+//	assert(rs.top > 0);
+//	return rs.a[rs.top-1];
+//}
+//
+//
+//int main()
+//{
+//	// 调用全局的
+//	ST st1;
+//	STInit(st1);
+//	STPush(st1, 1);
+//	STPush(st1, 2);
+//
+//	STModityTop(st1, 3);
+//
+//	STTop(st1) = 4;
+//
+//
+//	
+//
+//	return 0;
+//}
+//
+//vector<int> v;
+//for (size_t i = 0; i < v.size(); i++)
+//{
+//	v[i] = i;
+//}
+
+
+//#include<iostream>
+//using namespace std;
+//int main()
+//{
+//	int a = 10;
+//	// 编译报错：“ra”: 必须初始化引用
+//	//int& ra;
+//	int& b = a;
+//	int c = 20;
+//	cout << a << endl;
+//	cout << b << endl;
+//	cout << c << endl;
+//	// 这里并非让b引用c，因为C++引用不能改变指向，
+//	// 这里是一个赋值
+//	b = c;
+//
+//	cout << &a << endl;
+//	cout << &b << endl;
+//	cout << &c << endl;
+//	cout << a << endl;
+//	cout << b << endl;
+//	cout << c << endl;
+//}
 
 //#include<iostream>
 //using namespace std;
