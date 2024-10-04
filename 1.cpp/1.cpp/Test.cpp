@@ -1,30 +1,48 @@
-#include"Stack.h"
 #define _CRT_SECURE_NO_WARNINGS 1
-
+#include<iostream>
+using namespace std;
 
 class Date
-
 {
 
 public:
 
 	// 获取某年某月的天数
 
-	int GetMonthDay(int year, int month);
+	int GetMonthDay(int year, int month) {
+		static int arr[13] = { -1,31,28,31,30,31,
+			30,31,31,20,31,30,31 };
+
+		if (month == 2 &&
+			year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+			return 29;
+		}
+		return arr[month];
+
+	}
 
 
 
 	// 全缺省的构造函数
 
-	Date(int year = 1900, int month = 1, int day = 1);
+	Date(int year = 1900, int month = 1, int day = 1) {
+		_year = year;
+		_month = month;
+		_day = day;
+
+	}
 
 
 
-	// 拷贝构造函数
+// 拷贝构造函数
+// d2(d1)
 
-  // d2(d1)
+	Date(const Date& d) {
+		_year = d._year;
+		_month = d._month;
+		_day = d._day;
 
-	Date(const Date& d);
+	}
 
 
 
@@ -32,61 +50,130 @@ public:
 
   // d2 = d3 -> d2.operator=(&d2, d3)
 
-	Date& operator=(const Date& d);
+	Date& operator=(const Date& d) {
+		_year = d._year;
+		_month = d._month;
+		_day = d._day;
 
-
+		return *this;
+	}
 
 	// 析构函数
 
 	~Date();
 
 
-
 	// 日期+=天数
 
-	Date& operator+=(int day);
+	Date& operator+=(int day) {
+		_day += day;
+		while (_day > GetMonthDay(_year, _month)) {
+			_day -= GetMonthDay(_year, _month);
+			_month++;
+			if (13 == _month) {
+				_year++;
+				_month = 1;
+			}
+
+		}
+		return *this;
+	}
 
 
 
 	// 日期+天数
 
-	Date operator+(int day);
+	Date operator+(int day) {
+		Date tmp = *this;
+		tmp += day;
 
-
-
-	// 日期-天数
-
-	Date operator-(int day);
-
-
+		return tmp;
+	}
 
 	// 日期-=天数
 
-	Date& operator-=(int day);
+	Date& operator-=(int day) {
+		day += _day;
+		if (1 == _month) {
+			_year--;
+			_month = 12;
+			_day = GetMonthDay(_year, _month);
 
+		}
+		else {
+			_month--;
+			_day = GetMonthDay(_year, _month);
+		}
+
+		while (day >= GetMonthDay(_year, _month)) {
+			if (1 == _month) {
+				day -= GetMonthDay(_year, _month);
+				_year--;
+				_month = 12;
+				_day = GetMonthDay(_year, _month);
+
+			}
+			else {
+				day -= GetMonthDay(_year, _month);
+				_month--;
+				_day = GetMonthDay(_year, _month);
+			}
+			_month--;
+			day -= GetMonthDay(_year, _month);
+		}
+
+		_day -= day;
+		return *this;
+		}
+
+	// 日期-天数
+
+	Date operator-(int day) {
+		Date tmp = *this;
+		tmp -= day;
+
+		return tmp;
+	}
 
 
 	// 前置++
 
-	Date& operator++();
+	Date& operator++() {
+		if (_day + 1 > GetMonthDay(_year, _month)) {
+			if (12 == _month) {
+				_month == 1;
+				_year++;
+				_day = 1;
+			}
+			else {
+				_month++;
+				_day = 1;
+			}
+		}
+		_day++;
+
+		return *this;
+	}
 
 
 
 	// 后置++
 
-	Date operator++(int);
-
-
-
-	// 后置--
-
-	Date operator--(int);
+	Date operator++(int) {
+		Date tmp = *this;
+		++(*this);
+		return tmp;
+	}
 
 
 
 	// 前置--
 
 	Date& operator--();
+
+	// 后置--
+
+	Date operator--(int);
 
 
 
@@ -139,6 +226,17 @@ private:
 	int _day;
 
 };
+
+
+
+
+
+int mian() {
+
+
+	return 0;
+}
+
 
 
 //int main()
