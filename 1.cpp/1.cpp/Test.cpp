@@ -1,6 +1,158 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<iostream>
 using namespace std;
+
+class Date {
+public:
+	Date
+};
+
+
+
+
+
+
+
+
+//typedef int STDataType;
+//
+//class Stack {
+//	Stack(int n = 4) {
+//		_a = (STDataType*)malloc(sizeof(STDataType) * n);
+//		if (nullptr == _a) {
+//			perror("malloc…Í«Îø’º‰ ß∞‹");
+//				return;
+//		}
+//		_capacity = n;
+//		_top = 0;
+//	}
+//	~Stack() {
+//		free(_a);
+//		_a = nullptr;
+//		_top = _capacity = 0;
+//
+//	}
+//private:
+//	STDataType* _a;
+//	size_t _capacity;
+//	size_t _top;
+//
+//};
+
+
+
+
+//class Date {
+//public:
+//	//Date() {
+//	//	_year = 1;
+//	//	_month = 1;
+//	//	_day = 1;
+//	//}
+//	//Date(int year, int month, int day) {
+//	//	_year = year;
+//	//	_month = month;
+//	//	_day = day;
+//
+//	//}
+//	//Date(int _year = 1, int _month = 1, int _day = 1) {
+//	//	_year = year;
+//	//	_month = month;
+//	//	_day = day;
+//	//}
+//	void Print() {
+//		cout << _year << "/" << _month << "/" << _day << endl;
+//
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//
+//};
+//int main() {
+//	Date d1;
+//	d1.Print();
+//
+//	Date d2(2024, 7, 10);
+//	d2.Print();
+//	Date d3(2024);
+//	d3.Print();
+//
+//	Date func();
+//	func.Printf();
+//
+//	return 0;
+//}
+
+
+//class A {
+//public:
+//	void Printf() {
+//		cout << this << endl;
+//		cout << "A:Print()" << endl;
+//	}
+//private:
+//	int _a;
+//};
+//
+//int main() {
+//	A* p = nullptr;
+//
+//	p->Print();
+//	p->_a = 1;
+//	A aa;
+//	return 0
+//}
+
+
+//class Date {
+//public:
+//	//void Init(Date* const this,int year ,int month,int day)
+//	void Init(int year, int month, int day) {
+//		this->_year = year;
+//		this->_month = month;
+//		this->_day = day;
+//
+//	}
+//// void Printf(Date* const this)
+//	void Print() {
+//		cout << this->_year << "/" << this->_month << "/" << _day << endl;
+//		
+//}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//class B {
+//public:
+//	void Print()
+//	{
+//		//...
+//	}
+//};
+//class C {
+//
+//};
+//
+//int main() {
+//	Date d1;
+//	Date d2;
+//	d1.Init(2024,3,31);
+//	d1.Print(&d1);
+//
+//	A a;
+//	B b;
+//	C c;
+//	cout << sizeof(a) << endl;
+//	cout << sizeof(b) << endl;
+//	cout << sizeof(c) << endl;
+//
+//	return 0;
+//}
+
 //
 //class Date
 //{
