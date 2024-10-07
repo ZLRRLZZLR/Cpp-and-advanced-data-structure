@@ -5,6 +5,22 @@ using namespace std;
 
 
 
+
+//class A {
+//public:
+//	A(int a1 = 0, int a2 = 0)
+//		:_a1(a1)
+//		,_a2(a2)
+//	{
+//		cout << "A(int a1 = 0;int a2 = 0)" << endl;
+//	}
+//	A(const A& aa)
+//		:_a1(aa._a1)
+//	{
+//
+//	}
+//};
+
 //#include<iostream>
 //using namespace std;
 //
