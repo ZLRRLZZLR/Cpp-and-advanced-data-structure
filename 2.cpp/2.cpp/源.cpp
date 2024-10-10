@@ -1,6 +1,57 @@
-//#define _CRT_SECURE_NO_WARNINGS 1
-//#include<iostream>
-//using namespace std;
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<iostream>
+using namespace std;
+
+
+
+
+
+//int main() {
+//	int* p1 = new int;
+//	int* p2 = new int[10];
+//
+//	delete p1;
+//	delete[] p2;
+//
+//	int* p3 = new int(0);
+//	int* p4 = new int[10] {0};
+//	int* p5 = new int[10] {1, 2, 3, 4, 5};
+//
+//	delete p3;
+//	delete[] p4;
+//	delete[] p5;
+//
+//	return 0;
+//}
+//struct ListNode {
+//	int val;
+//	ListNode* next;
+//
+//	ListNode(int x)
+//		:val(x)
+//		,next(nullptr)
+//	{}
+//};
+//
+//int main() {
+//	A* p1 = new A;
+//	A* p2 = new A(1);
+//	delete p1;
+//	delete p2;
+//
+//	ListNode* n1 = new ListNode(1);
+//	ListNode* n2 = new ListNode(1);
+//	ListNode* n3 = new ListNode(1);
+//	ListNode* n4 = new ListNode(1);
+//	n1->next = n2;
+//	n2->next = n3;
+//	n3->next = n4;
+//	return 0;
+//
+//}
+
+
+
 //
 //
 //class Date
