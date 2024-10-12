@@ -1,186 +1,372 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<iostream>
+#include<string>
+#include<map>
+#include<list>
 using namespace std;
 
-
-#include <iostream>
-using namespace std;
-
-class Date
-
-{
-
-public:
-
-    // 获取某年某月的天数
-
-    int GetMonthDay(int year, int month)
-
-    {
-
-        static int days[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-
-        int day = days[month];
-
-        if (month == 2
-
-            && ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)))
-
-        {
-
-            day += 1;
-
-        }
-
-        return day;
-
-    }
-
-
-
-    // 全缺省的构造函数
-
-    Date(int year = 1900, int month = 1, int day = 1)
-
-    {
-
-        if (year < 1900
-
-            || month < 1 || month > 12
-
-            || day < 1 || day > GetMonthDay(year, month))
-
-        {
-
-            cout << "非法日期" << endl;
-
-        }
-
-
-
-        _year = year;
-
-        _month = month;
-
-        _day = day;
-
-    }
-
-
-
-    // 拷贝构造函数
-
-  // d2(d1)
-
-    Date(const Date& d)
-
-    {
-
-        this->_year = d._year;
-
-        _month = d._month;
-
-        _day = d._day;
-
-    }
-
-
-
-    // 赋值运算符重载
-
-  // d2 = d3 -> d2.operator=(&d2, d3)
-
-    Date& operator=(const Date& d)
-
-    {
-
-        if (this != &d)
-
-        {
-
-            this->_year = d._year;
-
-            this->_month = d._month;
-
-            this->_day = d._day;
-
-        }
-
-
-
-        return *this;
-
-    }
-
-
-    Date& operator+=(int day)
-
-    {
-
-
-        _day += day;
-
-        while (_day > GetMonthDay(_year, _month))
-
-        {
-
-            _day -= GetMonthDay(_year, _month);
-
-            _month++;
-
-            if (_month == 13)
-
-            {
-
-                _year++;
-
-                _month = 1;
-
-            }
-
-        }
-
-
-
-        return *this;
-
-    }
-
-
-    int _year;
-
-    int _month;
-
-    int _day;
-
-};
-
-int main() {
-    int m;
-    while (scanf("%d", &m) != EOF) { // 注意 while 处理多个 case
-        int year = 0, month = 0, day = 0, num = 0;
-        Date d1;
-        for (int i = 0; i < m; i++) {
-            cin >> year >> month >> day >> num;
-            Date d2(year, month, day);
-            d2 += num;
-            d1 = d2;
-        }
-        cout << d1._year << "-";
-        if (d1._month < 10) {
-            cout << 0 << d1._month << "-";
-        }
-        else {
-            cout << d1._month << "-";
-        }
-        if (d1._day < 10) {
-            cout << 0 << d1._day << endl;;
-        }
-        else {
-            cout << d1._day << endl;
-        }
-    }
-}
+//for(auto& e : array)
+//e*= 2 = 0;
+//for (auto e : array)
+//cout << e << "" << endl;
+
+//auto func2() {
+//	//......
+//	return func1();
+//}
+//int main() {
+//	int a = 10;
+//	auto b = a;
+//	auto c = 'a';
+//	cout << typeid(b).name() << endl;
+//	cout << typeid(c).name() << endl;
+//	cout << typeid(a).name() << endl;
+//
+//	//auto array[] = { 4,5,6 };
+//	int array[] = { 1,2,3,4,5};
+//	for (size_t i = 0; i < sizeof(array) / sizeof(array[0];i++)
+//	{
+//		array[i] *= 2;
+//	}
+//	for (size_t i = 0; i < sizeof(array) / sizeof(array[0] ; i++)
+//	{
+//		cout << array[i] << endl;
+//	}
+//}
+
+
+
+//void test_string4() {
+//	string s2("hello worldxxxxxxxxxxxxx");
+//	cout << s2.size() << endl;
+//	cout << s2.capacity() << endl << endl;
+//
+//	s2.reserve(20);
+//	cout << s2.size() << endl;
+//	cout << s2.capacity() << endl;
+//
+//	s2.clear();
+//
+//	cout << typeid(string::iterator).name() << endl;
+//	cout << typeid(string::reverse_iterator).name() << endl;
+//
+//
+//}
+
+
+//void TestPushBack() {
+//	string s;
+//	s.reserve(100);
+//	size_t sz = s.capacity();
+//	cout << "capacity changed:" << sz << '\n';
+//
+//	cout << "making s grow:\n";
+//	for (size_t i = 0; i < 100; i++)
+//	{
+//		s.push_back('c');
+//		if (sz != s.capacity()) {
+//			sz = s.capacity();
+//			cout << "capacity changed;" << sz << '\n';
+//		}
+//	}
+//}
+//
+//void test_string3() {
+//	string s2("hellow world");
+//	cout << s2.length() << endl;
+//	cout << s2.size() << endl;
+//
+//	cout << s2.max_size() << endl;
+//
+//	cout << s2.capacity() << endl;
+//	TestPushBack();
+//	string s3("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+//}
+
+
+//int main() {
+//	TestPushBack();
+//	return 0;
+//}
+
+//class string {
+//private:
+//	char _buff[16];
+//	char* _str;
+//
+//	size_t _size;
+//	size_t _capacity;
+//};
+
+//void test_string1() {
+//	string s1;
+//	string s2("hellow world");
+//
+//	cout << s1 << s2 << endl;
+//
+//	s2[0] = 'x';
+//	cout << s1 << s2 << endl;
+//
+//	for (size_t i = 0; i < s2.size(); i++)
+//	{
+//		cout << s2[i] << "";
+//	}
+//
+//	cout << endl;
+//
+//	string::iterator it = s2.begin();
+//	auto it = s2.begin();
+//	while (it != s2.end()) {
+//			*it += 2;
+//
+//			cout << *it << "";
+//			++it;
+//
+//	}
+//	cout << endl;
+//
+//	cout << s2 << endl;
+//
+//	map<string, string>dict;
+//	//map<string,string>::iterator mit = dict.begin();
+//	auto mit = dict.begin();
+//	
+//	list<int> lt = {1,2,3,4,5,6,7};
+//	list<int>::iterator lit = lt.begin();
+//	while (lit != lt.end) {
+//		cout << *lit << "";
+//		++lit;
+//	}
+//	cout << endl;
+//	for (auto& ch : s2) {
+//		ch -= 2;
+//		cout << ch << "";
+//	}
+//	cout << endl;
+//	cout << s2 << endl;
+//
+//}
+//
+//void test_string2() {
+//	string s2("hello world");
+//	string::iterator it = s2.begin();
+//	while (it != s2.end()) {
+//		*it += 2;
+//		cout << *it << "";
+//		++it;
+//	}
+//	cout << endl;
+//	string::reverse_iterator rit = s2.rbegin();
+//	while(rit != s2.rend()) {
+//		cout << *rit << "";
+//		++rit;
+//	}
+//	cout << endl;
+//	const string s3("hellow world");
+//	//string::const_iterator cit = s3.begin();
+//	auto cit = s3.begin();
+//	while (cit != s3.end()) {
+//		//*cit += 2;
+//		cout << *cit << "";
+//		++cit;
+//	}
+//	cout << endl;
+//
+//	//string::const_reverse_yterator rcit = s3.begin();
+//	auto rcit = s3.rbegin();
+//	while(rcit != s3.rend()) {
+//		cout << *rcit << "";
+//		++rcit;
+//	}
+//	cout << endl;
+//
+//}
+//
+//
+//int main() {
+//
+//	return 0;
+//}
+
+
+//#include <iostream>
+//using namespace std;
+//
+//class Date
+//
+//{
+//
+//public:
+//
+//    // 获取某年某月的天数
+//
+//    int GetMonthDay(int year, int month)
+//
+//    {
+//
+//        static int days[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+//
+//        int day = days[month];
+//
+//        if (month == 2
+//
+//            && ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)))
+//
+//        {
+//
+//            day += 1;
+//
+//        }
+//
+//        return day;
+//
+//    }
+//
+//
+//
+//    // 全缺省的构造函数
+//
+//    Date(int year = 1900, int month = 1, int day = 1)
+//
+//    {
+//
+//        if (year < 1900
+//
+//            || month < 1 || month > 12
+//
+//            || day < 1 || day > GetMonthDay(year, month))
+//
+//        {
+//
+//            cout << "非法日期" << endl;
+//
+//        }
+//
+//
+//
+//        _year = year;
+//
+//        _month = month;
+//
+//        _day = day;
+//
+//    }
+//
+//
+//
+//    // 拷贝构造函数
+//
+//  // d2(d1)
+//
+//    Date(const Date& d)
+//
+//    {
+//
+//        this->_year = d._year;
+//
+//        _month = d._month;
+//
+//        _day = d._day;
+//
+//    }
+//
+//
+//
+//    // 赋值运算符重载
+//
+//  // d2 = d3 -> d2.operator=(&d2, d3)
+//
+//    Date& operator=(const Date& d)
+//
+//    {
+//
+//        if (this != &d)
+//
+//        {
+//
+//            this->_year = d._year;
+//
+//            this->_month = d._month;
+//
+//            this->_day = d._day;
+//
+//        }
+//
+//
+//
+//        return *this;
+//
+//    }
+//
+//
+//    Date& operator+=(int day)
+//
+//    {
+//
+//
+//        _day += day;
+//
+//        while (_day > GetMonthDay(_year, _month))
+//
+//        {
+//
+//            _day -= GetMonthDay(_year, _month);
+//
+//            _month++;
+//
+//            if (_month == 13)
+//
+//            {
+//
+//                _year++;
+//
+//                _month = 1;
+//
+//            }
+//
+//        }
+//
+//
+//
+//        return *this;
+//
+//    }
+//
+//
+//    int _year;
+//
+//    int _month;
+//
+//    int _day;
+//
+//};
+//
+//int main() {
+//    int m;
+//    while (scanf("%d", &m) != EOF) { // 注意 while 处理多个 case
+//        int year = 0, month = 0, day = 0, num = 0;
+//        Date d1;
+//        for (int i = 0; i < m; i++) {
+//            cin >> year >> month >> day >> num;
+//            Date d2(year, month, day);
+//            d2 += num;
+//            d1 = d2;
+//        }
+//        cout << d1._year << "-";
+//        if (d1._month < 10) {
+//            cout << 0 << d1._month << "-";
+//        }
+//        else {
+//            cout << d1._month << "-";
+//        }
+//        if (d1._day < 10) {
+//            cout << 0 << d1._day << endl;;
+//        }
+//        else {
+//            cout << d1._day << endl;
+//        }
+//    }
+//}
 // 64 位输出请用 printf("%lld")
 
 //int main() {
