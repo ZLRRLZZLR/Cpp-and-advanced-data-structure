@@ -7,7 +7,45 @@ using namespace std;
 
 
 
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ * };
+ */
+ /**
+  * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+  *
+  *
+  * @param head ListNode类
+  * @param m int整型
+  * @param n int整型
+  * @return ListNode类
+  */
+typedef struct ListNode ListNode;
 
+struct ListNode* reverseBetween(struct ListNode* head, int m, int n) {
+    if (NULL == head || m == n)
+        return head;
+
+    ListNode* new_head = (ListNode*)malloc(sizeof(ListNode));
+    new_head->next = head;
+    ListNode* prev = new_head;
+    for (int i = 1; i < m; i++) {
+        prev = prev->next;
+    }
+
+    head = prev->next;
+    while (head->next != NULL) {
+        ListNode* p = head->next;
+        head->next = p->next;
+        prev->next = p;
+        p->next = head;
+    }
+    head = new_head->next;
+    free(new_head);
+    return head;
+}
 //#include <iostream>
 //using namespace std;
 //
