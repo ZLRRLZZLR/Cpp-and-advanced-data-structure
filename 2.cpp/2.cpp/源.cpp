@@ -6,6 +6,53 @@
 using namespace std;
 
 
+//class string {
+//private:
+//	char _buff[16];
+//	char* _str;
+//
+//	size_t _size;
+//	size_t _capacity;
+//};
+void test_string1() {
+	string s1;
+	string s2("hello world");
+
+	cout << s1 << s2 << endl;
+
+	s2[0] = 'x';
+	cout << s1 << s2 << endl;
+
+	for (size_t i = 0; i < s2.size(); i++) {
+		cout << s2[i] << " ";
+	}
+	cout << endl;
+	auto it = s2.begin();
+	while (it != s2.end()) {
+		*it += 2;
+
+		cout << *it << " ";
+		++it;
+	}
+	cout << endl;
+
+	cout << s2 << endl;
+
+	map<string, string>dict;
+
+	auto mit = dict.begin();
+	for (auto& ch : s2) {
+		ch -= 2;
+		cout << ch << " ";
+	}
+	cout << endl;
+
+	cout << s2 << endl;
+
+}
+
+
+
 ////NC21 链表内指定区间反转
 ///**
 // * struct ListNode {
