@@ -50,6 +50,10 @@ void test_string1() {
 	cout << s2 << endl;
 
 }
+void test_string2() {
+	string s2("hello world");
+	string::iterator it = s2.begin();
+}
 
 
 
