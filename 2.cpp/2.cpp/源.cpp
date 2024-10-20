@@ -5,6 +5,210 @@
 #include<list>
 using namespace std;
 
+#include <iostream>
+using namespace std;
+
+int main() {
+    string str;
+    getline(cin, str);
+    int pos = str.rfind(' ');
+    cout << str.size() - pos - 1;
+    return 0;
+}
+// 64 位输出请用 printf("%lld")
+
+
+//class Solution {
+//public:
+//    int firstUniqChar(string s) {
+//        int arr[256] = { 0 };
+//        for (auto ch : s) {
+//            arr[ch]++;
+//        }
+//        for (int i = 0; i < s.size(); i++) {
+//            if (arr[s[i]] == 1)
+//                return i;
+//        }
+//        return -1;
+//    }
+//};
+
+
+//翻转字符串II：区间部分翻转
+
+
+//class Solution {
+//public:
+//    string reverseStr(string s, int k) {
+//        auto begin = s.begin();
+//        auto end = s.end();
+//        while (end - begin >= 2 * k) {
+//            reverse(begin, begin + k);
+//            begin += 2 * k;
+//        }
+//
+//
+//        if (end - begin < k) {
+//            reverse(begin, end);
+//        }
+//        else if ((end - begin) >= k && (end - begin) < 2 * k) {
+//            reverse(begin, begin + k);
+//        }
+//
+//
+//        return s;
+//    }
+//};
+//class Solution {
+//public:
+//    string reverseStr(string s, int k) {
+//        auto begin = s.begin();
+//        auto end = s.end();
+//        int ret = end - begin;
+//        while (ret >= 2 * k) {
+//            reverse(begin, begin + k - 1);
+//            begin += 2 * k;
+//            ret = end - begin;
+//        }
+//
+//        if (ret < k) {
+//            reverse(s.begin(), s.end() - 1);
+//        }
+//        else if (ret >= k && ret < 2 * k) {
+//            reverse(s.begin(), s.begin() + k - 1);
+//        }
+//
+//        return s;
+//    }
+//};
+//
+//int main() {
+//
+//    Solution().reverseStr("abcdefg",2);
+//
+//    return 0;
+//}
+
+
+
+
+
+//验证一个字符串是否是回文
+//class Solution {
+//public:
+//    bool isPalindrome(string s) {
+//        string tmp;
+//        for (auto ch : s) {
+//            if (ch >= 'A' && ch <= 'Z') {
+//                tmp += ch + 32;
+//            }
+//            else if (ch >= 'a' && ch <= 'z') {
+//                tmp += ch;
+//            }
+//            else if (ch >= '0' && ch <= '9') {
+//                tmp += ch;
+//            }
+//            else {
+//                continue;
+//            }
+//        }
+//        int left = 0;
+//        int right = tmp.size() - 1;
+//        while (left < right) {
+//            if (tmp[left++] != tmp[right--]) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//};
+
+
+//class Solution {
+//public:
+//    bool isPalindrome(string s) {
+//        string tmp;
+//        for (auto ch : s) {
+//            if (ch >= 'A' && ch <= 'Z') {
+//                tmp += ch + 32;
+//            }
+//            else if (ch >= 'a' && ch <= 'z') {
+//                tmp += ch;
+//            }
+//            else {
+//                continue;
+//            }
+//        }
+//        int left = 0;
+//        int right = tmp.size() - 1;
+//        while (left < right) {
+//            if (tmp[left] != tmp[right]) {
+//                return false;
+//            }
+//        }
+//        return true;
+//    }
+//};
+//
+//
+//int main() {
+//    Solution().isPalindrome("A man, a plan, a canal: Panama");
+//
+//
+//    return 0;
+//}
+
+
+
+
+
+
+//
+////字符串里面最后一个单词的长度
+//#include <iostream>
+//using namespace std;
+//
+//int main() {
+//    string str;
+//    getline(cin, str);
+//    int i = str.size() - 1;
+//    for (; i > 0; i--) {
+//        if (str[i] == ' ')
+//            break;
+//    }
+//    if (i) {
+//        cout << str.substr(i).size();
+//    }
+//    else {
+//        cout << str.size();
+//    }
+//    return 0;
+//}
+
+
+//
+//#include <iostream>
+//using namespace std;
+//
+//int main() {
+//    string str;
+//    while (cin >> str) { // 注意 while 处理多个 case
+//        int i = str.size() - 1;
+//        for (; i > 0; i--) {
+//            if (str[i] == ' ')
+//                break;
+//        }
+//        if (i) {
+//            cout << str.substr(i).size();
+//        }
+//        else {
+//            cout << str.size();
+//        }
+//        return 0;
+//    }
+//}
+//// 64 位输出请用 printf("%lld")
+
 
 //class string {
 //private:
@@ -13,47 +217,161 @@ using namespace std;
 //
 //	size_t _size;
 //	size_t _capacity;
+//
 //};
-void test_string1() {
-	string s1;
-	string s2("hello world");
 
-	cout << s1 << s2 << endl;
 
-	s2[0] = 'x';
-	cout << s1 << s2 << endl;
 
-	for (size_t i = 0; i < s2.size(); i++) {
-		cout << s2[i] << " ";
-	}
-	cout << endl;
-	auto it = s2.begin();
-	while (it != s2.end()) {
-		*it += 2;
 
-		cout << *it << " ";
-		++it;
-	}
-	cout << endl;
 
-	cout << s2 << endl;
+//template<class T>
+//T Add(const T& left, const T& right) {
+//	return left + right;
+//}
 
-	map<string, string>dict;
 
-	auto mit = dict.begin();
-	for (auto& ch : s2) {
-		ch -= 2;
-		cout << ch << " ";
-	}
-	cout << endl;
 
-	cout << s2 << endl;
+//int main() {
+//	int i = 1, int j = 2;
+//	double m = 1.1, n = 2.2;
+//	Swap(i, j);
+//
+//}
 
-}
-void test_string2() {
-	string s2("hello world");
-	string::iterator it = s2.begin();
-}
+//template<typename T1, typename T2 >
+//void func(const T1& x, const T2& y) {
+//
+//}
+
+
+
+
+//class A {
+//public:
+//	A(int a = 0)
+//		:_a(a) {
+//		cout << "A():" << this << endl;
+//	}
+//
+//	~A() {
+//		cout << "~A()" << this << endl;
+//	}
+//
+//private :
+//	int _a;
+//};
+//
+//int main() {
+//	A* p1 = new A(1);
+//	delete p1;
+//
+//	A* p2 = (A*) operator new (sizeof(A));
+//	new(p2)A(1);
+//	p2->~A();
+//	operator delete(p2);
+//	return 0;
+//
+//
+//
+//}
+
+//#include <iostream>
+//using namespace std;
+//
+//int main() {
+//    string str;
+//    while (cin >> str) { // 注意 while 处理多个 case
+//        int pos = str.find(' ') + 1;
+//        //if (pos == -1) {
+//            cout << str.size();
+//        }
+//
+//        cout << str.substr(pos).size();
+//    }
+//}
+//// 64 位输出请用 printf("%lld")
+
+
+////字符串相加
+//class Solution {
+//public:
+//    string addStrings(string num1, string num2) {
+//        int end1 = num1.size() - 1;
+//        int end2 = num2.size() - 1;
+//        string tmp;
+//        int next = 0;
+//        while (end1 >= 0 || end2 >= 0) {
+//            int n1 = end1 < 0 ? 0 : num1[end1--] - '0';
+//            int n2 = end2 < 0 ? 0 : num2[end2--] - '0';
+//            int ret = n2 + n1 + next;
+//            next = ret / 10;
+//            ret %= 10;
+//            tmp += ret + '0';
+//        }
+//        if (next)
+//            tmp += next + '0';
+//
+//        reverse(tmp.begin(), tmp.end());
+//
+//        return tmp;
+//    }
+//};
+//
+//int main() {
+//    Solution().addStrings("1","9");
+//
+//    return 0;
+//
+//}
+
+////class string {
+////private:
+////	char _buff[16];
+////	char* _str;
+////
+////	size_t _size;
+////	size_t _capacity;
+////};
+//void test_string1() {
+//	string s1;
+//	string s2("hello world");
+//
+//	cout << s1 << s2 << endl;
+//
+//	s2[0] = 'x';
+//	cout << s1 << s2 << endl;
+//
+//	for (size_t i = 0; i < s2.size(); i++) {
+//		cout << s2[i] << " ";
+//	}
+//	cout << endl;
+//	auto it = s2.begin();
+//	while (it != s2.end()) {
+//		*it += 2;
+//
+//		cout << *it << " ";
+//		++it;
+//	}
+//	cout << endl;
+//
+//	cout << s2 << endl;
+//
+//	map<string, string>dict;
+//
+//	auto mit = dict.begin();
+//	for (auto& ch : s2) {
+//		ch -= 2;
+//		cout << ch << " ";
+//	}
+//	cout << endl;
+//
+//	cout << s2 << endl;
+//
+//}
+//void test_string2() {
+//	string s2("hello world");
+//	string::iterator it = s2.begin();
+//}
 
 
 
