@@ -1,20 +1,64 @@
 #define _CRT_SECURE_NO_WARNINGS 1
-#include<iostream>
+
 #include<string>
 #include<map>
 #include<list>
-using namespace std;
 
-#include <iostream>
-using namespace std;
 
-int main() {
-    string str;
-    getline(cin, str);
-    int pos = str.rfind(' ');
-    cout << str.size() - pos - 1;
-    return 0;
-}
+
+
+
+
+//#include<iostream>
+//using namespace std;
+//
+//class Stack//类定义在全局位置
+//{
+//public://访问限定符可可以定义多个
+//	void Push(int x)
+//	{}
+//
+//private://访问限定符定义顺序不一定
+//	int* a;
+//	int top;
+//	int capacity;
+//
+//public:
+//	void Pop()
+//	{}
+//
+//private:
+//
+//	int Top()
+//	{
+//		return 0;
+//	}
+//
+//};
+//
+//int main()
+//{
+//	Stack st;
+//	st.Pop();
+//	st.Push(1);
+//	//st.a;
+//
+//	return 0;
+//}
+
+
+
+
+//#include <iostream>
+//using namespace std;
+//
+//int main() {
+//    string str;
+//    getline(cin, str);
+//    int pos = str.rfind(' ');
+//    cout << str.size() - pos - 1;
+//    return 0;
+//}
 // 64 位输出请用 printf("%lld")
 
 
