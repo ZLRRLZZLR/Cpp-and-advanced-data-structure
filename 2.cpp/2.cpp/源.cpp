@@ -6,6 +6,70 @@
 
 
 
+#include<iostream>
+using namespace std;
+class A
+{
+public:
+	void Print()
+	{
+		cout << "A::Print()" << endl;
+		cout << _a << endl;//实质上是this->_a
+	}
+private:
+	int _a;
+};
+int main()
+{
+	A* p = nullptr;
+	p->Print();
+	return 0;
+}
+
+//#include<iostream>
+//using namespace std;
+//class Date
+//{
+//public:
+//	// void Init(Date* const this, int year, int month, int day)
+//	void Init(int year, int month, int day)
+//	{
+//		this->_year = year;
+//		this->_month = month;
+//		this->_day = day;
+//	}
+//
+//	// void Print(Date* const this)
+//	void Print()
+//	{
+//		cout << this->_year << "/" << this->_month << "/" << _day << endl;
+//	}
+//
+//private:
+//	// 这里只是声明，没有开空间
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//int main()
+//{
+//	// Date类实例化出对象d1和d2
+//	Date d1;
+//	Date d2;
+//
+//	// d1.Init(&d1, 2024, 3, 31);
+//	d1.Init(2024, 3, 31);
+//	// d1.Print(&d1);
+//	d1.Print();
+//
+//	// d2.Init(&d2, 2024, 7, 5);
+//	d2.Init(2024, 7, 5);
+//	// d2.Print(&d2);
+//	d2.Print();
+//
+//	return 0;
+//}
 
 
 
