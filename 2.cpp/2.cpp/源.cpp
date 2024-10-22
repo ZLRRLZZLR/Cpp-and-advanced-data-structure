@@ -5,26 +5,233 @@
 #include<list>
 
 
-
-#include<iostream>
-using namespace std;
-class A
+typedef int STDataType;
+class Stack
 {
 public:
-	void Print()
+	Stack(int n = 4)
 	{
-		cout << "A::Print()" << endl;
-		cout << _a << endl;//实质上是this->_a
+		_a = (STDataType*)malloc(sizeof(STDataType) * n);
+		if (nullptr == _a)
+		{
+			perror("malloc申请空间失败");
+			return;
+		}
+		_capacity = n;
+		_top = 0;
+	}
+
+	// st2(st1)
+	Stack(const Stack& st)
+	{
+		cout << "Stack(const Stack& st)" << endl;
+
+		// 需要对_a指向资源创建同样大的资源再拷贝值
+		_a = (STDataType*)malloc(sizeof(STDataType) * st._capacity);
+		if (nullptr == _a)
+		{
+			perror("malloc申请空间失败!!!");
+			return;
+		}
+		memcpy(_a, st._a, sizeof(STDataType) * st._top);
+		_top = st._top;
+		_capacity = st._capacity;
+	}
+
+	void Push(STDataType x)
+	{
+		if (_top == _capacity)
+		{
+			int newcapacity = _capacity * 2;
+			STDataType* tmp = (STDataType*)realloc(_a, newcapacity *
+				sizeof(STDataType));
+			if (tmp == NULL)
+			{
+				perror("realloc fail");
+				return;
+			}
+			_a = tmp;
+			_capacity = newcapacity;
+		}
+		_a[_top++] = x;
+
+	}
+	~Stack()
+	{
+		cout << "~Stack()" << endl;
+		free(_a);
+		_a = nullptr;
+		_top = _capacity = 0;
 	}
 private:
-	int _a;
+	STDataType* _a;
+	size_t _capacity;
+	size_t _top;
 };
+
 int main()
 {
-	A* p = nullptr;
-	p->Print();
+	Stack st1;
+	st1.Push(1);
+	st1.Push(2);
+
+	// Stack不显示实现拷贝构造，用自动生成的拷贝构造完成浅拷贝
+	// 会导致st1和st2里面的_a指针指向同一块资源，析构时会析构两次，程序崩溃
+	Stack st2(st1);
+
 	return 0;
 }
+
+//#include<iostream>
+//using namespace std;
+//class Date
+//{
+//public:
+//	Date(int year = 1, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	// 编译报错：error C2652: “Date”: 非法的复制构造函数: 第一个参数不应是“Date”
+//	//Date(Date d)
+//	Date(const Date& d)
+//	{
+//		_year = d._year;
+//		_month = d._month;
+//		_day = d._day;
+//	}
+//	Date(Date* d)
+//	{
+//		_year = d->_year;
+//		_month = d->_month;
+//		_day = d->_day;
+//	}
+//	void Print()
+//	{
+//		cout << _year << "-" << _month << "-" << _day << endl;
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//void Func1(Date d)
+//{
+//	cout << &d << endl;
+//	d.Print();
+//}
+//// Date Func2()
+//Date& Func2()
+//{
+//	Date tmp(2024, 7, 5);
+//	tmp.Print();
+//	return tmp;
+//}
+//int main()
+//{
+//	Date d1(2024, 7, 5);
+//	// C++规定自定义类型对象进行拷贝行为必须调用拷贝构造，所以这里传值传参要调用拷贝
+//	//构造
+//		// 所以这里的d1传值传参给d要调用拷贝构造完成拷贝，传引用传参可以较少这里的拷贝
+//	Func1(d1);
+//	cout << &d1 << endl;
+//
+//	// 这里可以完成拷贝，但是不是拷贝构造，只是一个普通的构造
+//	Date d2(&d1);
+//	d1.Print();
+//	d2.Print();
+//
+//	//这样写才是拷贝构造，通过同类型的对象初始化构造，而不是指针
+//	Date d3(d1);
+//	d2.Print();
+//
+//	// 也可以这样写，这里也是拷贝构造
+//	Date d4 = d1;
+//	d2.Print();
+//
+//	// Func2返回了一个局部对象tmp的引用作为返回值
+//	// Func2函数结束，tmp对象就销毁了，相当于了一个野引用
+//	Date ret = Func2();
+//	ret.Print();
+//	return 0;
+//}
+
+//#include<iostream>
+//using namespace std;
+//class Date
+//{
+//public:
+//	Date(int year = 1, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	void Print()
+//	{
+//		cout << _year << "-" << _month << "-" << _day << endl;
+//	}
+//	int Getyeat() {
+//		return _year;
+//	}
+//
+//	int Getmonth() {
+//		return _month;
+//	}	
+//
+//	int Getday() {
+//		return _day;
+//	}
+//
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//
+//};
+//// 重载为全局的面临对象访问私有成员变量的问题
+//// 有几种方法可以解决：
+//// 1、成员放公有
+//// 2、Date提供getxxx函数
+//// 3、友元函数
+//// 4、重载为成员函数
+//bool operator==(const Date& d1, const Date& d2)
+//{
+//	return d1._year == d2._year
+//		&& d1._month == d2._month
+//		&& d1._day == d2._day;
+//}
+//int main()
+//{
+//	Date d1(2024, 7, 5);
+//	Date d2(2024, 7, 6);
+//	// 运算符重载函数可以显示调用
+//	operator==(d1, d2);
+//	// 编译器会转换成 operator==(d1, d2);
+//	d1 == d2;
+//	return 0;
+//}
+
+//#include<iostream>
+//using namespace std;
+//class A
+//{
+//public:
+//	void Print()
+//	{
+//		cout << "A::Print()" << endl;
+//		cout << _a << endl;//实质上是this->_a
+//	}
+//private:
+//	int _a;
+//};
+//int main()
+//{
+//	A* p = nullptr;
+//	p->Print();
+//	return 0;
+//}
 
 //#include<iostream>
 //using namespace std;
