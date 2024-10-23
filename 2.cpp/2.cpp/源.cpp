@@ -5,82 +5,340 @@
 #include<list>
 
 
-typedef int STDataType;
-class Stack
-{
-public:
-	Stack(int n = 4)
-	{
-		_a = (STDataType*)malloc(sizeof(STDataType) * n);
-		if (nullptr == _a)
-		{
-			perror("malloc申请空间失败");
-			return;
-		}
-		_capacity = n;
-		_top = 0;
-	}
+int main() {
 
-	// st2(st1)
-	Stack(const Stack& st)
-	{
-		cout << "Stack(const Stack& st)" << endl;
+	int a;
+	a = 0;
 
-		// 需要对_a指向资源创建同样大的资源再拷贝值
-		_a = (STDataType*)malloc(sizeof(STDataType) * st._capacity);
-		if (nullptr == _a)
-		{
-			perror("malloc申请空间失败!!!");
-			return;
-		}
-		memcpy(_a, st._a, sizeof(STDataType) * st._top);
-		_top = st._top;
-		_capacity = st._capacity;
-	}
-
-	void Push(STDataType x)
-	{
-		if (_top == _capacity)
-		{
-			int newcapacity = _capacity * 2;
-			STDataType* tmp = (STDataType*)realloc(_a, newcapacity *
-				sizeof(STDataType));
-			if (tmp == NULL)
-			{
-				perror("realloc fail");
-				return;
-			}
-			_a = tmp;
-			_capacity = newcapacity;
-		}
-		_a[_top++] = x;
-
-	}
-	~Stack()
-	{
-		cout << "~Stack()" << endl;
-		free(_a);
-		_a = nullptr;
-		_top = _capacity = 0;
-	}
-private:
-	STDataType* _a;
-	size_t _capacity;
-	size_t _top;
-};
-
-int main()
-{
-	Stack st1;
-	st1.Push(1);
-	st1.Push(2);
-
-	// Stack不显示实现拷贝构造，用自动生成的拷贝构造完成浅拷贝
-	// 会导致st1和st2里面的_a指针指向同一块资源，析构时会析构两次，程序崩溃
-	Stack st2(st1);
 
 	return 0;
 }
+
+//class Time
+//{
+//public:
+//	Time(int hour)//需要传参，不是默认构造
+//		:_hour(hour)
+//	{
+//		cout << "Time()" << endl;
+//	}
+//private:
+//	int _hour;
+//};
+//
+//class Date
+//{
+//public:
+//	Date(int& xx, int year, int month, int day)
+//		:_year(year)
+//		,_month(month)
+//		,_day(day)
+//		,_n(1)
+//		,_ref(xx)
+//		,_t(1)
+//		,_ptr((int*)malloc(12))
+//	{
+//		if (_ptr == nullptr)
+//		{
+//			perror("malloc fail");
+//		}
+//		else
+//		{
+//			memset(_ptr, 0, 12);
+//		}
+//	}
+//
+//	void Print() const
+//	{
+//		cout << _year << "-" << _month << "-" << _day << endl;
+//	}
+//
+//private:
+//	// 声明
+//	int _year;
+//	int _month;
+//	int _day;
+//
+//	// error C2512: “Time”: 没有合适的默认构造函数可用
+//	// error C2530 : “Date::_ref” : 必须初始化引用
+//	// error C2789 : “Date::_n” : 必须初始化常量限定类型的对象
+//	const int _n;
+//	int& _ref;
+//	Time _t;
+//
+//	int* _ptr;
+//};
+//
+//int main()
+//{
+//	int x = 0;
+//	// 对象定义
+//	Date d1(x, 2024, 7, 14);
+//	d1.Print();
+//
+//	//const int x = 1;
+//	// x = 1;
+//
+//	//int& rx;
+//
+//	return 0;
+//}
+
+
+//#include<iostream>
+//using namespace std;
+//class Time
+//{
+//public:
+//	Time(int hour)//需要传参，不是默认构造
+//		:_hour(hour)
+//	{
+//		cout << "Time()" << endl;
+//	}
+//private:
+//	int _hour;
+//};
+//class Date
+//{
+//public:
+//	Date(int& x, int year = 1, int month = 1, int day = 1)
+//		:_year(year)
+//		, _month(month + 1)
+//		, _day(day)
+//		, _t(12)
+//		, _ref(x)
+//		, _n(1)
+//	{
+//		// error C2512: “Time”: 没有合适的默认构造函数可用
+//		// error C2530 : “Date::_ref” : 必须初始化引用
+//		// error C2789 : “Date::_n” : 必须初始化常量限定类型的对象
+//	}
+//	void Print() const
+//	{
+//		cout << _year << "-" << _month << "-" << _day << endl;
+//	}
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//	Time _t; // 没有默认构造
+//	int& _ref; // 引用
+//	const int _n; // const
+//};
+//int main()
+//{
+//	int i = 0;
+//	Date d1(i);
+//	d1.Print();
+//	return 0;
+//}
+
+
+
+//#include<iostream>
+//using namespace std;
+//class A
+//{
+//public:
+//	//// 构造函数加了explicit就不再支持隐式类型转换
+//	// explicit A(int a = 0)
+//	A(int a = 0)
+//	{
+//		_a1 = a;
+//	}
+//
+//	A(const A& aa)
+//	{
+//		_a1 = aa._a1;
+//	}
+//
+//	A(int a1, int a2)
+//		:_a1(a1)
+//		, _a2(a2)
+//	{}
+//
+//	void Print() {
+//		cout << _a1 << " " << _a2 << endl;
+//	}
+//private:
+//	int _a1;
+//	int _a2;
+//};
+//
+//class Stack
+//{
+//public:
+//	void Push(const A& aa)
+//	{
+//		//...
+//	}
+//private:
+//	A _arr[10];
+//	int _top;
+//};
+//
+//int main()
+//{
+//	A aa1(1);
+//	aa1.Print();
+//
+//	// 隐式类型转换
+//	// 2构造一个A的临时对象，再用这个临时对象拷贝构造aa2
+//	// 编译器遇到连续构造+拷贝构造->优化为直接构造
+//	A aa2 = 2;
+//	aa2.Print();
+//
+//	A& raa1 = aa2;
+//	const A& raa2 = 2;
+//
+//	int i = 1;
+//	double d = i;
+//	const double& rd = i;
+//
+//	Stack st;
+//
+//	A aa3(3);
+//	st.Push(aa3);
+//
+//	st.Push(3);
+//
+//	// C++11之后才支持多参数转化
+//	A aa5 = { 1, 1 };
+//	const A& raa6 = { 2,2 };
+//	st.Push(aa5);
+//	st.Push({ 2,2 });
+//
+//	return 0;
+//}
+//#include<iostream>
+//using namespace std;
+//class A
+//{
+//public:
+//	// 构造函数explicit就不再支持隐式类型转换
+//	// explicit A(int a1)
+//	A(int a1)
+//		:_a1(a1)
+//	{}
+//	//explicit A(int a1, int a2)
+//	A(int a1, int a2)
+//		:_a1(a1)
+//		, _a2(a2)
+//	{}
+//	void Print()
+//	{
+//		cout << _a1 << " " << _a2 << endl;
+//	}
+//	int Get() const
+//	{
+//		return _a1 + _a2;
+//	}
+//private:
+//	int _a1 = 1;
+//	int _a2 = 2;
+//};
+//class B
+//{
+//public:
+//	B(const A& a)
+//		:_b(a.Get())
+//	{}
+//private:
+//	int _b = 0;
+//};
+//int main()
+//{
+//	// 1构造一个A的临时对象，再用这个临时对象拷贝构造aa3
+//	// 编译器遇到连续构造+拷贝构造->优化为直接构造
+//	A aa1 = 1;
+//	aa1.Print();
+//	const A& aa2 = 1;
+//	// C++11之后才支持多参数转化
+//	A aa3 = { 2,2 };
+//	// aa3隐式类型转换为b对象
+//	// 原理跟上面类似
+//	B b = aa3;
+//	const B& rb = aa3;
+//	return 0;
+//}
+
+
+//typedef int STDataType;
+//class Stack
+//{
+//public:
+//	Stack(int n = 4)
+//	{
+//		_a = (STDataType*)malloc(sizeof(STDataType) * n);
+//		if (nullptr == _a)
+//		{
+//			perror("malloc申请空间失败");
+//			return;
+//		}
+//		_capacity = n;
+//		_top = 0;
+//	}
+//
+//	// st2(st1)
+//	Stack(const Stack& st)
+//	{
+//		cout << "Stack(const Stack& st)" << endl;
+//
+//		// 需要对_a指向资源创建同样大的资源再拷贝值
+//		_a = (STDataType*)malloc(sizeof(STDataType) * st._capacity);
+//		if (nullptr == _a)
+//		{
+//			perror("malloc申请空间失败!!!");
+//			return;
+//		}
+//		memcpy(_a, st._a, sizeof(STDataType) * st._top);
+//		_top = st._top;
+//		_capacity = st._capacity;
+//	}
+//
+//	void Push(STDataType x)
+//	{
+//		if (_top == _capacity)
+//		{
+//			int newcapacity = _capacity * 2;
+//			STDataType* tmp = (STDataType*)realloc(_a, newcapacity *
+//				sizeof(STDataType));
+//			if (tmp == NULL)
+//			{
+//				perror("realloc fail");
+//				return;
+//			}
+//			_a = tmp;
+//			_capacity = newcapacity;
+//		}
+//		_a[_top++] = x;
+//
+//	}
+//	~Stack()
+//	{
+//		cout << "~Stack()" << endl;
+//		free(_a);
+//		_a = nullptr;
+//		_top = _capacity = 0;
+//	}
+//private:
+//	STDataType* _a;
+//	size_t _capacity;
+//	size_t _top;
+//};
+//
+//int main()
+//{
+//	Stack st1;
+//	st1.Push(1);
+//	st1.Push(2);
+//
+//	// Stack不显示实现拷贝构造，用自动生成的拷贝构造完成浅拷贝
+//	// 会导致st1和st2里面的_a指针指向同一块资源，析构时会析构两次，程序崩溃
+//	Stack st2(st1);
+//
+//	return 0;
+//}
 
 //#include<iostream>
 //using namespace std;
