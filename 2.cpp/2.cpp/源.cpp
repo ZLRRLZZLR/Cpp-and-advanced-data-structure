@@ -5,14 +5,603 @@
 #include<list>
 
 
-int main() {
-
-	int a;
-	a = 0;
 
 
-	return 0;
-}
+//template<class T1, class T2, ..., class Tn>
+//class 类模板名
+//{
+//	// 类内成员定义
+//};
+//#include<iostream>
+//using namespace std;
+//// 类模版
+//template<typename T>
+//class Stack
+//{
+//public:
+//	Stack(size_t capacity = 4)
+//	{
+//		_array = new T[capacity];
+//		_capacity = capacity;
+//		_size = 0;
+//	}
+//	void Push(const T& data);
+//private:
+//	T* _array;
+//	size_t _capacity;
+//	size_t _size;
+//};
+//// 模版不建议声明和定义分离到两个文件.h 和.cpp会出现链接错误，具体原因后面会讲
+//template<class T>
+//void Stack<T>::Push(const T& data)
+//{
+//	// 扩容
+//	_array[_size] = data;
+//	++_size;
+//}
+//int main()
+//{
+//	Stack<int> st1; // int
+//	Stack<double> st2; // double
+//	return 0;
+//}
+
+
+
+
+//// 专门处理int的加法函数
+//int Add(int left, int right)
+//{
+//	return left + right;
+//}
+//// 通用加法函数
+//template<class T1, class T2>
+//T1 Add(T1 left, T2 right)
+//{
+//	return left + right;
+//}
+//void Test()
+//{
+//	Add(1, 2); // 与非函数模板类型完全匹配，不需要函数模板实例化
+//	Add(1, 2.0); // 模板函数可以生成更加匹配的版本，编译器根据实参生成更加匹配的
+//	Add函数
+//}
+
+
+//// 专门处理int的加法函数
+//int Add(int left, int right)
+//{
+//	return left + right;
+//}
+//// 通用加法函数
+//template<class T>
+//T Add(T left, T right)
+//{
+//	return left + right;
+//}
+//void Test()
+//{
+//	Add(1, 2); // 与非模板函数匹配，编译器不需要特化
+//	Add<int>(1, 2); // 调用编译器特化的Add版本
+//}
+
+//int main(void)
+//{
+//	int a = 10;
+//	double b = 20.0;
+//	// 显式实例化
+//	Add<int>(a, b);
+//	return 0;
+//}
+
+
+
+
+
+//template<class T>
+//T Add(const T& left, const T& right)
+//{
+//	return left + right;
+//}
+//int main()
+//{
+//	int a1 = 10, a2 = 20;
+//	double d1 = 10.0, d2 = 20.0;
+//	Add(a1, a2);
+//	Add(d1, d2);
+//	/*
+//	该语句不能通过编译，因为在编译期间，当编译器看到该实例化时，需要推演其实参类型
+//	通过实参a1将T推演为int，通过实参d1将T推演为double类型，但模板参数列表中只有
+//	一个T，
+//	编译器无法确定此处到底该将T确定为int 或者 double类型而报错
+//	注意：在模板中，编译器一般不会进行类型转换操作，因为一旦转化出问题，编译器就需要
+//背黑锅
+//Add(a1, d1);
+//*/
+//// 此时有两种处理方式：1. 用户自己来强制转化 2. 使用显式实例化
+//	Add(a, (int)d);
+//	return 0;
+//}
+
+
+
+//template<typename T>
+//void Swap(T& left, T& right)
+//{
+//	T temp = left;
+//	left = right;
+//	right = temp;
+//}
+
+//void Swap(int& left, int& right)
+//{
+//	int temp = left;
+//	left = right;
+//	right = temp;
+//}
+//void Swap(double& left, double& right)
+//{
+//	double temp = left;
+//	left = right;
+//	right = temp;
+//}
+//void Swap(char& left, char& right)
+//{
+//	char temp = left;
+//	left = right;
+//	right = temp;
+//}
+//......
+
+//class A
+//{
+//public:
+//	A(int a = 0)
+//		: _a(a)
+//	{
+//		cout << "A():" << this << endl;
+//	}
+//	~A()
+//	{
+//		cout << "~A():" << this << endl;
+//	}
+//private:
+//	int _a;
+//};
+//// 定位new/replacement new
+//int main()
+//{
+//	// p1现在指向的只不过是与A对象相同大小的一段空间，还不能算是一个对象，因为构造函数没
+//	有执行
+//		A* p1 = (A*)malloc(sizeof(A));
+//	new(p1)A; // 注意：如果A类的构造函数有参数时，此处需要传参
+//	p1->~A();
+//	free(p1);
+//	A* p2 = (A*)operator new(sizeof(A));
+//	new(p2)A(10);
+//	p2->~A();
+//	operator delete(p2);
+//	return 0;
+//}
+
+///*
+//operator new：该函数实际通过malloc来申请空间，当malloc申请空间成功时直接返回；申请空间
+//失败，尝试执行空 间不足应对措施，如果改应对措施用户设置了，则继续申请，否
+//则抛异常。
+//*/
+//void* __CRTDECL operator new(size_t size) _THROW1(_STD bad_alloc)
+//{
+//	// try to allocate size bytes
+//	void* p;
+//	while ((p = malloc(size)) == 0)
+//		if (_callnewh(size) == 0)
+//		{
+//			// report no memory
+//			// 如果申请内存失败了，这里会抛出bad_alloc 类型异常
+//			static const std::bad_alloc nomem;
+//			_RAISE(nomem);
+//		}
+//	return (p);
+//}
+///*
+//operator delete: 该函数最终是通过free来释放空间的
+//*/
+//void operator delete(void* pUserData)
+//{
+//	_CrtMemBlockHeader* pHead;
+//	RTCCALLBACK(_RTC_Free_hook, (pUserData, 0));
+//	if (pUserData == NULL)
+//		return;
+//	_mlock(_HEAP_LOCK); /* block other threads */
+//	__TRY
+//		/* get a pointer to memory block header */
+//		pHead = pHdr(pUserData);
+//	/* verify block type */
+//	_ASSERTE(_BLOCK_TYPE_IS_VALID(pHead->nBlockUse));
+//	_free_dbg(pUserData, pHead->nBlockUse);
+//	__FINALLY
+//		_munlock(_HEAP_LOCK); /* release other threads */
+//	__END_TRY_FINALLY
+//		return;
+//}
+///*
+//free的实现
+//*/
+//#define free(p) _free_dbg(p, _NORMAL_BLOCK)
+
+
+//class A
+//{
+//public:
+//	A(int a = 0)
+//		: _a(a)
+//	{
+//		cout << "A():" << this << endl;
+//	}
+//	~A()
+//	{
+//		cout << "~A():" << this << endl;
+//	}
+//private:
+//	int _a;
+//};
+//int main()
+//{
+//	// new/delete 和 malloc/free最大区别是 new/delete对于【自定义类型】除了开空间
+//	还会调用构造函数和析构函数
+//		A* p1 = (A*)malloc(sizeof(A));
+//	A* p2 = new A(1);
+//	free(p1);
+//	delete p2;
+//	// 内置类型是几乎是一样的
+//	int* p3 = (int*)malloc(sizeof(int)); // C
+//	int* p4 = new int;
+//	free(p3);
+//	delete p4;
+//	A* p5 = (A*)malloc(sizeof(A) * 10);
+//	A* p6 = new A[10];
+//	free(p5);
+//	delete[] p6;
+//	return 0;
+//}
+
+
+//void Test()
+//{
+//	// 动态申请一个int类型的空间
+//	int* ptr4 = new int;
+//	// 动态申请一个int类型的空间并初始化为10
+//	int* ptr5 = new int(10);
+//	// 动态申请10个int类型的空间
+//	int* ptr6 = new int[3];
+//	delete ptr4;
+//	delete ptr5;
+//	delete[] ptr6;
+//}
+
+//void Test()
+//{
+//	// 1.malloc/calloc/realloc的区别是什么？
+//	int* p2 = (int*)calloc(4, sizeof(int));
+//	int* p3 = (int*)realloc(p2, sizeof(int) * 10);
+//	// 这里需要free(p2)吗？
+//	free(p3);
+//}
+
+//#include<iostream>
+//using namespace std;
+//
+//
+//int globalVar = 1;
+//static int staticGlobalVar = 1;
+//void Test()
+//{
+//	static int staticVar = 1;
+//	int localVar = 1;
+//	int num1[10] = { 1, 2, 3, 4 };
+//	char char2[] = "abcd";
+//	const char* pChar3 = "abcd";
+//	int* ptr1 = (int*)malloc(sizeof(int) * 4);
+//	int* ptr2 = (int*)calloc(4, sizeof(int));
+//	int* ptr3 = (int*)realloc(ptr2, sizeof(int) * 4);
+//	free(ptr1);
+//	free(ptr3);
+//}
+//1. 选择题：
+//选项 : A.栈 B.堆 C.数据段(静态区) D.代码段(常量区)
+//globalVar在哪里？____
+//staticGlobalVar在哪里？____
+//staticVar在哪里？____
+//localVar在哪里？____
+//num1 在哪里？____
+//char2在哪里？____
+//* char2在哪里？___
+//pChar3在哪里？____
+//* pChar3在哪里？____
+//ptr1在哪里？____
+//* ptr1在哪里？____
+
+//class A
+//{
+//public:
+//	A(int a1 = 0, int a2 = 0)
+//		:_a1(a1)
+//		, _a2(a2)
+//	{
+//		cout << "A(int a1 = 0, int a2 = 0)" << endl;
+//	}
+//
+//	A(const A& aa)
+//		:_a1(aa._a1)
+//	{
+//		cout << "A(const A& aa)" << endl;
+//	}
+//
+//	A& operator=(const A& aa)
+//	{
+//		cout << "A& operator=(const A& aa)" << endl;
+//		if (this != &aa)
+//		{
+//			_a1 = aa._a1;
+//		}
+//		return *this;
+//	}
+//
+//	~A()
+//	{
+//		//delete _ptr;
+//		cout << "~A()" << endl;
+//	}
+//
+//	void Print()
+//	{
+//		cout << "A::Print->" << _a1 << endl;
+//	}
+//
+//	A& operator++()
+//	{
+//		_a1 += 100;
+//
+//		return *this;
+//	}
+//private:
+//	int _a1 = 1;
+//	int _a2 = 1;
+//};
+//
+//
+//class A
+//{
+//public:
+//	A(int a = 0)
+//		:_a1(a)
+//	{
+//		cout << "A(int a)" << endl;
+//	}
+//	A(const A& aa)
+//		:_a1(aa._a1)
+//	{
+//		cout << "A(const A& aa)" << endl;
+//	}
+//	A& operator=(const A& aa)
+//	{
+//		cout << "A& operator=(const A& aa)" << endl;
+//		if (this != &aa)
+//		{
+//			_a1 = aa._a1;
+//		}
+//		return *this;
+//	}
+//	~A()
+//	{
+//		cout << "~A()" << endl;
+//	}
+//
+//	void Print()
+//	{
+//		cout << "A::Print->" << _a1 << endl;
+//	}
+//
+//private:
+//	int _a1 = 1;
+//	int _a2 = 1;
+//};
+//void f1(A aa)
+//{}
+//A f2()
+//{
+//	A aa;
+//	return aa;
+//}
+//int main()
+//{
+//	// 传值传参
+//	A aa1;
+//	f1(aa1);
+//	cout << endl;
+//	// 隐式类型，连续构造+拷贝构造->优化为直接构造
+//	f1(1);
+//	// 一个表达式中，连续构造+拷贝构造->优化为一个构造
+//	f1(A(2));
+//	cout << endl;
+//	cout << "***********************************************" << endl;
+//	// 传值返回
+//// 返回时一个表达式中，连续拷贝构造+拷贝构造->优化一个拷贝构造 （vs2019 debug）
+//// 一些编译器会优化得更厉害，进行跨行合并优化，直接变为构造。（vs2022 debug）
+//	f2();
+//	cout << endl;
+//	// 返回时一个表达式中，连续拷贝构造+拷贝构造->优化一个拷贝构造 （vs2019 debug）
+//	// 一些编译器会优化得更厉害，进行跨行合并优化，直接变为构造。（vs2022 debug）
+//	A aa2 = f2();
+//	cout << endl;
+//	// 一个表达式中，连续拷贝构造+赋值重载->无法优化
+//	aa1 = f2();
+//	cout << endl;
+//	return 0;
+//}
+
+
+////class Date
+////{
+////public:
+////	Date* operator&()
+////	{
+////		return this;
+////		// return nullptr;
+////	}
+////	const Date* operator&()const
+////	{
+////		return this;
+////		// return nullptr;
+////	}
+////private:
+////	int _year; // 年
+////	int _month; // 月
+////	int _day; // 日
+////};
+//
+//
+//#include<iostream>
+//using namespace std;
+//class A
+//{
+//private:
+//	static int _k;
+//	int _h = 1;
+//public:
+//	class B // B默认就是A的友元，可以访问A私有或者保护的数据
+//	{
+//	public:
+//		void foo(const A& a)
+//		{
+//			cout << _k << endl; //OK
+//			cout << a._h << endl; //OK
+//		}
+//	};
+//};
+//int A::_k = 1;
+//int main()
+//{
+//	cout << sizeof(A) << endl;
+//	A::B b;
+//	A aa;
+//	b.foo(aa);
+//	//A::C c;受到A访问限定符限制,C类无法从外部访问
+//	return 0;
+//}
+//class A
+//{
+//public:
+//	A()
+//	{
+//		++_scount;
+//	}
+//
+//	A(const A& t)
+//	{
+//		++_scount;
+//	}
+//
+//	~A()
+//	{
+//		--_scount;
+//	}
+//
+//	static int GetACount()
+//	{
+//		//_a++;没有this指针，不能访问
+//		return _scount;
+//	}
+//
+//	void func()//非静态的成员函数，可以访问任意的静态成员变量和静态成员函数
+//	{
+//		cout << _scount << endl;
+//		cout << GetACount() << endl;
+//	}
+//
+//
+//private:
+//	// 类里面声明
+//	static int _scount;
+//
+//	int _a = 1;
+//};
+//
+//// 类外面初始化
+//int A::_scount = 0;
+//
+//int main()
+//{
+//	//cout << A::_scount << endl;
+//	//cout << sizeof(A) << endl;
+//
+//
+//	//a1、a2、a3创建调用构造函数对静态成员++，验证静态_scount为整个类共有
+//	cout << A::GetACount() << endl;
+//	A a1, a2;
+//
+//	{//代码块构成局部域,a3出了作用域就销毁
+//		A a3(a1);
+//		cout << A::GetACount() << endl;
+//	}
+//
+//	// 突破类域就可以访问静态成员，可以通过类名::静态成员 或者 对象.
+//	// 静态成员 来访问静态成员变量和静态成员函数
+//	cout << A::GetACount() << endl;
+//	cout << a1.GetACount() << endl;
+//
+//	// 编译报错：error C2248: “A::_scount”: 无法访问 private 成员(在“A”类中声明)
+////cout << A::_scount << endl;
+//	return 0;
+//}
+
+//#include<iostream>
+//using namespace std;
+//class A
+//{
+//public:
+//	A()
+//	{
+//		++_scount;
+//	}
+//	A(const A& t)
+//	{
+//		++_scount;
+//	}
+//	~A()
+//	{
+//		--_scount;
+//	}
+//	static int GetACount()
+//	{
+//		return _scount;
+//	}
+//private:
+//	// 类里面声明
+//	static int _scount;
+//};
+//// 类外面初始化
+//int A::_scount = 0;
+//int main()
+//{
+//	cout << A::GetACount() << endl;
+//	A a1, a2;
+//	A a3(a1);
+//	cout << A::GetACount() << endl;
+//	cout << a1.GetACount() << endl;
+//	// 编译报错：error C2248: “A::_scount”: 无法访问 private 成员(在“A”类中声明)
+//	//cout << A::_scount << endl;
+//	return 0;
+//}
+
+//int main() {
+//
+//	int a;
+//	a = 0;
+//
+//
+//	return 0;
+//}
 
 //class Time
 //{
