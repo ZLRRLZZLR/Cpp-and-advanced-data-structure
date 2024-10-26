@@ -52,7 +52,7 @@ namespace bit
         }
 
         string& operator=(string s) {
-
+            swap(s);
         }
 
         ~string() {
@@ -83,13 +83,21 @@ namespace bit
 
         void push_back(char c);
 
-        string& operator+=(char c);
+
+        string& operator+=(char c) {
+            push_back(c);
+            return *this;
+        }
+
 
         void append(const char* str);
 
+
         string& operator+=(const char* str);
 
-        void clear();
+        void clear() {
+            _str[0] = '\0';
+        }
 
         void swap(string& s) {
             std::swap(_str,s._str);
@@ -114,10 +122,11 @@ namespace bit
         }
 
         bool empty()const {
-            return 
+            return _size == 0;
         }
 
         void resize(size_t n, char c = '\0');
+
 
         void reserve(size_t n);
 
@@ -125,9 +134,17 @@ namespace bit
 
         // access
 
-        char& operator[](size_t index);
+        char& operator[](size_t index) {
+            assert(index < _size);
 
-        const char& operator[](size_t index)const;
+            return _str[index];
+        }
+
+        const char& operator[](size_t index)const {
+            assert(index < _size);
+
+            return _str[index];
+        }
 
 
         /////////////////////////////////////////////////////////////
@@ -164,7 +181,9 @@ namespace bit
 
         // 返回子串s在string中第一次出现的位置
 
-        size_t find(const char* s, size_t pos = 0) const;
+        size_t find(const char* s, size_t pos = 0) const {
+            return strstr(_str + pos, s) - _str;
+        }
 
         // 在pos位置上插入字符c/字符串str，并返回该字符的位置
 
