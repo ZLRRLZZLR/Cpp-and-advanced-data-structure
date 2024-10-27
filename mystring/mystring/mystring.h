@@ -3,8 +3,9 @@
 #include<assert.h>
 #include<string.h>
 
-using namespace std;
+#define _CRT_SECURE_NO_WARNINGS 1
 
+using namespace std;
 
 namespace bit
 
@@ -27,33 +28,35 @@ namespace bit
         string(const char* str = "") {
             _size = _capacity = strlen(str);
             _str = new char[_capacity + 1];
-            strcpy(_str,str);
+            strcpy(_str, str);
         }
 
         //¾É°æ
-        //string(const string& s) {
-        //    _size = s._size;
-        //    _capacity = s._capacity;
-        //    _str = new char[_capacity + 1];
-        //    strcpy(_str, s._str);
-        //}
-
-        //string& operator=(const string& s) {
-        //    _size = s._size;
-        //    _capacity = s._capacity;
-        //    delete[] _str;
-        //    _str = new char[_capacity + 1];
-        //    strcpy(_str, s._str);
-        //}
-
         string(const string& s) {
-            string tmp(s);
-            swap(tmp);
+            _size = s._size;
+            _capacity = s._capacity;
+            _str = new char[_capacity + 1];
+            strcpy(_str, s._str);
         }
 
-        string& operator=(string s) {
-            swap(s);
+        string& operator=(const string& s) {
+            _size = s._size;
+            _capacity = s._capacity;
+            delete[] _str;
+            _str = new char[_capacity + 1];
+            strcpy(_str, s._str);
+            return *this;
         }
+
+        //string(const string& s){
+        //    string tmp(s);
+        //    swap(tmp);
+        //}
+
+        //string& operator=(string s) {
+        //    swap(s);
+        //    return *this;
+        //}
 
         ~string() {
             delete[] _str;
@@ -77,9 +80,9 @@ namespace bit
 
 
 
-            /////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////
 
-            // modify
+        // modify
 
         void push_back(char c);
 
@@ -100,7 +103,7 @@ namespace bit
         }
 
         void swap(string& s) {
-            std::swap(_str,s._str);
+            std::swap(_str, s._str);
             std::swap(_capacity, s._capacity);
             std::swap(_size, s._capacity);
         }
@@ -152,7 +155,7 @@ namespace bit
         //relational operators
 
         bool operator<(const string& s) {
-            return strcmp(_str,s._str) < 0;
+            return strcmp(_str, s._str) < 0;
         }
 
         bool operator<=(const string& s) {
@@ -196,7 +199,7 @@ namespace bit
 
         string& erase(size_t pos, size_t len);
 
-    private:
+        //private:
 
         char* _str = nullptr;
 
