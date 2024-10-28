@@ -22,6 +22,7 @@ namespace bit
     public:
 
         typedef char* iterator;
+        typedef const char* const_iterator;
 
     public:
 
@@ -54,7 +55,7 @@ namespace bit
         //}
 
         //string& operator=(string s) {
-        //    swap(s);
+        //    swap(s._str);
         //    return *this;
         //}
 
@@ -75,6 +76,14 @@ namespace bit
         }
 
         iterator end() {
+            return _str + _size;
+        }
+
+        const_iterator begin() const{
+            return _str;
+        }
+
+        const_iterator end() const{
             return _str + _size;
         }
 
@@ -100,12 +109,13 @@ namespace bit
 
         void clear() {
             _str[0] = '\0';
+            _size = 0;
         }
 
         void swap(string& s) {
             std::swap(_str, s._str);
             std::swap(_capacity, s._capacity);
-            std::swap(_size, s._capacity);
+            std::swap(_size, s._size);
         }
 
         const char* c_str()const {
@@ -154,29 +164,6 @@ namespace bit
 
         //relational operators
 
-        bool operator<(const string& s) {
-            return strcmp(_str, s._str) < 0;
-        }
-
-        bool operator<=(const string& s) {
-            return strcmp(_str, s._str) <= 0;
-        }
-
-        bool operator>(const string& s) {
-            return strcmp(_str, s._str) > 0;
-        }
-
-        bool operator>=(const string& s) {
-            return strcmp(_str, s._str) >= 0;
-        }
-
-        bool operator==(const string& s) {
-            return strcmp(_str, s._str) == 0;
-        }
-
-        bool operator!=(const string& s) {
-            return strcmp(_str, s._str) != 0;
-        }
 
         // 返回c在string中第一次出现的位置
 
@@ -210,5 +197,20 @@ namespace bit
         static const size_t npos = -1;
 
     };
+
+    bool operator<(const string& s1, const string& s2);
+
+    bool operator>(const string& s1, const string& s2);
+
+
+    bool operator<=(const string& s1, const string& s2);
+
+
+    bool operator>=(const string& s1, const string& s2);
+
+
+    bool operator==(const string& s1, const string& s2);
+
+    bool operator!=(const string& s1, const string& s2);
 
 }

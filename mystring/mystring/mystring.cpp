@@ -2,9 +2,33 @@
 
 
 namespace bit {
+    bool operator<(const string& s1, const string& s2) {
+        return strcmp(s1._str, s2._str) < 0;
+    }
+
+    bool operator>(const string& s1, const string& s2) {
+        return strcmp(s1._str, s2._str) > 0;
+    }
+
+    bool operator<=(const string& s1, const string& s2) {
+        return !(s1 > s2);
+    }
+
+    bool operator>=(const string& s1, const string& s2) {
+        return !(s1 < s2);
+    }
+
+    bool operator==(const string& s1, const string& s2) {
+        return !(s1 < s2) && !(s1 > s2);
+    }
+
+    bool operator!=(const string& s1, const string& s2) {
+        return !(s1 == s2);
+    }
+
 
     void string::reserve(size_t n) {
-        if (n > _capacity) {
+        if (n >= _capacity) {
             size_t new_capacity = n > 2 * _capacity ? n + 1 : 2 * _capacity + 1;
             char* str = new char[new_capacity];
             _capacity = new_capacity;
@@ -20,12 +44,13 @@ namespace bit {
             _str[n] = '\0';
             _size = n;
         }
+
         for (int i = _size; i < n - _size; i++) {
             _str[i] = c;
         }
 
         _size = n;
-
+        _str[_size] = '\0';
     }
 
     size_t string::find(char c, size_t pos) const {
@@ -53,6 +78,7 @@ namespace bit {
         reserve(_size + lenth);
         strcpy(_str + _size, str);
         _size += lenth;
+
         return *this;
     }
 
@@ -76,6 +102,7 @@ namespace bit {
 
         _str[pos] = c;
         _size++;
+        _str[_size] = '\0';
 
         return *this;
     }
@@ -93,6 +120,9 @@ namespace bit {
         }
 
         memcpy(_str + pos, str, len);
+        _size += len;
+
+        _str[_size] = '\0';
 
         return *this;
     }
@@ -100,8 +130,6 @@ namespace bit {
     string& string::erase(size_t pos, size_t len) {
         assert(pos < _size);
 
-        _str[pos] = '\0';
-        _size = pos;
 
         return *this;
     }
@@ -113,11 +141,13 @@ namespace bit {
     }
 
     istream& operator>>(istream& _cin, bit::string& s) {
+        s.clear();
 
-        char ch = getchar();
+        char ch = _cin.get();
         while (ch != '\0') {
             s += ch;
-            ch = getchar();
+            const char* str = s.c_str();
+            ch = _cin.get();
         }
         return _cin;
     }
