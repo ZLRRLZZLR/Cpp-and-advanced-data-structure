@@ -7,6 +7,9 @@
 //	public:
 //		typedef T* iterator;
 //		typedef const T* const_iterator;
+//		vector() = default;
+//
+//
 //
 //		iterator begin() {
 //			return _start;
