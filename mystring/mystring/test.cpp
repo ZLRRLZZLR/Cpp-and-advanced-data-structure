@@ -1,32 +1,14 @@
 #include"mystring.h"
 //
 //        istream& operator>>(istream& _cin, bit::string& s);
-// 
-//        void push_back(char c);
 //
-//        void append(const char* str);
-// 
-
 //        void resize(size_t n, char c = '\0');
 // 
 //        void reserve(size_t n);
 
-//        char& operator[](size_t index) 
-
-//        const char& operator[](size_t index)const
-
-
-//        size_t find(char c, size_t pos = 0) const;
-//
-// 
-//        size_t find(const char* s, size_t pos = 0) const
-
-
 //        string& insert(size_t pos, char c);
 //
-// 
 //        string& insert(size_t pos, const char* str);
-
 
 //        string& erase(size_t pos, size_t len);
 
@@ -36,10 +18,27 @@ namespace bit {
         string s1("abc");
         // 检查默认构造函数是否正确初始化空字符串
         // 使用带参数的构造函数
-        string s2("Hello");
+        string s2("Helloabc");
 
-        s2[1] = 'g';
 
+        s2.insert(7, s1.c_str());
+
+        s2.insert(0, s1.c_str());
+
+
+        //s2.insert(7, 'b');
+
+        //s2.insert(5,'b');
+        //s2.insert(0, 'b');
+
+        //char ret3 = s2[5];
+
+         //int ret1 = s2.find(s1.c_str());
+        //int ret2 = s2.find(' ');
+
+        //s2[1] = 'g';
+        //s2.push_back(' ');
+        //s2.append(s1.c_str());
         //cout << s2.capacity() << " ";
         //cout << s2.empty() << " ";
         //cout << s2.size() << " ";

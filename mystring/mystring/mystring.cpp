@@ -31,7 +31,7 @@ namespace bit {
         if (n >= _capacity) {
             size_t new_capacity = n > 2 * _capacity ? n + 1 : 2 * _capacity + 1;
             char* str = new char[new_capacity];
-            _capacity = new_capacity;
+            _capacity = new_capacity - 1;
             strcpy(str, _str);
             std::swap(_str, str);
             delete[] str;
@@ -130,6 +130,15 @@ namespace bit {
     string& string::erase(size_t pos, size_t len) {
         assert(pos < _size);
 
+        if (len == npos) {
+            _str[pos] = '\0';
+        }
+        else {
+            for (int i = 0; i < len; i++) {
+                _str[pos] = _str[pos + len];
+                pos++;
+            }
+        }
 
         return *this;
     }
