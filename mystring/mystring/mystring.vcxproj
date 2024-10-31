@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{d0b1b9dd-69f6-45f9-a2d5-8e36f2f7a3e2}</ProjectGuid>
+    <ProjectGuid>{71aab7ae-4508-44f3-9fd1-f0d740d196f3}</ProjectGuid>
     <RootNamespace>mystring</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -102,7 +102,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -127,11 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="mystring.h" />
+    <ClCompile Include="mystring.cpp" />
+    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="mystring.cpp" />
-    <ClCompile Include="test.cpp" />
+    <ClInclude Include="mystring.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

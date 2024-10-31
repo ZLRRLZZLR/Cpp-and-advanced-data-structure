@@ -1,23 +1,122 @@
+#define _CRT_SECURE_NO_WARNINGS 1
 #include<iostream>
-//#include<string>
 #include<vector>
+#include<string>
+#include<math.h>
 using namespace std;
 
-#include"3.h";
 
-void test_vector() {
-	vector<int> v1;
-	vector<int> v2(10, 1);
 
-	vector<int> v3(++v2.begin(), --v2.end());
+class Solution {
+public:
 
-	for (size_t i = 0; i < v3.size(); i++) {
-		cout << v3[i] << "";
-	}
-	cout << endl;
+    string addStrings(string num1, string num2) {
+        int end1 = num1.size() - 1;
+        int end2 = num2.size() - 1;
+        string tmp;
+        int next = 0;
+        while (end1 >= 0 || end2 >= 0) {
+            int n1 = end1 < 0 ? 0 : num1[end1--] - '0';
+            int n2 = end2 < 0 ? 0 : num2[end2--] - '0';
+            int ret = n2 + n1 + next;
+            next = ret / 10;
+            ret %= 10;
+            tmp += ret + '0';
+        }
+        if (next)
+            tmp += next + '0';
 
-	vector<>
+        reverse(tmp.begin(), tmp.end());
+
+        return tmp;
+    }
+    string multiply(string num1, string num2) {
+
+        string sum;
+        for (int i = num2.size(); i >= 0; i--) {
+            string s = to_string((num2[i] - '0') * stoi(num1) * pow(10, num2.size() - i));
+            sum = addStrings(s, sum);
+        }
+        return sum;
+    }
+};
+
+int main() {
+
+    char s1[] = {'2'};
+    char s2[] = {'3'};
+
+    Solution().multiply(s1,s2);
+
+    return 0;
 }
+
+//namespace bit {
+//	class string
+//
+//	{
+//
+//	public:
+//
+//		string(const char* str = "")
+//		{
+//			int len = strlen(str);
+//			if (len) {
+//				_str = new char[len];
+//				strcpy(_str, str);
+//			}
+//			else {
+//				_str = new char[len + 1];
+//				_str[0] = '\0';
+//			}
+//
+//		}
+//
+//		string(const string& s) {
+//			string tmp(s);
+//			std::swap(_str, tmp._str);
+//		}
+//
+//		string& operator=(const string& s) {
+//			string tmp(s);
+//			std::swap(_str, tmp._str);
+//		}
+//
+//		~string() {
+//			delete[] _str;
+//			_str = nullptr;
+//		}
+//
+//	private:
+//
+//		char* _str;
+//
+//	};
+//}
+//
+//
+//
+//int main() {
+//	string s1("abc");
+//	string s2(s1);
+//	string s3("acd");
+//	//s3 = s2;
+//
+//	return 0;
+//}
+//void test_vector() {
+//	vector<int> v1;
+//	vector<int> v2(10, 1);
+//
+//	vector<int> v3(++v2.begin(), --v2.end());
+//
+//	for (size_t i = 0; i < v3.size(); i++) {
+//		cout << v3[i] << "";
+//	}
+//	cout << endl;
+//
+//	vector<>
+//}
 
 
 //////void test_vector1() {

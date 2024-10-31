@@ -15,16 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mystring.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="Test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="mystring.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mystring.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

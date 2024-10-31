@@ -1,9 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS 1
 #pragma once
 #include<iostream>
 #include<assert.h>
 #include<string.h>
+#include<stdio.h>
 
-#define _CRT_SECURE_NO_WARNINGS 1
 
 using namespace std;
 
@@ -41,11 +42,14 @@ namespace bit
         }
 
         string& operator=(const string& s) {
-            _size = s._size;
-            _capacity = s._capacity;
-            delete[] _str;
-            _str = new char[_capacity + 1];
-            strcpy(_str, s._str);
+            if (this != &s) {
+                _size = s._size;
+                _capacity = s._capacity;
+                delete[] _str;
+                _str = new char[_capacity + 1];
+                strcpy(_str, s._str);
+            }
+
             return *this;
         }
 
@@ -79,11 +83,11 @@ namespace bit
             return _str + _size;
         }
 
-        const_iterator begin() const{
+        const_iterator begin() const {
             return _str;
         }
 
-        const_iterator end() const{
+        const_iterator end() const {
             return _str + _size;
         }
 
@@ -184,7 +188,7 @@ namespace bit
 
         // 删除pos位置上的元素，并返回该元素的下一个位置
 
-        string& erase(size_t pos, size_t len);
+        string& erase(size_t pos, size_t len = npos);
 
         //private:
 
@@ -194,7 +198,7 @@ namespace bit
 
         size_t _size = 0;
 
-        static const size_t npos = -1;
+        static const size_t npos;
 
     };
 
