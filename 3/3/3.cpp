@@ -5,51 +5,149 @@
 #include<math.h>
 using namespace std;
 
-
-
 class Solution {
 public:
-
-    string addStrings(string num1, string num2) {
-        int end1 = num1.size() - 1;
-        int end2 = num2.size() - 1;
-        string tmp;
-        int next = 0;
-        while (end1 >= 0 || end2 >= 0) {
-            int n1 = end1 < 0 ? 0 : num1[end1--] - '0';
-            int n2 = end2 < 0 ? 0 : num2[end2--] - '0';
-            int ret = n2 + n1 + next;
-            next = ret / 10;
-            ret %= 10;
-            tmp += ret + '0';
+    vector<int> singleNumber(vector<int>& nums) {
+        int s = 0;
+        for (auto i : nums) {
+            s ^= i;
         }
-        if (next)
-            tmp += next + '0';
 
-        reverse(tmp.begin(), tmp.end());
+        int lowbit = s & (~s);
 
-        return tmp;
-    }
-    string multiply(string num1, string num2) {
+        int a = 0;
+        int b = 0;
 
-        string sum;
-        for (int i = num2.size(); i >= 0; i--) {
-            string s = to_string((num2[i] - '0') * stoi(num1) * pow(10, num2.size() - i));
-            sum = addStrings(s, sum);
+        for (auto i : nums) {
+            if (i & lowbit != lowbit) {
+                a ^= i;
+            }
+            else {
+                b ^= i;
+            }
         }
-        return sum;
+
+        return vector<int>{a, b};
     }
 };
 
 int main() {
-
-    char s1[] = {'2'};
-    char s2[] = {'3'};
-
-    Solution().multiply(s1,s2);
+    vector<int> nums = { 1, 2, 1, 3, 2, 5 };
+    
+    Solution().singleNumber(nums);
 
     return 0;
 }
+
+//class Solution {
+//public:
+//
+//    string addStrings(string num1, string num2) {
+//        int end1 = num1.size() - 1;
+//        int end2 = num2.size() - 1;
+//        string tmp;
+//        int next = 0;
+//        while (end1 >= 0 || end2 >= 0) {
+//            int n1 = end1 < 0 ? 0 : num1[end1--] - '0';
+//            int n2 = end2 < 0 ? 0 : num2[end2--] - '0';
+//            int ret = n2 + n1 + next;
+//            next = ret / 10;
+//            ret %= 10;
+//            tmp += ret + '0';
+//        }
+//        if (next)
+//            tmp += next + '0';
+//
+//        reverse(tmp.begin(), tmp.end());
+//
+//        return tmp;
+//    }
+//    string multiply(string num1, string num2) {
+//
+//        string sum;
+//        for (int i = num2.size(); i >= 0; i--) {
+//            string s = to_string((num2[i] - '0') * stoi(num1) * pow(10, num2.size() - i));
+//            sum = addStrings(s, sum);
+//        }
+//        return sum;
+//    }
+//};
+
+//class Solution {
+//public:
+//    void Mulitem(string& tmp, string& num1, char ch) {
+//        int sign = 0;
+//        for (int i = num1.size() - 1; i >= 0; i--) {
+//            int ret = (num1[i] - '0') * (ch - '0') + sign;
+//            sign = ret / 10;
+//            if (sign) {
+//                ret %= 10;
+//            }
+//
+//            tmp.push_back(ret + '0');
+//        }
+//        if (sign) {
+//            tmp.push_back(sign + '0');
+//        }
+//
+//        reverse(tmp.begin(), tmp.end());
+//    }
+//
+//    string addStrings(string num1, string num2) {
+//        int end1 = num1.size() - 1;
+//        int end2 = num2.size() - 1;
+//        string tmp;
+//        int next = 0;
+//        while (end1 >= 0 || end2 >= 0) {
+//            int n1 = end1 < 0 ? 0 : num1[end1--] - '0';
+//            int n2 = end2 < 0 ? 0 : num2[end2--] - '0';
+//            int ret = n2 + n1 + next;
+//            next = ret / 10;
+//            ret %= 10;
+//            tmp += ret + '0';
+//        }
+//        if (next)
+//            tmp += next + '0';
+//
+//
+//        reverse(tmp.begin(), tmp.end());
+//
+//
+//        return tmp;
+//    }
+//
+//    string multiply(string num1, string num2) {
+//        string tmp;
+//        string result;
+//
+//        if (strcmp(num1.c_str(),"0") == 0 || strcmp(num2.c_str(),"0") == 0) {
+//            result += "0";
+//        }
+//        else {
+//            for (int i = num2.size() - 1; i >= 0; i--) {
+//                Mulitem(tmp, num1, num2[i]);
+//                for (int j = 0; j < num2.size() - i - 1; j++) {
+//                    tmp.push_back('0');
+//                }
+//                result = addStrings(result, tmp);
+//
+//                tmp.clear();
+//            }
+//        }
+//        return result;
+//    }
+//};
+//
+//int main() {
+//
+//    char p1[] = "2";
+//    char p2[] = "3";
+//
+//    Solution().multiply(p1,p2);
+//    //vector<vector<int>> vv(5);
+//
+//    return 0;
+//}
 
 //namespace bit {
 //	class string
