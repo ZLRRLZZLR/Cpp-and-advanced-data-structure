@@ -5,39 +5,100 @@
 #include<math.h>
 using namespace std;
 
-class Solution {
-public:
-    vector<int> singleNumber(vector<int>& nums) {
-        int s = 0;
-        for (auto i : nums) {
-            s ^= i;
-        }
 
-        int lowbit = s & (~s);
+////删除排序数组中的重复项
+//class Solution {
+//public:
+//    int removeDuplicates(vector<int>& nums) {
+//        int max = nums[0];
+//        int min = nums[0];
+//        for (auto i : nums) {
+//            if (max < i) {
+//                max = i;
+//            }
+//            else if (min > i) {
+//                min = i;
+//            }
+//        }
+//        vector<int> v(max - min + 1, 0);
+//        for (int i = 0; i < nums.size();) {
+//            v[nums[i] - min]++;
+//            if (v[nums[i] - min] > 1) {
+//                v[nums[i] - min]--;
+//                auto pos = nums.begin() + i;
+//                nums.erase(pos);
+//            }
+//            else {
+//                i++;
+//            }
+//        }
+//        return nums.size();
+//    }
+//};
+//
+//int main() {
+//    vector<int> vv = { 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 };
+//    Solution().removeDuplicates(vv);
+//
+//    return 0;
+//}
 
-        int a = 0;
-        int b = 0;
+//只出现一次的数ii
+//class Solution {
+//public:
+//    int singleNumber(vector<int>& nums) {
+//        int ans = 0;
+//        for (int i = 0; i < 32; i++) {
+//            int total = 0;
+//            for (int tmp : nums) {
+//                total += (tmp >> i) & 1;
+//            }
+//
+//
+//            if (total % 3 != 0) {
+//                ans |= (1 << i);
+//            }
+//
+//
+//        }
+//        return ans;
+//    }
+//};
 
-        for (auto i : nums) {
-            if (i & lowbit != lowbit) {
-                a ^= i;
-            }
-            else {
-                b ^= i;
-            }
-        }
-
-        return vector<int>{a, b};
-    }
-};
-
-int main() {
-    vector<int> nums = { 1, 2, 1, 3, 2, 5 };
-    
-    Solution().singleNumber(nums);
-
-    return 0;
-}
+////只出现一次的数
+//class Solution {
+//public:
+//    vector<int> singleNumber(vector<int>& nums) {
+//        unsigned s = 0;
+//        for (auto i : nums) {
+//            s ^= i;
+//        }
+//
+//        int lowbit = s & (~s);
+//
+//        int a = 0;
+//        int b = 0;
+//
+//        for (auto i : nums) {
+//            if (i & lowbit != lowbit) {
+//                a ^= i;
+//            }
+//            else {
+//                b ^= i;
+//            }
+//        }
+//
+//        return vector<int>{a, b};
+//    }
+//};
+//
+//int main() {
+//    vector<int> nums = { 1, 2, 1, 3, 2, 5 };
+//    
+//    Solution().singleNumber(nums);
+//
+//    return 0;
+//}
 
 //class Solution {
 //public:
