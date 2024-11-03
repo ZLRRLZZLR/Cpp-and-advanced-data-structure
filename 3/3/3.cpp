@@ -6,6 +6,204 @@
 using namespace std;
 
 
+
+class A
+{
+public:
+	A(int a1 = 0, int a2 = 0)
+		:_a1(a1)
+		, _a2(a2)
+	{
+		cout << "A(int a1 = 0, int a2 = 0)" << endl;
+	}
+
+	A(const A& aa)
+		:_a1(aa._a1)
+	{
+		cout << "A(const A& aa)" << endl;
+	}
+
+	A& operator=(const A& aa)
+	{
+		cout << "A& operator=(const A& aa)" << endl;
+		if (this != &aa)
+		{
+			_a1 = aa._a1;
+		}
+		return *this;
+	}
+
+	~A()
+	{
+		//delete _ptr;
+		cout << "~A()" << endl;
+	}
+
+	void Print()
+	{
+		cout << "A::Print->" << _a1 << endl;
+	}
+
+	A& operator++()
+	{
+		_a1 += 100;
+
+		return *this;
+	}
+private:
+	int _a1 = 1;
+	int _a2 = 1;
+};
+
+
+int main()
+{
+
+	A* p1 = new A(1);
+	A* p2 = new A(2, 2);
+
+	A aa1(1, 1);
+	A aa2(2, 2);
+	A aa3(3, 3);
+
+	return 0;
+}
+
+
+//class A
+//{
+//public:
+//	A(int a = 0)
+//		: _a(a)
+//	{
+//		cout << "A():" << endl;
+//	}
+//	~A()
+//	{
+//		cout << "~A():" << endl;
+//	}
+//private:
+//	int _a;
+//};
+//int main()
+//{
+//	// new/delete 和 malloc/free最大区别是 new/delete对于【自定义类型】除了开空间
+//	//还会调用构造函数和析构函数
+//	A* p1 = (A*)malloc(sizeof(A));
+//	A* p2 = new A(1);
+//	free(p1);
+//	delete p2;
+//
+//	// 内置类型是几乎是一样的
+//	int* p3 = (int*)malloc(sizeof(int)); // C
+//	int* p4 = new int;
+//	free(p3);
+//	delete p4;
+//
+//	A* p5 = (A*)malloc(sizeof(A) * 10);
+//	A* p6 = new A[10];
+//	free(p5);
+//	delete[] p6;
+//	return 0;
+//}
+
+
+//class A
+//{
+//public:
+//	A(int a1 = 0, int a2 = 0)
+//		:_a1(a1)
+//		, _a2(a2)
+//	{
+//		cout << "A(int a1 = 0, int a2 = 0)" << endl;
+//	}
+//
+//	A(const A& aa)
+//		:_a1(aa._a1)
+//	{
+//		cout << "A(const A& aa)" << endl;
+//	}
+//
+//	A& operator=(const A& aa)
+//	{
+//		cout << "A& operator=(const A& aa)" << endl;
+//		if (this != &aa)
+//		{
+//			_a1 = aa._a1;
+//		}
+//		return *this;
+//	}
+//
+//	~A()
+//	{
+//		//delete _ptr;
+//		cout << "~A()" << endl;
+//	}
+//
+//	void Print()
+//	{
+//		cout << "A::Print->" << _a1 << endl;
+//	}
+//
+//	A& operator++()
+//	{
+//		_a1 += 100;
+//
+//		return *this;
+//	}
+//private:
+//	int _a1 = 1;
+//	int _a2 = 1;
+//};
+//
+//
+//int main()
+//{
+//
+//	A* p1 = new A(1);
+//	A* p2 = new A(2, 2);
+//
+//	A aa1(1, 1);
+//	A aa2(2, 2);
+//	A aa3(3, 3);
+//	A* p3 = new A[3]{ aa1, aa2, aa3 };
+//
+//	A* p4 = new A[3]{ A(1,1), A(2,2), A(3,3) };
+//
+//	//A aa1 = { 1, 1 };
+//	A* p5 = new A[3]{ {1,1}, {2,2}, {3,3} };
+//
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	// 动态申请一个int类型的空间
+//	int* p1 = new int;
+//
+//	// 动态申请10个int类型的空间
+//	int* p2 = new int[10];
+//
+//	delete p1;
+//	delete[] p2;
+//
+//	// 动态申请一个int类型的空间并初始化为0
+//	int* p3 = new int(0);
+//
+//	//动态申请10个int类型的空间，10个空间初始化为0
+//	int* p4 = new int[10]{ 0 };
+//
+//	//动态申请10个空间，前5个空间依次初始化为1,2,3,4,5,后5个空间默认初始化为0
+//	int* p5 = new int[10]{1,2,3,4,5};
+//
+//	delete p3;
+//	delete[] p4;
+//	delete[] p5;
+//
+//	return 0;
+//}
+
 ////删除排序数组中的重复项
 //class Solution {
 //public:
