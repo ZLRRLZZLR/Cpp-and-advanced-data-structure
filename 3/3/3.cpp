@@ -10,64 +10,194 @@ using namespace std;
 class A
 {
 public:
-	A(int a1 = 0, int a2 = 0)
-		:_a1(a1)
-		, _a2(a2)
+	A(int a = 0)
+		: _a(a)
 	{
-		cout << "A(int a1 = 0, int a2 = 0)" << endl;
+		cout << "A():" << this << endl;
 	}
-
-	A(const A& aa)
-		:_a1(aa._a1)
-	{
-		cout << "A(const A& aa)" << endl;
-	}
-
-	A& operator=(const A& aa)
-	{
-		cout << "A& operator=(const A& aa)" << endl;
-		if (this != &aa)
-		{
-			_a1 = aa._a1;
-		}
-		return *this;
-	}
-
 	~A()
 	{
-		//delete _ptr;
-		cout << "~A()" << endl;
-	}
-
-	void Print()
-	{
-		cout << "A::Print->" << _a1 << endl;
-	}
-
-	A& operator++()
-	{
-		_a1 += 100;
-
-		return *this;
+		cout << "~A():" << this << endl;
 	}
 private:
-	int _a1 = 1;
-	int _a2 = 1;
+	int _a;
 };
 
-
+// 定位new/replacement new
 int main()
 {
+	// p2现在指向的只不过是与A对象相同大小的一段空间，还不能算是一个对象，因为构造函数没
+	//有执行
+	A* p2 = (A*)operator new(sizeof(A));
+	new(p2)A(10);// 注意：如果A类的构造函数有参数时，此处需要传参
 
-	A* p1 = new A(1);
-	A* p2 = new A(2, 2);
-
-	A aa1(1, 1);
-	A aa2(2, 2);
-	A aa3(3, 3);
-
+	p2->~A();//显式调用析构
+	operator delete(p2);
 	return 0;
 }
+
+
+
+//class A
+//{
+//	~A()
+//	{
+//		//delete _ptr;
+//		cout << "~A()" << endl;
+//	}
+//
+//private:
+//	int _a1 = 1;
+//	int _a2 = 1;
+//};
+//
+//
+//class B
+//{
+//private:
+//	int _b1 = 2;
+//	int _b2 = 2;
+//};
+//
+//int main()
+//{
+//	int* p1 = new int[10]; // -> malloc
+//	delete p1;             // -> free
+//	free(p1);
+//
+//	B* p2 = new B[10];
+//	delete p2;//B对象数组不会报错
+//
+//	A* p3 = new A[10];
+//	delete[] p3;//A对象数组会报错
+//
+//	return 0;
+//}
+
+
+//int main()
+//{
+//	int* p1 = new int;//内置类型，没有指向什么资源
+//	free(p1);//使用free，不会调用析构函数
+//	//delete p1;
+//
+//	A* p2 = new A;//A匿名对象中有指针指向一块空间
+//	free(p2);//free仅会释放匿名对象的空间，指针管理的空间丢失
+//	//delete p2;
+//
+//	return 0;
+//}
+
+//int main()
+//{
+//	try
+//	{
+//		// throw try/catch 
+//		void* p1 = new char[1024 * 1024 * 1024];
+//		cout << p1 << endl;
+//
+//		void* p2 = new char[1024 * 1024 * 1024];
+//		cout << p2 << endl;
+//
+//		void* p3 = new char[1024 * 1024 * 1024];
+//		cout << p3 << endl;
+//	}
+//	catch (const exception& e)
+//	{
+//		cout << e.what() << endl;
+//	}
+//
+//	return 0;
+//}
+//
+//
+//void func()
+//{
+//	// throw try/catch 
+//	int n = 1;
+//	while (1)
+//	{
+//		void* p1 = new char[1024 * 1024];
+//		cout << p1 << "->"<< n<<endl;
+//		++n;
+//	}
+//}
+//
+//int main()
+//{
+//	try
+//	{
+//		func();
+//	}
+//	catch (const exception& e)
+//	{
+//		cout << e.what() << endl;
+//	}
+//
+//	return 0;
+//}
+
+//class A
+//{
+//public:
+//	A(int a1 = 0, int a2 = 0)
+//		:_a1(a1)
+//		, _a2(a2)
+//	{
+//		cout << "A(int a1 = 0, int a2 = 0)" << endl;
+//	}
+//
+//	A(const A& aa)
+//		:_a1(aa._a1)
+//	{
+//		cout << "A(const A& aa)" << endl;
+//	}
+//
+//	A& operator=(const A& aa)
+//	{
+//		cout << "A& operator=(const A& aa)" << endl;
+//		if (this != &aa)
+//		{
+//			_a1 = aa._a1;
+//		}
+//		return *this;
+//	}
+//
+//	~A()
+//	{
+//		//delete _ptr;
+//		cout << "~A()" << endl;
+//	}
+//
+//	void Print()
+//	{
+//		cout << "A::Print->" << _a1 << endl;
+//	}
+//
+//	A& operator++()
+//	{
+//		_a1 += 100;
+//
+//		return *this;
+//	}
+//private:
+//	int _a1 = 1;
+//	int _a2 = 1;
+//};
+//
+//
+//int main()
+//{
+//
+//	A* p1 = new A(1);
+//	A* p2 = new A(2, 2);
+//
+//	A aa1(1, 1);
+//	A aa2(2, 2);
+//	A aa3(3, 3);
+//
+//	return 0;
+//}
 
 
 //class A
