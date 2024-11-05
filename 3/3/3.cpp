@@ -7,33 +7,44 @@ using namespace std;
 
 
 
-class A
-{
-public:
-	A(int a = 0)
-		: _a(a)
-	{
-		cout << "A():" << this << endl;
-	}
-	~A()
-	{
-		cout << "~A():" << this << endl;
-	}
-private:
-	int _a;
-};
+//class A
+//{
+//public:
+//	A(int a = 0)
+//		: _a(a)
+//	{
+//		cout << "A():" << this << endl;
+//	}
+//	~A()
+//	{
+//		cout << "~A():" << this << endl;
+//	}
+//private:
+//	int _a;
+//};
 
 // 定位new/replacement new
 int main()
 {
-	// p2现在指向的只不过是与A对象相同大小的一段空间，还不能算是一个对象，因为构造函数没
-	//有执行
-	A* p2 = (A*)operator new(sizeof(A));
-	new(p2)A(10);// 注意：如果A类的构造函数有参数时，此处需要传参
+	//// p2现在指向的只不过是与A对象相同大小的一段空间，还不能算是一个对象，因为构造函数没
+	////有执行
+	//A* p2 = (A*)operator new(sizeof(A));
+	//new(p2)A(10);// 注意：如果A类的构造函数有参数时，此处需要传参
 
-	p2->~A();//显式调用析构
-	operator delete(p2);
+	//p2->~A();//显式调用析构
+	//operator delete(p2);
+	int a1 = 0;
+	char e1 = 0;
+		int a2 = 0;
+	char c2 = 0;
+
+
+	scanf("%d%c%d%c", &a1, &e1, &a2, &c2);
+
+	int i = 0;
+
 	return 0;
+
 }
 
 
