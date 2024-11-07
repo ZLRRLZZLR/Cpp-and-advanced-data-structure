@@ -7,6 +7,64 @@ using namespace std;
 
 
 
+#include <iostream>
+
+// 函数模板定义
+template <typename T>
+void printValue(T value) {
+    std::cout << "Value: " << value << std::endl;
+}
+
+// 类模板定义
+template <typename T>
+class MyClass {
+public:
+    MyClass(T value) : value_(value) {}
+
+    void display() const {
+        std::cout << "Class Value: " << value_ << std::endl;
+    }
+
+private:
+    T value_;
+};
+
+// 显式实例化函数模板
+template void printValue<int>(int);
+
+// 显式实例化类模板
+template class MyClass<double>;
+
+int main() {
+    // 隐式实例化函数模板
+    printValue(42);              // 隐式地实例化 printValue<int>(int)
+    printValue(3.14);            // 隐式地实例化 printValue<double>(double)
+
+    // 隐式实例化类模板
+    MyClass<int> obj1(100);      // 隐式地实例化 MyClass<int>
+    obj1.display();
+
+    // 使用显式实例化的类模板（注意：这里不需要再次实例化，只是展示如何使用）
+    MyClass<double> obj2(200.5); // 理论上，这个实例化是隐式的，但因为我们之前已经显式实例化了MyClass<double>，所以这里只是使用它
+    // 然而，需要注意的是，C++标准并不要求编译器因为之前的显式实例化而优化这里的隐式实例化。
+    // 这里的隐式实例化是独立的，之前的显式实例化主要是为了解决链接问题或编译时间优化。
+    obj2.display();
+
+    // 显式实例化的函数模板调用（实际上，由于C++的ODR规则，显式实例化通常用于声明，而不是在main中调用）
+    // 但为了演示，我们假设它在其他地方已经被实例化，并在这里调用
+    // 注意：在真实代码中，你应该在头文件中声明显式实例化，在一个源文件中定义它，并在其他源文件中使用它。
+    printValue<int>(42); // 调用显式实例化的函数模板（虽然这里看起来像是隐式调用，但假设它在其他地方已经被显式实例化）
+
+    return 0;
+}
+
+// 注意：在真实项目中，显式实例化通常放在源文件中，而不是头文件中，
+// 并且需要确保每个模板实例只在一个翻译单元中被显式实例化。
+// 此外，对于函数模板的显式实例化，你通常会在头文件中声明一个extern模板实例化，
+// 并在一个源文件中进行实际的模板实例化。
+// 对于类模板，如果涉及到静态成员，你通常也需要在源文件中进行显式实例化。
+
+
 //class A
 //{
 //public:
@@ -24,28 +82,28 @@ using namespace std;
 //};
 
 // 定位new/replacement new
-int main()
-{
-	//// p2现在指向的只不过是与A对象相同大小的一段空间，还不能算是一个对象，因为构造函数没
-	////有执行
-	//A* p2 = (A*)operator new(sizeof(A));
-	//new(p2)A(10);// 注意：如果A类的构造函数有参数时，此处需要传参
-
-	//p2->~A();//显式调用析构
-	//operator delete(p2);
-	int a1 = 0;
-	char e1 = 0;
-		int a2 = 0;
-	char c2 = 0;
-
-
-	scanf("%d%c%d%c", &a1, &e1, &a2, &c2);
-
-	int i = 0;
-
-	return 0;
-
-}
+//int main()
+//{
+//	//// p2现在指向的只不过是与A对象相同大小的一段空间，还不能算是一个对象，因为构造函数没
+//	////有执行
+//	//A* p2 = (A*)operator new(sizeof(A));
+//	//new(p2)A(10);// 注意：如果A类的构造函数有参数时，此处需要传参
+//
+//	//p2->~A();//显式调用析构
+//	//operator delete(p2);
+//	int a1 = 0;
+//	char e1 = 0;
+//		int a2 = 0;
+//	char c2 = 0;
+//
+//
+//	scanf("%d%c%d%c", &a1, &e1, &a2, &c2);
+//
+//	int i = 0;
+//
+//	return 0;
+//
+//}
 
 
 
