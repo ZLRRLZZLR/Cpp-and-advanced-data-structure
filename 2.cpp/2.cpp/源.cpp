@@ -4,7 +4,824 @@
 #include<map>
 #include<list>
 
+class String
+{
+public:
+	String(const char* str = "")
+	{
+		if (nullptr == str)
+		{
+			assert(false);
+			return;
+		}
+		_str = new char[strlen(str) + 1];
+		strcpy(_str, str);
+	}
+	String(const String& s)
+		: _str(nullptr)
+	{
+		String strTmp(s._str);
+		swap(_str, strTmp._str);
+	}
+	// 对比下和上面的赋值那个实现比较好？
+	String& operator=(String s)
+	{
+		swap(_str, s._str);
+		return *this;
+	}
+	/*
+	String& operator=(const String& s)
+	{
+	if(this != &s)
+	{
+	String strTmp(s);
+	swap(_str, strTmp._str);
+	}
+	return *this;
+	}
+	*/
+	~String()
+	{
+		if (_str)
+		{
+			delete[] _str;
+			_str = nullptr;
+		}
+	}
+private:
+	char* _str;
+};
 
+
+
+//class String
+//{
+//public:
+//	String(const char* str = "")
+//	{
+//		// 构造String类对象时，如果传递nullptr指针，可以认为程序非
+//		if (nullptr == str)
+//		{
+//			assert(false);
+//			return;
+//		}
+//		_str = new char[strlen(str) + 1];
+//		strcpy(_str, str);
+//	}
+//	String(const String& s)
+//		: _str(new char[strlen(s._str) + 1])
+//	{
+//		strcpy(_str, s._str);
+//	}
+//	String& operator=(const String& s)
+//	{
+//		if (this != &s)
+//		{
+//			char* pStr = new char[strlen(s._str) + 1];
+//			strcpy(pStr, s._str);
+//			delete[] _str;
+//			_str = pStr;
+//		}
+//		return *this;
+//	}
+//	~String()
+//	{
+//		if (_str)
+//		{
+//			delete[] _str;
+//			_str = nullptr;
+//		}
+//	}
+//private:
+//	char* _str;
+//};
+
+
+
+//// 为了和标准库区分，此处使用String
+//class String
+//{
+//public:
+//	/*String()
+//	:_str(new char[1])
+//	{*_str = '\0';}
+//	*/
+//	//String(const char* str = "\0") 错误示范
+//	//String(const char* str = nullptr) 错误示范
+//	String(const char* str = "")
+//	{
+//		// 构造String类对象时，如果传递nullptr指针，可以认为程序非
+//		if (nullptr == str)
+//		{
+//			assert(false);
+//			return;
+//		}
+//		_str = new char[strlen(str) + 1];
+//		strcpy(_str, str);
+//	}
+//	~String()
+//	{
+//		if (_str)
+//		{
+//			delete[] _str;
+//			_str = nullptr;
+//		}
+//	}
+//private:
+//	char* _str;
+//};
+//// 测试
+//void TestString()
+//{
+//	String s1("hello bit!!!");
+//	String s2(s1);
+//}
+
+
+
+//class Solution {
+//public:
+//	string addstrings(string num1, string num2)
+//	{
+//		// 从后往前相加，相加的结果到字符串可以使用insert头插
+//		// 或者+=尾插以后再reverse过来
+//		int end1 = num1.size() - 1;
+//		int end2 = num2.size() - 1;
+//		int value1 = 0, value2 = 0, next = 0;
+//		string addret;
+//		while (end1 >= 0 || end2 >= 0)
+//		{
+//			if (end1 >= 0)
+//				value1 = num1[end1--] - '0';
+//			else
+//				value1 = 0;
+//			if (end2 >= 0)
+//				value2 = num2[end2--] - '0';
+//			else
+//				value2 = 0;
+//			int valueret = value1 + value2 + next;
+//			if (valueret > 9)
+//			{
+//				next = 1;
+//				valueret -= 10;
+//			}
+//			else
+//			{
+//				next = 0;
+//			}
+//			//addret.insert(addret.begin(), valueret+'0');
+//			addret += (valueret + '0');
+//		}
+//		if (next == 1)
+//		{
+//			//addret.insert(addret.begin(), '1');
+//			addret += '1';
+//		}
+//		reverse(addret.begin(), addret.end());
+//		return addret;
+//	}
+//};
+
+
+
+//class Solution {
+//public:
+//	bool isLetterOrNumber(char ch)
+//	{
+//		return (ch >= '0' && ch <= '9')
+//			|| (ch >= 'a' && ch <= 'z')
+//			|| (ch >= 'A' && ch <= 'Z');
+//	}
+//	bool isPalindrome(string s) {
+//		// 先小写字母转换成大写，再进行判断
+//		for (auto& ch : s)
+//		{
+//			if (ch >= 'a' && ch <= 'z')
+//				ch -= 32;
+//		}
+//		int begin = 0, end = s.size() - 1;
+//		while (begin < end)
+//		{
+//			while (begin < end && !isLetterOrNumber(s[begin]))
+//				++begin;
+//			while (begin < end && !isLetterOrNumber(s[end]))
+//				--end;
+//			if (s[begin] != s[end])
+//			{
+//				return false;
+//			}
+//			else
+//			{
+//				++begin;
+//				--end;
+//			}
+//		}
+//		return true;
+//	}
+//};
+
+//#include<iostream>
+//#include<string>
+//using namespace std;
+//int main()
+//{
+//	string line;
+//	// 不要使用cin>>line,因为会它遇到空格就结束了
+//	// while(cin>>line)
+//	while (getline(cin, line))
+//	{
+//		size_t pos = line.rfind(' ');
+//		cout << line.size() - pos - 1 << endl;
+//	}
+//	return 0;
+//}
+
+
+//class Solution {
+//public:
+//	int firstUniqChar(string s) {
+//		// 统计每个字符出现的次数
+//		int count[256] = { 0 };
+//		int size = s.size();
+//		for (int i = 0; i < size; ++i)
+//			count[s[i]] += 1;
+//		// 按照字符次序从前往后找只出现一次的字符
+//		for (int i = 0; i < size; ++i)
+//			if (1 == count[s[i]])
+//				return i;
+//		return -1;
+//	}
+//};
+
+
+
+//class Solution {
+//public:
+//	bool isLetter(char ch)
+//	{
+//		if (ch >= 'a' && ch <= 'z')
+//			return true;
+//		if (ch >= 'A' && ch <= 'Z')
+//			return true;
+//		return false;
+//	}
+//	string reverseOnlyLetters(string S) {
+//		if (S.empty())
+//			return S;
+//		size_t begin = 0, end = S.size() - 1;
+//		while (begin < end)
+//		{
+//			while (begin < end && !isLetter(S[begin]))
+//				++begin;
+//			while (begin < end && !isLetter(S[end]))
+//				--end;
+//			swap(S[begin], S[end]);
+//			++begin;
+//			--end;
+//		}
+//		return S;
+//	}
+//};
+
+
+//struct _Rep_base
+//{
+//	size_type _M_length;
+//	size_type _M_capacity;
+//	_Atomic_word _M_refcount;
+//};
+
+
+
+//union _Bxty
+//{ // storage for small buffer or pointer to larger one
+//	value_type _Buf[_BUF_SIZE];
+//	pointer _Ptr;
+//	char _Alias[_BUF_SIZE]; // to permit aliasing
+//} _Bx;
+
+//#define _CRT_SECURE_NO_WARNINGS
+//
+//#include <iostream>
+//using namespace std;
+//
+//#include <string>
+//
+//////////////////////////////////////////////////////////////////////////
+//// 测试string容量相关的接口
+//// size/clear/resize
+//void Teststring1()
+//{
+//	// 注意：string类对象支持直接用cin和cout进行输入和输出
+//	string s("hello, bit!!!");
+//	cout << s.size() << endl;
+//	cout << s.length() << endl;
+//	cout << s.capacity() << endl;
+//	cout << s << endl;
+//
+//	// 将s中的字符串清空，注意清空时只是将size清0，不改变底层空间的大小
+//	s.clear();
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//
+//	// 将s中有效字符个数增加到10个，多出位置用'a'进行填充
+//	// “aaaaaaaaaa”
+//	s.resize(10, 'a');
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//
+//	// 将s中有效字符个数增加到15个，多出位置用缺省值'\0'进行填充
+//	// "aaaaaaaaaa\0\0\0\0\0"
+//	// 注意此时s中有效字符个数已经增加到15个
+//	s.resize(15);
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//	cout << s << endl;
+//
+//	// 将s中有效字符个数缩小到5个
+//	s.resize(5);
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//	cout << s << endl;
+//}
+//
+////====================================================================================
+//void Teststring2()
+//{
+//	string s;
+//	// 测试reserve是否会改变string中有效元素个数
+//	s.reserve(100);
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//
+//	// 测试reserve参数小于string的底层空间大小时，是否会将空间缩小
+//	s.reserve(50);
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//}
+//
+//// 利用reserve提高插入数据的效率，避免增容带来的开销
+////====================================================================================
+//void TestPushBack()
+//{
+//	string s;
+//	size_t sz = s.capacity();
+//	cout << "making s grow:\n";
+//	for (int i = 0; i < 100; ++i)
+//	{
+//		s.push_back('c');
+//		if (sz != s.capacity())
+//		{
+//			sz = s.capacity();
+//			cout << "capacity changed: " << sz << '\n';
+//		}
+//	}
+//}
+//
+//// 构建vector时，如果提前已经知道string中大概要放多少个元素，可以提前将string中空间设置好
+//void TestPushBackReserve()
+//{
+//	string s;
+//	s.reserve(100);
+//	size_t sz = s.capacity();
+//
+//	cout << "making s grow:\n";
+//	for (int i = 0; i < 100; ++i)
+//	{
+//		s.push_back('c');
+//		if (sz != s.capacity())
+//		{
+//			sz = s.capacity();
+//			cout << "capacity changed: " << sz << '\n';
+//		}
+//	}
+//}
+//
+//
+//////////////////////////////////////////////////////////////////
+//// string的遍历
+//// begin()+end()   for+[]  范围for
+//// 注意：string遍历时使用最多的还是for+下标 或者 范围for(C++11后才支持)
+//// begin()+end()大多数使用在需要使用STL提供的算法操作string时，比如：采用reverse逆置string
+//void Teststring3()
+//{
+//	string s1("hello Bit");
+//	const string s2("Hello Bit");
+//	cout << s1 << " " << s2 << endl;
+//	cout << s1[0] << " " << s2[0] << endl;
+//
+//	s1[0] = 'H';
+//	cout << s1 << endl;
+//
+//	// s2[0] = 'h';   代码编译失败，因为const类型对象不能修改
+//}
+//
+//void Teststring4()
+//{
+//	string s("hello Bit");
+//	// 3种遍历方式：
+//	// 需要注意的以下三种方式除了遍历string对象，还可以遍历是修改string中的字符，
+//	// 另外以下三种方式对于string而言，第一种使用最多
+//	// 1. for+operator[]
+//	for (size_t i = 0; i < s.size(); ++i)
+//		cout << s[i] << endl;
+//
+//	// 2.迭代器
+//	string::iterator it = s.begin();
+//	while (it != s.end())
+//	{
+//		cout << *it << endl;
+//		++it;
+//	}
+//
+//	// string::reverse_iterator rit = s.rbegin();
+//	// C++11之后，直接使用auto定义迭代器，让编译器推到迭代器的类型
+//	auto rit = s.rbegin();
+//	while (rit != s.rend())
+//		cout << *rit << endl;
+//
+//	// 3.范围for
+//	for (auto ch : s)
+//		cout << ch << endl;
+//}
+//
+//
+////////////////////////////////////////////////////////////////
+//// 测试string：
+//// 1. 插入(拼接)方式：push_back  append  operator+= 
+//// 2. 正向和反向查找：find() + rfind()
+//// 3. 截取子串：substr()
+//// 4. 删除：erase
+//void Teststring5()
+//{
+//	string str;
+//	str.push_back(' ');   // 在str后插入空格
+//	str.append("hello");  // 在str后追加一个字符"hello"
+//	str += 'b';           // 在str后追加一个字符'b'   
+//	str += "it";          // 在str后追加一个字符串"it"
+//	cout << str << endl;
+//	cout << str.c_str() << endl;   // 以C语言的方式打印字符串
+//
+//	// 获取file的后缀
+//	string file("string.cpp");
+//	size_t pos = file.rfind('.');
+//	string suffix(file.substr(pos, file.size() - pos));
+//	cout << suffix << endl;
+//
+//	// npos是string里面的一个静态成员变量
+//	// static const size_t npos = -1;
+//
+//	// 取出url中的域名
+//	string url("http://www.cplusplus.com/reference/string/string/find/");
+//	cout << url << endl;
+//	size_t start = url.find("://");
+//	if (start == string::npos)
+//	{
+//		cout << "invalid url" << endl;
+//		return;
+//	}
+//	start += 3;
+//	size_t finish = url.find('/', start);
+//	string address = url.substr(start, finish - start);
+//	cout << address << endl;
+//
+//	// 删除url的协议前缀
+//	pos = url.find("://");
+//	url.erase(0, pos + 3);
+//	cout << url << endl;
+//}
+//
+//int main()
+//{
+//	return 0;
+//}
+
+
+
+//#define _CRT_SECURE_NO_WARNINGS
+//
+//#include <iostream>
+//using namespace std;
+//
+//#include <string>
+//
+//////////////////////////////////////////////////////////////////////////
+//// 测试string容量相关的接口
+//// size/clear/resize
+//void Teststring1()
+//{
+//	// 注意：string类对象支持直接用cin和cout进行输入和输出
+//	string s("hello, bit!!!");
+//	cout << s.size() << endl;
+//	cout << s.length() << endl;
+//	cout << s.capacity() << endl;
+//	cout << s << endl;
+//
+//	// 将s中的字符串清空，注意清空时只是将size清0，不改变底层空间的大小
+//	s.clear();
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//
+//	// 将s中有效字符个数增加到10个，多出位置用'a'进行填充
+//	// “aaaaaaaaaa”
+//	s.resize(10, 'a');
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//
+//	// 将s中有效字符个数增加到15个，多出位置用缺省值'\0'进行填充
+//	// "aaaaaaaaaa\0\0\0\0\0"
+//	// 注意此时s中有效字符个数已经增加到15个
+//	s.resize(15);
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//	cout << s << endl;
+//
+//	// 将s中有效字符个数缩小到5个
+//	s.resize(5);
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//	cout << s << endl;
+//}
+//
+////====================================================================================
+//void Teststring2()
+//{
+//	string s;
+//	// 测试reserve是否会改变string中有效元素个数
+//	s.reserve(100);
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//
+//	// 测试reserve参数小于string的底层空间大小时，是否会将空间缩小
+//	s.reserve(50);
+//	cout << s.size() << endl;
+//	cout << s.capacity() << endl;
+//}
+//
+//// 利用reserve提高插入数据的效率，避免增容带来的开销
+////====================================================================================
+//void TestPushBack()
+//{
+//	string s;
+//	size_t sz = s.capacity();
+//	cout << "making s grow:\n";
+//	for (int i = 0; i < 100; ++i)
+//	{
+//		s.push_back('c');
+//		if (sz != s.capacity())
+//		{
+//			sz = s.capacity();
+//			cout << "capacity changed: " << sz << '\n';
+//		}
+//	}
+//}
+//
+//// 构建vector时，如果提前已经知道string中大概要放多少个元素，可以提前将string中空间设置好
+//void TestPushBackReserve()
+//{
+//	string s;
+//	s.reserve(100);
+//	size_t sz = s.capacity();
+//
+//	cout << "making s grow:\n";
+//	for (int i = 0; i < 100; ++i)
+//	{
+//		s.push_back('c');
+//		if (sz != s.capacity())
+//		{
+//			sz = s.capacity();
+//			cout << "capacity changed: " << sz << '\n';
+//		}
+//	}
+//}
+//
+//
+//////////////////////////////////////////////////////////////////
+//// string的遍历
+//// begin()+end()   for+[]  范围for
+//// 注意：string遍历时使用最多的还是for+下标 或者 范围for(C++11后才支持)
+//// begin()+end()大多数使用在需要使用STL提供的算法操作string时，比如：采用reverse逆置string
+//void Teststring3()
+//{
+//	string s1("hello Bit");
+//	const string s2("Hello Bit");
+//	cout << s1 << " " << s2 << endl;
+//	cout << s1[0] << " " << s2[0] << endl;
+//
+//	s1[0] = 'H';
+//	cout << s1 << endl;
+//
+//	// s2[0] = 'h';   代码编译失败，因为const类型对象不能修改
+//}
+//
+//void Teststring4()
+//{
+//	string s("hello Bit");
+//	// 3种遍历方式：
+//	// 需要注意的以下三种方式除了遍历string对象，还可以遍历是修改string中的字符，
+//	// 另外以下三种方式对于string而言，第一种使用最多
+//	// 1. for+operator[]
+//	for (size_t i = 0; i < s.size(); ++i)
+//		cout << s[i] << endl;
+//
+//	// 2.迭代器
+//	string::iterator it = s.begin();
+//	while (it != s.end())
+//	{
+//		cout << *it << endl;
+//		++it;
+//	}
+//
+//	// string::reverse_iterator rit = s.rbegin();
+//	// C++11之后，直接使用auto定义迭代器，让编译器推到迭代器的类型
+//	auto rit = s.rbegin();
+//	while (rit != s.rend())
+//		cout << *rit << endl;
+//
+//	// 3.范围for
+//	for (auto ch : s)
+//		cout << ch << endl;
+//}
+//
+//
+////////////////////////////////////////////////////////////////
+//// 测试string：
+//// 1. 插入(拼接)方式：push_back  append  operator+= 
+//// 2. 正向和反向查找：find() + rfind()
+//// 3. 截取子串：substr()
+//// 4. 删除：erase
+//void Teststring5()
+//{
+//	string str;
+//	str.push_back(' ');   // 在str后插入空格
+//	str.append("hello");  // 在str后追加一个字符"hello"
+//	str += 'b';           // 在str后追加一个字符'b'   
+//	str += "it";          // 在str后追加一个字符串"it"
+//	cout << str << endl;
+//	cout << str.c_str() << endl;   // 以C语言的方式打印字符串
+//
+//	// 获取file的后缀
+//	string file("string.cpp");
+//	size_t pos = file.rfind('.');
+//	string suffix(file.substr(pos, file.size() - pos));
+//	cout << suffix << endl;
+//
+//	// npos是string里面的一个静态成员变量
+//	// static const size_t npos = -1;
+//
+//	// 取出url中的域名
+//	string url("http://www.cplusplus.com/reference/string/string/find/");
+//	cout << url << endl;
+//	size_t start = url.find("://");
+//	if (start == string::npos)
+//	{
+//		cout << "invalid url" << endl;
+//		return;
+//	}
+//	start += 3;
+//	size_t finish = url.find('/', start);
+//	string address = url.substr(start, finish - start);
+//	cout << address << endl;
+//
+//	// 删除url的协议前缀
+//	pos = url.find("://");
+//	url.erase(0, pos + 3);
+//	cout << url << endl;
+//}
+//
+//int main()
+//{
+//	return 0;
+//}
+
+
+//void Teststring()
+//{
+//	string s1; // 构造空的string类对象s1
+//	string s2("hello bit"); // 用C格式字符串构造string类对象s2
+//	string s3(s2); // 拷贝构造s3
+//}
+
+//#include<iostream>
+//#include <string>
+//#include <map>
+//using namespace std;
+//int main()
+//{
+//	int array[] = { 1, 2, 3, 4, 5 };
+//	// C++98的遍历
+//	for (int i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+//	{
+//		array[i] *= 2;
+//	}
+//	for (int i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+//	{
+//		cout << array[i] << endl;
+//	}
+//	// C++11的遍历
+//	for (auto& e : array)
+//		e *= 2;
+//	for (auto e : array)
+//		cout << e << " " << endl;
+//	string str("hello world");
+//	for (auto ch : str)
+//	{
+//		cout << ch << " ";
+//	}
+//	cout << endl;
+//	return 0;
+//}
+
+
+
+//#include<iostream>
+//#include <string>
+//#include <map>
+//using namespace std;
+//int main()
+//{
+//	int array[] = { 1, 2, 3, 4, 5 };
+//	// C++98的遍历
+//	for (int i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+//	{
+//		array[i] *= 2;
+//	}
+//	for (int i = 0; i < sizeof(array) / sizeof(array[0]); ++i)
+//	{
+//		cout << array[i] << endl;
+//	}
+//	// C++11的遍历
+//	for (auto& e : array)
+//		e *= 2;
+//	for (auto e : array)
+//		cout << e << " " << endl;
+//	string str("hello world");
+//	for (auto ch : str)
+//	{
+//		cout << ch << " ";
+//	}
+//	cout << endl;
+//	return 0;
+//}
+
+
+//#include<iostream>
+//using namespace std;
+//int func1()
+//{
+//	return 10;
+//}
+//// 不能做参数
+//void func2(auto a)
+//{}
+//// 可以做返回值，但是建议谨慎使用
+//auto func3()
+//{
+//	return 3;
+//}
+//int main()
+//{
+//	int a = 10;
+//	auto b = a;
+//	auto c = 'a';
+//	auto d = func1();
+//	// 编译报错:rror C3531: “e”: 类型包含“auto”的符号必须具有初始值设定项
+//	auto e;
+//	cout << typeid(b).name() << endl;
+//	cout << typeid(c).name() << endl;
+//	cout << typeid(d).name() << endl;
+//	int x = 10;
+//	auto y = &x;
+//	auto* z = &x;
+//	auto& m = x;
+//	cout << typeid(x).name() << endl;
+//	cout << typeid(y).name() << endl;
+//	cout << typeid(z).name() << endl;
+//	auto aa = 1, bb = 2;
+//	// 编译报错：error C3538: 在声明符列表中，“auto”必须始终推导为同一类型
+//	auto cc = 3, dd = 4.0;
+//	// 编译报错：error C3318: “auto []”: 数组不能具有其中包含“auto”的元素类型
+//	auto array[] = { 4, 5, 6 };
+//	return 0;
+//}
+//#include<iostream>
+//#include <string>
+//#include <map>
+//using namespace std;
+//int main()
+//{
+//	std::map<std::string, std::string> dict = { { "apple", "苹果" },{ "orange",
+//	"橙子" }, {"pear","梨"} };
+//	// auto的用武之地
+//	//std::map<std::string, std::string>::iterator it = dict.begin();
+//	auto it = dict.begin();
+//	while (it != dict.end())
+//	{
+//		cout << it->first << ":" << it->second << endl;
+//		++it;
+//	}
+//	return 0;
+//}
 
 
 //template<class T1, class T2, ..., class Tn>
