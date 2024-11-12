@@ -5,7 +5,41 @@ using namespace std;
 
 #include"vector.h"
 
+void Teststring()
+{
+	string s1; 
+	string s2("hello bit"); 
+	string s3(s2); 
 
+
+int main()
+{
+	string s1;// 构造空的string类对象s1
+	string s2("hello world");// 用C格式字符串构造string类对象s2
+	string s3(s2);// 拷贝构造s3
+
+	cout << s1 << endl;
+	cout << s2 << endl;
+	cout << s3 << endl;
+
+	string s4(s2, 6, 15);//从s2第6个字符开始拷贝5个字符进行构造
+	cout << s4 << endl;
+
+	string s5(s2, 6);//从第6个字符一直拷贝到最后
+	cout << s5 << endl;
+
+	string s6("hello world", 5);//从字符串第5个字符开始拷贝
+	cout << s6 << endl;
+
+	string s7(10, 'X');//用10个X构造
+	cout << s7 << endl;
+
+	s6[10];
+	s6[0] = 'x';
+	cout << s6 << endl;
+
+	return 0;
+}
 //namespace zlr
 //{
 //	template<class T, class Container = vector<T>>
