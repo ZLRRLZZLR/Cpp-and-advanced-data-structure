@@ -1,45 +1,66 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<iostream>
-#include<vector>
+#include<string>
 using namespace std;
 
-#include"vector.h"
 
-void Teststring()
+
+
+
+void Teststring3()
 {
-	string s1; 
-	string s2("hello bit"); 
-	string s3(s2); 
+	// 2、迭代器
+	//string::iterator it = s2.begin();
+	auto it = s2.begin();
+	while (it != s2.end())
+	{
+		*it += 2;
 
+		cout << *it << " ";
+		++it;
+	}
+	cout << endl;
 
-int main()
-{
-	string s1;// 构造空的string类对象s1
-	string s2("hello world");// 用C格式字符串构造string类对象s2
-	string s3(s2);// 拷贝构造s3
-
-	cout << s1 << endl;
 	cout << s2 << endl;
-	cout << s3 << endl;
 
-	string s4(s2, 6, 15);//从s2第6个字符开始拷贝5个字符进行构造
-	cout << s4 << endl;
+	map<string, string> dict;
+	//map<string, string>::iterator mit = dict.begin();
+	auto mit = dict.begin();
 
-	string s5(s2, 6);//从第6个字符一直拷贝到最后
-	cout << s5 << endl;
-
-	string s6("hello world", 5);//从字符串第5个字符开始拷贝
-	cout << s6 << endl;
-
-	string s7(10, 'X');//用10个X构造
-	cout << s7 << endl;
-
-	s6[10];
-	s6[0] = 'x';
-	cout << s6 << endl;
-
-	return 0;
+	/*list<int> lt = { 1,2,3,4,5,6,7 };
+	list<int>::iterator lit = lt.begin();
+	while (lit != lt.end())
+	{
+		cout << *lit << " ";
+		++lit;
+	}
+	cout << endl;*/
 }
+
+//int main()
+//{
+//	string s1;// 构造空的string类对象s1
+//	string s2("hello world");// 用C格式字符串构造string类对象s2
+//	string s3(s2);// 拷贝构造s3
+//
+//	cout << s1 << endl;
+//	cout << s2 << endl;
+//	cout << s3 << endl;
+//
+//	string s4(s2, 6, 15);//从s2第6个字符开始拷贝5个字符进行构造
+//	cout << s4 << endl;
+//
+//	string s5(s2, 6);//从第6个字符一直拷贝到最后
+//	cout << s5 << endl;
+//
+//	string s6("hello world", 5);//从字符串第5个字符开始拷贝
+//	cout << s6 << endl;
+//
+//	string s7(10, 'X');//用10个X构造
+//	cout << s7 << endl;
+//
+//	return 0;
+//}
 //namespace zlr
 //{
 //	template<class T, class Container = vector<T>>
