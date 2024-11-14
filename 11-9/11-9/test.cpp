@@ -4,38 +4,182 @@
 using namespace std;
 
 
-
-
-
-void Teststring3()
+void test_string3()
 {
-	// 2、迭代器
-	//string::iterator it = s2.begin();
-	auto it = s2.begin();
-	while (it != s2.end())
-	{
-		*it += 2;
+	string s2("hello world");
+	cout << s2.length() << endl;
+	cout << s2.size() << endl;
 
-		cout << *it << " ";
-		++it;
-	}
-	cout << endl;
+	cout << s2.max_size() << endl;
 
-	cout << s2 << endl;
+	cout << s2.capacity() << endl;
 
-	map<string, string> dict;
-	//map<string, string>::iterator mit = dict.begin();
-	auto mit = dict.begin();
 
-	/*list<int> lt = { 1,2,3,4,5,6,7 };
-	list<int>::iterator lit = lt.begin();
-	while (lit != lt.end())
-	{
-		cout << *lit << " ";
-		++lit;
-	}
-	cout << endl;*/
+	string s3("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+	//cout << sizeof(s2) << endl;
+	//cout << sizeof(s3) << endl;
 }
+
+//class string
+//{
+//private:
+//	char _buff[16];
+//	char*  _str;
+//
+//	size_t _size;
+//	size_t _capacity;
+//};
+
+
+//void test_string2()
+//{
+//	string s2("hello world");
+//	string::iterator it = s2.begin();
+//	while (it != s2.end())
+//	{
+//		*it += 2;
+//		cout << *it << " ";
+//		++it;
+//	}
+//	cout << endl;
+//
+//	string s3("hello world");
+//	string::reverse_iterator rit = s3.rbegin();
+//	while (rit != s3.rend())
+//	{
+//		cout << *rit << " ";
+//		++rit;
+//	}
+//	cout << endl;
+//
+//	const string s4("hello world");
+//	//string::const_iterator cit = s3.begin();
+//	auto cit = s4.begin();
+//	while (cit != s4.end())
+//	{
+//		//*cit += 2;
+//		cout << *cit << " ";
+//		++cit;
+//	}
+//	cout << endl;
+//
+//	const string s5("hello world");
+//	//string::const_reverse_iterator rcit = s3.rbegin();
+//	auto rcit = s5.rbegin();
+//	while (rcit != s5.rend())
+//	{
+//		// *rcit += 2;
+//		cout << *rcit << " ";
+//		++rcit;
+//	}
+//	cout << endl;
+//}
+//int main() {
+//	test_string2();
+//	return 0;
+//}
+
+//#include<iostream>
+//using namespace std;
+//int func1()
+//{
+//	return 10;
+//}
+//
+//// 不能做参数
+//void func2(auto a)
+//{}
+//
+//// 可以做返回值，但是建议谨慎使用
+//auto func3()
+//{
+//	return 3;
+//}
+//
+//
+//
+//int main()
+//{
+//	int a = 10;
+//	auto b = a;//b是a赋值得到的，b类型是int
+//	auto c = 'a';//c类型是char
+//	auto d = func1();
+//
+//	// 编译报错:rror C3531: “e”: 类型包含“auto”的符号必须具有初始值设定项
+//	auto e;
+//
+//	cout << typeid(b).name() << endl;//查看变量的类型
+//	cout << typeid(c).name() << endl;
+//	cout << typeid(d).name() << endl;
+//
+//	int x = 10;
+//	auto y = &x;//可以推导指针类型
+//	auto* z = &x;
+//	auto& m = x;
+//
+//	cout << typeid(x).name() << endl;//查看变量的类型
+//	cout << typeid(y).name() << endl;
+//	cout << typeid(z).name() << endl;
+//
+//	auto aa = 1, bb = 2;
+//	// 编译报错：error C3538: 在声明符列表中，“auto”必须始终推导为同一类型
+//	auto cc = 3, dd = 4.0;
+//	// 编译报错：error C3318: “auto []”: 数组不能具有其中包含“auto”的元素类型
+//	auto array[] = { 4, 5, 6 };
+//
+//	return 0;
+//}
+//
+//#include<iostream>
+//#include <string>
+//#include <map>
+//using namespace std;
+//int main()
+//{
+//	std::map<std::string, std::string> dict = { { "apple", "苹果" },{ "orange",
+//	"橙子" }, {"pear","梨"} };
+//	// auto的用武之地
+//	//std::map<std::string, std::string>::iterator it = dict.begin();
+//	auto it = dict.begin();
+//	while (it != dict.end())
+//	{
+//		cout << it->first << ":" << it->second << endl;
+//		++it;
+//	}
+//	return 0;
+//}
+
+
+
+//void Teststring3()
+//{
+//	// 2、迭代器
+//	//string::iterator it = s2.begin();
+//	auto it = s2.begin();
+//	while (it != s2.end())
+//	{
+//		*it += 2;
+//
+//		cout << *it << " ";
+//		++it;
+//	}
+//	cout << endl;
+//
+//	cout << s2 << endl;
+//
+//	map<string, string> dict;
+//	//map<string, string>::iterator mit = dict.begin();
+//	auto mit = dict.begin();
+//
+//	/*list<int> lt = { 1,2,3,4,5,6,7 };
+//	list<int>::iterator lit = lt.begin();
+//	while (lit != lt.end())
+//	{
+//		cout << *lit << " ";
+//		++lit;
+//	}
+//	cout << endl;*/
+//}
 
 //int main()
 //{
