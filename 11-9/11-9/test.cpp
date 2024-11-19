@@ -1,25 +1,60 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<iostream>
 #include<string>
+#include<vector>
 using namespace std;
 
-// 以杨慧三角的前n行为例：假设n为5
-void test2vector(size_t n)
+
+class Solution {
+public:
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+
+
+        vector<vector<int>> dp(m + 1, vector<int>(n + 2, INT_MAX));
+        dp[0] = { 0 };
+
+        for (int i = 1; i <= m; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                int Min = min(dp[i - 1][j - 1], dp[i - 1][j]);
+                Min = min(Min, dp[i - 1][j + 1]);
+                dp[i][j] = Min + matrix[i - 1][j - 1];
+            }
+        }
+        int Min = min(dp[m][n], dp[m][n - 1]);
+        Min = min(Min, dp[m][n - 2]);
+        return Min;
+    }
+};
+
+int main()
 {
-	// 使用vector定义二维数组vv，vv中的每个元素都是vector<int>
-	bit::vector<bit::vector<int>> vv(n);
-	// 将二维数组每一行中的vecotr<int>中的元素全部设置为1
-	for (size_t i = 0; i < n; ++i)
-		vv[i].resize(i + 1, 1);
-	// 给杨慧三角出第一列和对角线的所有元素赋值
-	for (int i = 2; i < n; ++i)
-	{
-		for (int j = 1; j < i; ++j)
-		{
-			vv[i][j] = vv[i - 1][j] + vv[i - 1][j - 1];
-		}
-	}
+    Solution().minFallingPathSum({ {2, 1, 3 } , { 6, 5, 4 } ,{7, 8, 9 });
+
+    return 0;
 }
+
+
+//// 以杨慧三角的前n行为例：假设n为5
+//void test2vector(size_t n)
+//{
+//	// 使用vector定义二维数组vv，vv中的每个元素都是vector<int>
+//	bit::vector<bit::vector<int>> vv(n);
+//	// 将二维数组每一行中的vecotr<int>中的元素全部设置为1
+//	for (size_t i = 0; i < n; ++i)
+//		vv[i].resize(i + 1, 1);
+//	// 给杨慧三角出第一列和对角线的所有元素赋值
+//	for (int i = 2; i < n; ++i)
+//	{
+//		for (int j = 1; j < i; ++j)
+//		{
+//			vv[i][j] = vv[i - 1][j] + vv[i - 1][j - 1];
+//		}
+//	}
+//}
 
 
 
