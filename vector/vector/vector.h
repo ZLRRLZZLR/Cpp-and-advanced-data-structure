@@ -67,9 +67,9 @@ namespace bit
             {
                 reserve(v.size());
 
-                for (int i = 0; i < v.size(); i++)
+                for (auto& e : v)
                 {
-                    push_back(v[i]);
+                    push_back(e);
                 }
 
             }
@@ -85,7 +85,7 @@ namespace bit
             {
                 delete[] _start;
 
-                _start = _finish = _end_of_storage;
+                _start = _finish = _end_of_storage = nullptr;
             }
 
             // capacity
@@ -104,12 +104,13 @@ namespace bit
             {
                 if(n > capacity())
                 {
-                    size_t old_size = _finish - _start;
-                    T* tmp = new T * [size() == 0 ? 4 : n * sizeof(T)];
+                    size_t old_size = size();
+                    T* tmp = new T * [n];
                     for(int i = 0;i < old_size,i++)
                     {
                         tmp[i] = _start[i];
                     }
+                    delete[] tmp;
 
                     _start = tmp;
                     _finish = _start + old_size;
@@ -119,13 +120,18 @@ namespace bit
 
             void resize(size_t n, const T& value = T())
             {
-                if(n > size())
+                if(n < size())
+                {
+                    _finish = _start + n;
+                }
+                else
                 {
                     reserve(n);
 
-                    for(int i = size() - 1; i < n;i++)
+                    while(_finish < _start + n)
                     {
-                        push_back(value);
+                        *_finish = val;
+                        ++_finish;
                     }
 
                 }
@@ -155,10 +161,14 @@ namespace bit
 
             void push_back(const T& x)
             {
-                if(_finish = _end_of_storage)
+                if(_finish == _end_of_storage)
                 {
-                    reserve()
+                    reserve(capacity() == 0 ? 4 : 2 * capacity());
+
                 }
+
+                *_finish = x;
+                ++_finish;
             }
 
             void pop_back()
@@ -177,10 +187,44 @@ namespace bit
 
             iterator insert(iterator pos, const T& x)
             {
-                if(_end_of_stage)
+                assert(pos >= _start);
+                assert(pos <= _finish);
+
+                if(_finish = _end_of_stage)
+                {
+                    size_t len = pos - _start;
+                    reserve(capacity() == 0 ? 4 : 2 * capacity());
+                    pos = _start + len;
+
+                }
+
+                iterator end = _finish - 1;
+                While(end >= pos)
+                {
+                    *(end + 1) = *(end--);
+                }
+
+                *pos = x;
+
+                _finish++;
+
+                return pos;
+
             }
 
-            iterator erase(Iterator pos)£»
+            iterator erase(iterator pos)
+            {
+                assert(pos >= _start && pos < _finish);
+
+                iterator end = pos + 1;
+                While(end != end())
+                {
+                    *(end - 1) = *(end);
+                    end++;
+                }
+
+                _finish--;
+            }
 
     private:
 
