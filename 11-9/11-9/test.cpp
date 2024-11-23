@@ -2,40 +2,183 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<algorithm>
 using namespace std;
 
 
 class Solution {
 public:
-    int minFallingPathSum(vector<vector<int>>& matrix) {
-        int m = matrix.size();
-        int n = matrix[0].size();
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int>> table;
 
+        sort(nums.begin(), nums.end());
 
-        vector<vector<int>> dp(m + 1, vector<int>(n + 2, INT_MAX));
-        dp[0] = { 0 };
-
-        for (int i = 1; i <= m; i++)
+        int a = 0;
+        while (a <= (int)nums.size() - 4)
         {
-            for (int j = 1; j <= n; j++)
+            int b = a + 1;
+            while (b <= (int)nums.size() - 3)
             {
-                int Min = min(dp[i - 1][j - 1], dp[i - 1][j]);
-                Min = min(Min, dp[i - 1][j + 1]);
-                dp[i][j] = Min + matrix[i - 1][j - 1];
+                int left = b + 1, right = nums.size() - 1;
+                int goal = target - nums[a] - nums[b];
+                while (left < right)
+                {
+                    int sum = nums[left] + nums[right];
+                    if (sum > goal)
+                    {
+                        right--;
+                    }
+                    else if (sum < goal)
+                    {
+                        left++;
+                    }
+                    else
+                    {
+                        table.push_back({ nums[a],nums[b], nums[left], nums[right] });
+                        int num1 = nums[left];
+                        int num2 = nums[right];
+
+                        left++;
+                        right--;
+                        while (nums[left] == num1 && left < right)
+                        {
+                            left++;
+                        }
+                        while (nums[right] == num2 && left < right)
+                        {
+                            right--;
+                        }
+                    }
+                }
+
+                int num3 = nums[b];
+                b++;
+
+                while (nums[b] == num3 && b <= nums.size() - 3)
+                {
+                    b++;
+                }
             }
+
+            int num4 = nums[a];
+            a++;
+
+            while (nums[a] == num4 && a <= nums.size() - 4)
+            {
+                a++;
+            }
+
         }
-        int Min = min(dp[m][n], dp[m][n - 1]);
-        Min = min(Min, dp[m][n - 2]);
-        return Min;
+        return table;
+
     }
 };
 
 int main()
 {
-    Solution().minFallingPathSum({ {2, 1, 3 } , { 6, 5, 4 } ,{7, 8, 9 });
+    vector<int> table = {0};
+    Solution().fourSum(table,0);
 
     return 0;
 }
+
+//class Solution {
+//public:
+//    vector<vector<int>> threeSum(vector<int>& nums) {
+//        vector<vector<int>> table;
+//
+//        sort(nums.begin(), nums.end());
+//
+//        int cur = 0;
+//        while (cur <= nums.size() - 3)
+//        {
+//            int left = cur + 1, right = nums.size() - 1;
+//            int flge = 0;
+//            while (left < right)
+//            {
+//                if (nums[left] + nums[right] >  - nums[cur])
+//                {
+//                    right--;
+//                }
+//                else if (nums[left] + nums[right] < -nums[cur])
+//                {
+//                    left++;
+//                }
+//                else
+//                {
+//                    table.push_back(vector<int>{nums[cur], nums[left], nums[right]});
+//                    int num1 = nums[left];
+//                    int num2 = nums[right];
+//
+//                    left++;
+//                    right--;
+//                    while (nums[left] == num1 && left < right)
+//                    {
+//                        left++;
+//                    }
+//                    while (nums[right] == num2 && left < right)
+//                    {
+//                        right--;
+//                    }
+//                    flge = 1;
+//                }
+//            }
+//
+//            int num3 = nums[cur];
+//            cur++;
+//
+//            if (flge)
+//            {
+//                while (nums[cur] == num3 && nums.size() - 3)
+//                {
+//                    cur++;
+//                }
+//            }
+//
+//        }
+//
+//        return table;
+//    }
+//};
+//
+//int main()
+//{
+//    vector<int> dp = { -1,0,1,2,-1,-4 };
+//    Solution().threeSum(dp);
+//    return 0;
+//}
+
+//class Solution {
+//public:
+//    int minFallingPathSum(vector<vector<int>>& matrix) {
+//        int m = matrix.size();
+//        int n = matrix[0].size();
+//
+//
+//        vector<vector<int>> dp(m + 1, vector<int>(n + 2, INT_MAX));
+//        dp[0] = { 0 };
+//
+//        for (int i = 1; i <= m; i++)
+//        {
+//            for (int j = 1; j <= n; j++)
+//            {
+//                int Min = min(dp[i - 1][j - 1], dp[i - 1][j]);
+//                Min = min(Min, dp[i - 1][j + 1]);
+//                dp[i][j] = Min + matrix[i - 1][j - 1];
+//            }
+//        }
+//        int Min = min(dp[m][n], dp[m][n - 1]);
+//        Min = min(Min, dp[m][n - 2]);
+//        return Min;
+//    }
+//};
+//
+//int main()
+//{
+//    Solution().minFallingPathSum({ {2, 1, 3 } , { 6, 5, 4 } ,{7, 8, 9 });
+//
+//    return 0;
+//}
 
 
 //// 以杨慧三角的前n行为例：假设n为5
