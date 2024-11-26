@@ -1,5 +1,6 @@
 #pragma once
 #include<iostream>
+#include<assert.h>
 using namespace std;
 
 
@@ -37,12 +38,12 @@ namespace zlr
             :_pNode(l._pNode)
         {}
 
-        T& operator*()
+        Ref operator*()
         {
             return _pNode->_val;
         }
 
-        T* operator->()
+        Ptr operator->()
         {
             return &_pNode->_val;
         }
@@ -55,9 +56,9 @@ namespace zlr
 
         Self operator++(int)
         {
-            PNode* tmp(_pNode);
+            Self tmp(*this);
             _pNode = _pNode->_pNext;
-            return *this;
+            return tmp;
         }
 
         Self& operator--()
@@ -68,19 +69,19 @@ namespace zlr
 
         Self& operator--(int)
         {
-            PNode* tmp(_pNode);
+            Self tmp(*this);
             _pNode = _pNode->_pPre;
-            return *this;
+            return tmp;
         }
 
         bool operator!=(const Self& l)
         {
-            return _pNode->_val != l._pNode->_val;
+            return _pNode != l._pNode;
         }
 
         bool operator==(const Self& l)
         {
-            return _pNode->_val == l._pNode->_val;
+            return _pNode == l._pNode;
         }
 
         PNode _pNode;
@@ -97,7 +98,7 @@ namespace zlr
     public:
 
         typedef ListIterator<T, T&, T*> iterator;
-        typedef ListIterator<T, const T&, const T&> const_iterator;
+        typedef ListIterator<T, const T&, const T*> const_iterator;
 
     public:
         ///////////////////////////////////////////////////////////////
@@ -110,6 +111,7 @@ namespace zlr
 
         list(int n, const T& value = T())
         {
+            CreateHead();
             for(int i = 0;i < n;i++)
             {
                 push_back(value);
@@ -119,6 +121,7 @@ namespace zlr
         template <class Iterator>
         list(Iterator first, Iterator last)
         {
+            CreateHead();
             while(*first != *last)
             {
                 push_back(*first);
@@ -128,12 +131,14 @@ namespace zlr
 
         list(const list<T>& l)
         {
-            *this(l.begin(), l.end());
+            list tmp(l.begin(), l.end());
+            swap(tmp);
         }
 
         list<T>& operator=(const list<T> l)
         {
             swap(l);
+            return *this;
         }
 
         ~list()
@@ -171,6 +176,7 @@ namespace zlr
         {
             return _size;
         }
+
         bool empty()const
         {
             return _size == 0;
@@ -181,20 +187,29 @@ namespace zlr
         // List Access
         T& front()
         {
-            return _pHead->_pNext;
+            assert(!empty());
+
+            return _pHead->_pNext->_val;
         }
+
         const T& front()const
         {
-            return _pHead->_pNext;
+            assert(!empty());
+
+            return _pHead->_pNext->_val;
         }
 
         T& back()
         {
-            return _pHead->_pPre;
+            assert(!empty());
+
+            return _pHead->_pPre->_val;
         }
         const T& back()const
         {
-            return _pHead->_pPre;
+            assert(!empty());
+
+            return _pHead->_pPre->_val;
         }
 
 
@@ -212,19 +227,18 @@ namespace zlr
 
         void push_front(const T& val)
         {
-            push_front(begin(), val);
+            insert(begin(), val);
         }
 
         void pop_front()
         {
             erase(begin());
-
         }
+
         // 在pos位置前插入值为val的节点
         iterator insert(iterator pos, const T& val)
         {
-            CreateHead();
-            PNode newnode = new Node;
+            PNode newnode = new Node(val);
             PNode prev = pos._pNode->_pPre;
 
             prev->_pNext = newnode;
@@ -233,12 +247,15 @@ namespace zlr
             pos._pNode->_pPre = newnode;
 
             _size++;
+
             return newnode;
         }
 
         // 删除pos位置的节点，返回该节点的下一个位置
         iterator erase(iterator pos)
         {
+            assert(pos != end());
+
             PNode prev = pos._pNode->_pPre;
             PNode next = pos._pNode->_pNext;
 
@@ -283,12 +300,36 @@ namespace zlr
 
     void Test_01()
     {
-        list<int> l1(10);
+        list<int> l1;
+        list<int> l5(10);
+        list<int> l6(10,1);
+
+        list<int> l2(l1.begin(), l1.end());
+        list<int> l3(l1);
+        list<int> l4 = l1;
+        int& a = l5.front();
+        int c = l5.empty();
+        int& b = l5.back();
+        l1.push_front(1);
+        l1.push_back(2);
+        l1.push_front(3);
+        l1.push_front(4);
+        l1.push_front(5);
+
+        list<int>::iterator r1 = l1.begin();
+        ++r1;
+
+        auto r2 = l1.end();
+        auto r3 = l1.begin();
+
+        r2++;
+
+        int e = r1 == r2;
+
+
+        l1.pop_front();
+
+
     }
-
-
-
-
-
 
 };
