@@ -8,140 +8,273 @@ using namespace std;
 #include"list.h"
 
 
-void test_list1()
-{
-	list<int> lt;
-	lt.push_back(1);
+//栈的压入与弹出序列
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param pushV int整型vector
+//     * @param popV int整型vector
+//     * @return bool布尔型
+//     */
+//    bool IsPopOrder(vector<int>& pushV, vector<int>& popV) {
+//        stack<int> st;
+//        size_t pos = 0;
+//        for (auto e : pushV)
+//        {
+//            st.push(e);
+//
+//            while (!st.empty() && st.top() == popV[pos])
+//            {
+//                st.pop();
+//                pos++;
+//            }
+//        }
+//
+//        return pos == popV.size();
+//    }
+//};
 
-	list<int>::iterator it = lt.begin();
-	while(it != lt.end())
-	{
-		cout << *it << " ";
-		++it;
-	}
-	cout << endl;
 
-	for(auto e : lt)
-	{
-		cout << e << " ";
+//最小栈
+//class MinStack {
+//public:
+//    MinStack() {
+//
+//    }
+//
+//    void push(int val) {
+//        if (_minst.empty() || val <= _minst.top())
+//        {
+//            _minst.push(val);
+//        }
+//
+//        _st.push(val);
+//    }
+//
+//    void pop() {
+//        if (_st.top() == _minst.top())
+//        {
+//            _minst.pop();
+//        }
+//
+//        _st.pop();
+//
+//    }
+//
+//    int top() {
+//        return _st.top();
+//    }
+//
+//    int getMin() {
+//        return _minst.top();
+//    }
+//
+//private:
+//    stack<int> _st;
+//    stack<int> _minst;
+//};
+//
+///**
+// * Your MinStack object will be instantiated and called as such:
+// * MinStack* obj = new MinStack();
+// * obj->push(val);
+// * obj->pop();
+// * int param_3 = obj->top();
+// * int param_4 = obj->getMin();
+// */
 
-	}
-	cout << endl;
+//二叉树的层序遍历
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     TreeNode *left;
+// *     TreeNode *right;
+// *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+// * };
+// */
+//class Solution {
+//public:
+//    vector<vector<int>> levelOrder(TreeNode* root) {
+//        vector<vector<int>> vv;
+//        queue<TreeNode*> q;
+//        int levelsize = 0;
+//
+//        if (root)
+//        {
+//            q.push(root);
+//            levelsize = 1;
+//        }
+//
+//        while (!q.empty())
+//        {
+//            vector<int> v;
+//            while (levelsize--)
+//            {
+//                TreeNode* front = q.front();
+//                q.pop();
+//                v.push_back(front->val);
+//
+//                if (front->left)
+//                {
+//                    q.push(front->left);
+//                }
+//
+//                if (front->right)
+//                {
+//                    q.push(front->right);
+//                }
+//
+//            }
+//
+//            vv.push_back(v);
+//            levelsize = q.size();
+//
+//        }
+//
+//        return vv;
+//    }
+//};
 
-	string s("dadawdfadsa");
-	cout << s << endl;
-	sort(s.begin(), s.end());
-	cout << s << endl;
-}
-struct A
-{
-public:
-	A(int a1 = 1,int a2 = 1)
-		:_a1(a1)
-		,_a2(a2)
-	{
-		cout << "A(int a1 = 1, int a2 = 1)" << endl;
-	}
-
-	A(const A& aa)
-		:_a1(aa._a1)
-		, _a2(aa._a2)
-	{
-		cout << "A(const A& aa)" << endl;
-	}
-	int _a1;
-	int _a2;
-};
-
-void test_list2()
-{
-	list<A> lt;
-	A aa1(1, 1);
-	lt.push_back(aa1);
-	lt.push_back(A(2, 2));
-
-	lt.emplace_back(aa1);
-	lt.emplace_back(A(2,2));
-	cout << endl;
-
-	lt.emplace_back(3, 3);
-
-}
-
-void test_list3()
-{
-	list<int> lt;
-	lt.push_back(1);
-	lt.push_back(2);
-	lt.push_back(3);
-	lt.push_back(4);
-	lt.push_back(5);
-	lt.push_back(6);
-
-	for(auto e : lt)
-	{
-		cout << e << " ";
-	}
-	cout << endl;
-
-	auto it = lt.begin();
-	int k = 3;
-	while(k--)
-	{
-		++it;
-	}
-
-	lt.insert(it, 30);
-
-	int x = 0;
-	cin >> x;
-	it = find(lt.begin(), lt.end(), x);
-	if(it != lt.end())
-	{
-		lt.erase(it);
-	}
-
-	for(auto e : lt)
-	{
-		cout << e << "";
-	}
-	cout << endl;
-
-}
-
-void test_list4()
-{
-	list<int> lt;
-	lt.push_back(1);
-	lt.push_back(20);
-	lt.push_back(3);
-	lt.push_back(5);
-	lt.push_back(4);
-	lt.push_back(5);
-	lt.push_back(6);
-
-	for(auto e :lt)
-	{
-		cout << e << " ";
-	}
-	cout << endl;
-
-	lt.sort(greater<int>());
-
-	for(auto e : lt)
-	{
-		cout << e << " ";
-	}
-
-	cout << endl;
-
-	std::list<double> first, second;
-
-	first.sort();
-
-	first.merge(second);
-
-}
+//void test_list1()
+//{
+//	list<int> lt;
+//	lt.push_back(1);
+//
+//	list<int>::iterator it = lt.begin();
+//	while(it != lt.end())
+//	{
+//		cout << *it << " ";
+//		++it;
+//	}
+//	cout << endl;
+//
+//	for(auto e : lt)
+//	{
+//		cout << e << " ";
+//
+//	}
+//	cout << endl;
+//
+//	string s("dadawdfadsa");
+//	cout << s << endl;
+//	sort(s.begin(), s.end());
+//	cout << s << endl;
+//}
+//struct A
+//{
+//public:
+//	A(int a1 = 1,int a2 = 1)
+//		:_a1(a1)
+//		,_a2(a2)
+//	{
+//		cout << "A(int a1 = 1, int a2 = 1)" << endl;
+//	}
+//
+//	A(const A& aa)
+//		:_a1(aa._a1)
+//		, _a2(aa._a2)
+//	{
+//		cout << "A(const A& aa)" << endl;
+//	}
+//	int _a1;
+//	int _a2;
+//};
+//
+//void test_list2()
+//{
+//	list<A> lt;
+//	A aa1(1, 1);
+//	lt.push_back(aa1);
+//	lt.push_back(A(2, 2));
+//
+//	lt.emplace_back(aa1);
+//	lt.emplace_back(A(2,2));
+//	cout << endl;
+//
+//	lt.emplace_back(3, 3);
+//
+//}
+//
+//void test_list3()
+//{
+//	list<int> lt;
+//	lt.push_back(1);
+//	lt.push_back(2);
+//	lt.push_back(3);
+//	lt.push_back(4);
+//	lt.push_back(5);
+//	lt.push_back(6);
+//
+//	for(auto e : lt)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	auto it = lt.begin();
+//	int k = 3;
+//	while(k--)
+//	{
+//		++it;
+//	}
+//
+//	lt.insert(it, 30);
+//
+//	int x = 0;
+//	cin >> x;
+//	it = find(lt.begin(), lt.end(), x);
+//	if(it != lt.end())
+//	{
+//		lt.erase(it);
+//	}
+//
+//	for(auto e : lt)
+//	{
+//		cout << e << "";
+//	}
+//	cout << endl;
+//
+//}
+//
+//void test_list4()
+//{
+//	list<int> lt;
+//	lt.push_back(1);
+//	lt.push_back(20);
+//	lt.push_back(3);
+//	lt.push_back(5);
+//	lt.push_back(4);
+//	lt.push_back(5);
+//	lt.push_back(6);
+//
+//	for(auto e :lt)
+//	{
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	lt.sort(greater<int>());
+//
+//	for(auto e : lt)
+//	{
+//		cout << e << " ";
+//	}
+//
+//	cout << endl;
+//
+//	std::list<double> first, second;
+//
+//	first.sort();
+//
+//	first.merge(second);
+//
+//}
 
 //void test_list5()
 //{

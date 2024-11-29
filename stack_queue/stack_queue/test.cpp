@@ -1,8 +1,15 @@
+//#include"stack_queue.h"
+#include"priority_queue.h"
 
-#include<deque>
-#include <list>
-#include<vector>
-using namespace std;
+int main()
+{
+	//zlr::TestStack();
+	//cout << endl;
+	//zlr::TestQueue();
+	zlr::TestPriority_queue();
+	
+	return 0;
+}
 
 //int main()
 //{

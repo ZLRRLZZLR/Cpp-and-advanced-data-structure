@@ -1,34 +1,59 @@
 #pragma once
 #include<queue>
+#include<assert.h>
+#include<iostream>
 using namespace std;
+
+
 
 namespace zlr
 
 {
 
-#include<deque>
-
     template<class T, class Con = deque<T>>
-
     class stack
 
     {
 
     public:
 
-        stack();
+        //stack() = default;//不报错
+        //stack() = default//报错
+        stack() {};
+        //stack() {}//不报错
+        //stack()报错
+        //stack()报错
 
-        void push(const T& x);
 
-        void pop();
+        void push(const T& x)
+        {
+            _c.push_back(x);
+        }
 
-        T& top();
+        void pop()
+        {
+            _c.pop_back();
+        }
 
-        const T& top()const;
+        T& top()
+        {
+            return _c.back();
+        }
 
-        size_t size()const;
+        const T& top()const
+        {
+            return _c.back();
+        }
 
-        bool empty()const;
+        size_t size()const
+        {
+            return _c.size();
+        }
+
+        bool empty()const
+        {
+            return _c.empty();
+        }
 
     private:
 
@@ -46,28 +71,102 @@ namespace zlr
 
     public:
 
-        queue();
+        void push(const T& x)
+        {
+            _c.push_back(x);
+        }
 
-        void push(const T& x);
+        void pop()
+        {
+            _c.pop_front();
+        }
 
-        void pop();
+        T& back()
+        {
+            return _c.back();
+        }
 
-        T& back();
+        const T& back()const
+        {
+            return _c.back();
+        }
 
-        const T& back()const;
+        T& front()
+        {
+            return _c.front();
+        }
 
-        T& front();
+        const T& front()const
+        {
+            return _c.front();
+        }
 
-        const T& front()const;
+        size_t size()const
+        {
+            return _c.size();
+        }
 
-        size_t size()const;
-
-        bool empty()const;
+        bool empty()const
+        {
+            return _c.empty();
+        }
 
     private:
 
         Con _c;
 
     };
+
+
+    void TestStack()
+    {
+        stack<int> s;
+
+        cout << s.empty();
+
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(4);
+        s.push(5);
+
+        cout << s.top();
+
+        cout << s.size();
+
+        s.pop();
+        s.pop();
+        s.pop();
+        cout << s.size();
+
+
+    }
+
+    void TestQueue()
+    {
+        queue<int> s;
+
+        cout << s.empty();
+
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(4);
+        s.push(5);
+
+        cout << s.front();
+        cout << s.back();
+
+
+        cout << s.size();
+
+        s.pop();
+        s.pop();
+        s.pop();
+        cout << s.size();
+
+
+    }
+
 
 };
