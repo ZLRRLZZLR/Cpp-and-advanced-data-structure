@@ -1,15 +1,244 @@
 //#include"stack_queue.h"
 #include"priority_queue.h"
 
-int main()
+namespace bit
 {
-	//zlr::TestStack();
-	//cout << endl;
-	//zlr::TestQueue();
-	zlr::TestPriority_queue();
-	
-	return 0;
+	// 默认是大堆
+	template<class T, class Container = vector<T>, class Compare = Less<T>>
+	class priority_queue
+	{
+	public:
+		void AdjustUp(int child)//向上调整算法
+		{
+			Compare com;
+			int parent = (child - 1) / 2;
+			while (child > 0)
+			{
+				//if (_con[parent] < _con[child])
+				if (com(_con[parent], _con[child]))
+				{
+					swap(_con[child], _con[parent]);
+					child = parent;
+					parent = (child - 1) / 2;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+
+		void push(const T& x)
+		{
+			_con.push_back(x);
+
+			AdjustUp(_con.size() - 1);
+		}
+
+		void AdjustDown(int parent)//向下调整算法
+		{
+			// 先假设左孩子小
+			size_t child = parent * 2 + 1;
+
+			Compare com;
+			while (child < _con.size())  // child >= n说明孩子不存在，调整到叶子了
+			{
+				// 找出小的那个孩子
+				//if (child + 1 < _con.size() && _con[child] < _con[child + 1])
+				if (child + 1 < _con.size() && com(_con[child], _con[child + 1]))
+				{
+					++child;
+				}
+
+				//if (_con[parent] < _con[child])
+				if (com(_con[parent], _con[child]))
+				{
+					swap(_con[child], _con[parent]);
+					parent = child;
+					child = parent * 2 + 1;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+
+		void pop()
+		{
+			swap(_con[0], _con[_con.size() - 1]);
+			_con.pop_back();
+			AdjustDown(0);
+		}
+
+		const T& top()
+		{
+			return _con[0];
+		}
+
+		size_t size() const
+		{
+			return _con.size();
+		}
+
+		bool empty() const
+		{
+			return _con.empty();
+		}
+
+	private:
+		Container _con;
+	};
 }
+
+// //仿函数：本质是一个类，这个类重载operator(),他的对象可以像函数一样使用
+//template<class T>
+//class Less
+//{
+//public:
+//	bool operator()(const T& x, const T& y)
+//	{
+//		return x < y;
+//	}
+//};
+//
+//template<class T>
+//class Greater
+//{
+//public:
+//	bool operator()(const T& x, const T& y)
+//	{
+//		return x > y;
+//	}
+//};
+//
+// //< 升序
+// //> 降序
+//template<class Compare>
+//void BubbleSort(int* a, int n, Compare com)
+//{
+//	for (int j = 0; j < n; j++)
+//	{
+//		// 单趟
+//		int flag = 0;
+//		for (int i = 1; i < n - j; i++)
+//		{
+//			//if (a[i] < a[i - 1])
+//			if (com(a[i], a[i - 1]))//通过仿函数，这里的比较逻辑
+//			{	                    //我们就可以通过传比较器（仿函数）控制
+//				swap(a[i - 1], a[i]);
+//				flag = 1;
+//			}
+//		}
+//
+//		if (flag == 0)
+//		{
+//			break;
+//		}
+//	}
+//}
+//
+//int main()
+//{
+//	Less<int> LessFunc;
+//	Greater<int> GreaterFunc;
+//	// 函数对象
+//	cout << LessFunc(1, 2) << endl;
+//	cout << LessFunc.operator()(1, 2) << endl;
+//
+//	int a[] = { 9,1,2,5,7,4,6,3 };
+//	BubbleSort(a, 8, LessFunc);//传入比较器（仿函数）控制内部的比较逻辑
+//	BubbleSort(a, 8, GreaterFunc);
+//
+//	BubbleSort(a, 8, Less<int>());
+//	BubbleSort(a, 8, Greater<int>());
+//
+//	return 0;
+//}
+
+//template<class T, class Container = deque<T>>
+//class queue
+//{
+//public:
+//	void push(const T& x)
+//	{
+//		_con.push_back(x);
+//	}
+//
+//	void pop()
+//	{
+//		_con.pop_front();
+//	}
+//
+//	const T& front() const
+//	{
+//		return _con.front();
+//	}
+//
+//	const T& back() const
+//	{
+//		return _con.back();
+//	}
+//
+//	size_t size() const
+//	{
+//		return _con.size();
+//	}
+//
+//	bool empty() const
+//	{
+//		return _con.empty();
+//	}
+//
+//private:
+//	Container _con;
+//};
+
+
+//template<class T, class Container = deque<T>>
+//class stack
+//{
+//public:
+//	void push(const T& x)
+//	{
+//		_con.push_back(x);
+//	}
+//
+//	void pop()
+//	{
+//		_con.pop_back();
+//	}
+//
+//	const T& top() const
+//	{
+//		return _con.back();
+//	}
+//
+//	size_t size() const
+//	{
+//		return _con.size();
+//	}
+//
+//	bool empty() const
+//	{
+//		return _con.empty();
+//	}
+//
+//private:
+//	Container _con;//自定义对象调用自己的析构和构造函数，我们不需要写
+//};
+
+
+
+//int main()
+//{
+//	//zlr::TestStack();
+//	//cout << endl;
+//	//zlr::TestQueue();
+//	zlr::TestPriority_queue();
+//	
+//	return 0;
+//}
 
 //int main()
 //{

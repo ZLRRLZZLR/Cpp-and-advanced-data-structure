@@ -92,7 +92,7 @@ namespace zlr
         {
             _c.push_back(x);
 
-            AdjustUp(_c.size() - 1);
+            AdjustUp((int)_c.size() - 1);
         }
 
         void pop()
@@ -125,11 +125,12 @@ namespace zlr
         p.push(3);
 
         cout << p.size() << endl;
+        int n = p.size();
 
-        for(int i = 0;i < p.size();i++)
+        for(int i = 0;i < n;i++)
         {
-            p.pop();
             cout << p.top();
+            p.pop();
         }
 
     }
