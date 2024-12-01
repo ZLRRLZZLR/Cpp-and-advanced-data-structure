@@ -1,96 +1,172 @@
 //#include"stack_queue.h"
 #include"priority_queue.h"
 
-namespace bit
+class Date
 {
-	// 默认是大堆
-	template<class T, class Container = vector<T>, class Compare = Less<T>>
-	class priority_queue
+	friend ostream& operator<<(ostream& _cout, const Date& d);
+public:
+	Date(int year = 1900, int month = 1, int day = 1)
+		: _year(year)
+		, _month(month)
+		, _day(day)
+	{}
+
+	bool operator<(const Date& d)const
 	{
-	public:
-		void AdjustUp(int child)//向上调整算法
-		{
-			Compare com;
-			int parent = (child - 1) / 2;
-			while (child > 0)
-			{
-				//if (_con[parent] < _con[child])
-				if (com(_con[parent], _con[child]))
-				{
-					swap(_con[child], _con[parent]);
-					child = parent;
-					parent = (child - 1) / 2;
-				}
-				else
-				{
-					break;
-				}
-			}
-		}
+		return (_year < d._year) ||
+			(_year == d._year && _month < d._month) ||
+			(_year == d._year && _month == d._month && _day < d._day);
+	}
 
-		void push(const T& x)
-		{
-			_con.push_back(x);
+	bool operator>(const Date& d)const
+	{
+		return (_year > d._year) ||
+			(_year == d._year && _month > d._month) ||
+			(_year == d._year && _month == d._month && _day > d._day);
+	}
+private:
+	int _year;
+	int _month;
+	int _day;
+};
 
-			AdjustUp(_con.size() - 1);
-		}
-
-		void AdjustDown(int parent)//向下调整算法
-		{
-			// 先假设左孩子小
-			size_t child = parent * 2 + 1;
-
-			Compare com;
-			while (child < _con.size())  // child >= n说明孩子不存在，调整到叶子了
-			{
-				// 找出小的那个孩子
-				//if (child + 1 < _con.size() && _con[child] < _con[child + 1])
-				if (child + 1 < _con.size() && com(_con[child], _con[child + 1]))
-				{
-					++child;
-				}
-
-				//if (_con[parent] < _con[child])
-				if (com(_con[parent], _con[child]))
-				{
-					swap(_con[child], _con[parent]);
-					parent = child;
-					child = parent * 2 + 1;
-				}
-				else
-				{
-					break;
-				}
-			}
-		}
-
-		void pop()
-		{
-			swap(_con[0], _con[_con.size() - 1]);
-			_con.pop_back();
-			AdjustDown(0);
-		}
-
-		const T& top()
-		{
-			return _con[0];
-		}
-
-		size_t size() const
-		{
-			return _con.size();
-		}
-
-		bool empty() const
-		{
-			return _con.empty();
-		}
-
-	private:
-		Container _con;
-	};
+ostream& operator<<(ostream& _cout, const Date& d)
+{
+	_cout << d._year << "-" << d._month << "-" << d._day;
+	return _cout;
 }
 
+class DateLess
+{
+public:
+	bool operator()(Date* p1, Date* p2)
+	{
+		return *p1 < *p2;
+	}
+};
+
+	// 1、类类型不支持比较大小
+	// 2、支持比较大小，但是比较的逻辑不是你想要的
+	// 需要自己实现仿函数
+
+	priority_queue<Date*, vector<Date*>, DateLess> q2;
+	priority_queue<Date*> q2;
+	q2.push(new Date(2018, 10, 29));
+	q2.push(new Date(2018, 10, 28));
+	q2.push(new Date(2018, 10, 30));
+	cout << *q2.top() << endl;
+	q2.pop();
+
+	cout << *q2.top() << endl;
+	q2.pop();
+
+	cout << *q2.top() << endl;
+	q2.pop();
+
+	priority_queue<int*> q3;
+	q3.push(new int(2));
+	q3.push(new int(1));
+	q3.push(new int(3));
+
+	cout << *q3.top() << endl;
+	q3.pop();
+
+	cout << *q3.top() << endl;
+	q3.pop();
+
+	cout << *q3.top() << endl;
+	q3.pop();
+
+//namespace bit
+//{
+//	// 默认是大堆
+//	template<class T, class Container = vector<T>, class Compare = Less<T>>
+//	class priority_queue
+//	{
+//	public:
+//		void AdjustUp(int child)//向上调整算法
+//		{
+//			Compare com;
+//			int parent = (child - 1) / 2;
+//			while (child > 0)
+//			{
+//				//if (_con[parent] < _con[child])
+//				if (com(_con[parent], _con[child]))
+//				{
+//					swap(_con[child], _con[parent]);
+//					child = parent;
+//					parent = (child - 1) / 2;
+//				}
+//				else
+//				{
+//					break;
+//				}
+//			}
+//		}
+//
+//		void push(const T& x)
+//		{
+//			_con.push_back(x);
+//
+//			AdjustUp(_con.size() - 1);
+//		}
+//
+//		void AdjustDown(int parent)//向下调整算法
+//		{
+//			// 先假设左孩子小
+//			size_t child = parent * 2 + 1;
+//
+//			Compare com;
+//			while (child < _con.size())  // child >= n说明孩子不存在，调整到叶子了
+//			{
+//				// 找出小的那个孩子
+//				//if (child + 1 < _con.size() && _con[child] < _con[child + 1])
+//				if (child + 1 < _con.size() && com(_con[child], _con[child + 1]))
+//				{
+//					++child;
+//				}
+//
+//				//if (_con[parent] < _con[child])
+//				if (com(_con[parent], _con[child]))
+//				{
+//					swap(_con[child], _con[parent]);
+//					parent = child;
+//					child = parent * 2 + 1;
+//				}
+//				else
+//				{
+//					break;
+//				}
+//			}
+//		}
+//
+//		void pop()
+//		{
+//			swap(_con[0], _con[_con.size() - 1]);
+//			_con.pop_back();
+//			AdjustDown(0);
+//		}
+//
+//		const T& top()
+//		{
+//			return _con[0];
+//		}
+//
+//		size_t size() const
+//		{
+//			return _con.size();
+//		}
+//
+//		bool empty() const
+//		{
+//			return _con.empty();
+//		}
+//
+//	private:
+//		Container _con;
+//	};
+//}
+//
 // //仿函数：本质是一个类，这个类重载operator(),他的对象可以像函数一样使用
 //template<class T>
 //class Less
