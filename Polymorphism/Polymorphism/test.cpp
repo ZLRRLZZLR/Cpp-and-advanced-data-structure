@@ -1,3 +1,284 @@
+#include<iostream>
+using namespace std;
+
+//int main()
+//{
+//	int i = 0;
+//	static int j = 1;
+//	int* p1 = new int;
+//	const char* p2 = "xxxxxxxx";
+//	printf();
+//}
+
+
+
+//class Derive : public Base
+//{
+//public:
+//	virtual void func1() { cout << "Derive::func1" << endl; }
+//
+//};
+
+
+//class Person{
+//public:
+//	void BuyTicket() { cout << "ÂòÆ±-È«¼Û" << endl; }
+//protected:
+//	string _name;
+//};
+//
+//class student : public Person
+//{
+//public:
+//	virtual void BuyTicket() { cout << "ÂòÆ±-´òÕÛ" << endl; }
+//
+//protected:
+//	int _id;
+//};
+//
+//class Soldier : public Person
+//{
+//public:
+//	virtual
+//};
+
+//class Car
+//{
+//public:
+//	virtual void Drive() = 0;
+//};
+//
+//class Benz : public Car
+//{
+//public:
+//	virtual void Drive()
+//	{
+//		cout << "Benz-ÊæÊÊ" << endl;
+//	}
+//};
+//
+//class BMW : public Car
+//{
+//public:
+//	virtual void Drive()
+//	{
+//		cout << "BMW-²Ù¿Ø" << endl;
+//	}
+//};
+//
+//int main()
+//{
+//	Car* pBenz = new Benz;
+//	pBenz->Drive();
+//
+//	return 0;
+//}
+//
+//class Base
+//{
+//public:
+//	virtual void Func1()
+//	{
+//		cout << "Func1()" << endl;
+//	}
+//
+//		virtual void Func2()
+//	{
+//		cout << "Func1()" << endl;
+//	}
+//
+//	void Func3()
+//	{
+//		cout << "Func1()" << endl;
+//	}
+//
+//protected:
+//	int _b = 1;
+//	char _ch = 'x';
+//};
+//
+//int main()
+//{
+//	Base b;
+//	cout << sizeof(b) << endl;
+//	return 0;
+//}
+
+//class A
+//{
+//public:
+//	virtual ~A()
+//	{
+//		cout << "~A()" << endl;
+//	}
+//};
+//
+//class B : public A
+//{
+//public:
+//	~B()
+//	{
+//		cout << "~B()->delete:" << _p << endl;
+//		delete _p;
+//	}
+//
+//protected:
+//	int* _p = new int[10];
+//};
+//
+//class Car
+//{
+//public:
+//	virtual void Drive()final;
+//	{}
+//};
+//
+//class Benz :public Car {
+//public:
+//	virtual void Drive() { cout << "Benz-ÊæÊÊ" << endl; }
+//};
+//
+//int main()
+//{
+//	A* p1 = new A;
+//	A* p2 = new B;
+//
+//	delete p1;
+//	delete p2;
+//
+//	return 0;
+//}
+
+
+
+//class A {};
+//class B : public A {};
+
+
+
+//class Person{
+//public :
+//	virtual A* BuyTicket()
+//	{
+//		cout << "ÂòÆ±-È«¼Û" << endl;
+//		return nullptr;
+//	}
+//};
+//
+//class Student : public Person
+//{
+//public:
+//	virtual B* BuyTicket()
+//	{
+//		cout << "ÂòÆ±-´òÕÛ" << endl;
+//		return nullptr;
+//	}
+//};
+//
+//void Func(Person* ptr)
+//{
+//	ptr->BuyTicket();
+//}
+//
+//int main()
+//{
+//	Person ps;
+//	Student st;
+//
+//	Func(&ps);
+//	Func(&st);
+//
+//	return 0;
+//}
+
+
+//class A
+//{
+//public:
+//	virtual void func(int val = 1) { std::cout << "A->" << val << std::endl; }
+//	virtual void test() { func(); }
+//
+//};
+//
+//class B : public A
+//{
+//public:
+//	void func(int val = 0) { std::cout << "B->" << val << std::endl; }
+//};
+//
+//int main(int argc,char* argv)
+//{
+//	B* p = new B;
+//	p->func();
+//	p->test();
+//
+//	return 0;
+//}
+
+
+
+//class Person
+//{
+//public:
+//	virtual void BuyTicket() { cout << "ÂòÆ±¡ªÈ«¼Û" << endl; }
+//};
+//
+//class Student : public Person{
+//public:
+//	void BuyTicket() { cout << "ÂòÆ±-´òÕÛ" << endl; }
+//};
+//
+//void Func(Person& ptr)
+//{
+//	ptr.BuyTicket();
+//}
+//
+//class Animal
+//{
+//public:
+//	virtual void talk() const
+//	{}
+//};
+//
+//class Dog : public Animal
+//{
+//public:
+//	virtual void talk() const
+//	{
+//		std::cout << "ÍôÍô" << std::endl;
+//	}
+//};
+//
+//class Cat : public Animal
+//{
+//public:
+//	virtual void talk() const
+//	{
+//		std::cout << "ß÷" << std::endl;
+//	}
+//};
+//
+//void letsHear(const Animal& animal)
+//{
+//	animal.talk();
+//}
+//
+//int main()
+//{
+//	Person ps;
+//	Student st;
+//	Func(ps);
+//	Func(st);
+//
+//	Cat cat;
+//	Dog dog;
+//	letsHear(cat);
+//	letsHear(dog);
+//
+//
+//	return 0;
+//}
+
 
 //int main()
 //{
