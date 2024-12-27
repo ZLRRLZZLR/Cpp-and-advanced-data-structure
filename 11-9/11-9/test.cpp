@@ -5,82 +5,108 @@
 #include<algorithm>
 using namespace std;
 
-
-class Solution {
+class Base {
 public:
-    vector<vector<int>> fourSum(vector<int>& nums, int target) {
-        vector<vector<int>> table;
-
-        sort(nums.begin(), nums.end());
-
-        int a = 0;
-        while (a <= (int)nums.size() - 4)
-        {
-            int b = a + 1;
-            while (b <= (int)nums.size() - 3)
-            {
-                int left = b + 1, right = nums.size() - 1;
-                int goal = target - nums[a] - nums[b];
-                while (left < right)
-                {
-                    int sum = nums[left] + nums[right];
-                    if (sum > goal)
-                    {
-                        right--;
-                    }
-                    else if (sum < goal)
-                    {
-                        left++;
-                    }
-                    else
-                    {
-                        table.push_back({ nums[a],nums[b], nums[left], nums[right] });
-                        int num1 = nums[left];
-                        int num2 = nums[right];
-
-                        left++;
-                        right--;
-                        while (nums[left] == num1 && left < right)
-                        {
-                            left++;
-                        }
-                        while (nums[right] == num2 && left < right)
-                        {
-                            right--;
-                        }
-                    }
-                }
-
-                int num3 = nums[b];
-                b++;
-
-                while (nums[b] == num3 && b <= nums.size() - 3)
-                {
-                    b++;
-                }
-            }
-
-            int num4 = nums[a];
-            a++;
-
-            while (nums[a] == num4 && a <= nums.size() - 4)
-            {
-                a++;
-            }
-
-        }
-        return table;
-
-    }
+	Base(int n, int m = 7) :x(n), y(n + m) { cout << x << "\t"; };
+	void func() { cout << y << "\t"; }
+private:
+	int x, y;
 };
-
-int main()
-{
-    vector<int> table = {0};
-    Solution().fourSum(table,0);
-
-    return 0;
+class A {
+public:
+	A(int n = 3) :k(n) { cout << k << "\t"; }
+private:
+	int k;
+};
+class Derived :public Base {
+public:
+	Derived(int n = 1, int m = 2) :a2(m), Base(n + m), z(n) {}
+	void func() { cout << z << "\t"; }
+private:
+	int z;
+	A a1, a2;
+};
+void func(Base& b) { b.func(); }
+int main() {
+	Derived d(5);
+	func(d);
+	return 0;
 }
+//class Solution {
+//public:
+//    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+//        vector<vector<int>> table;
+//
+//        sort(nums.begin(), nums.end());
+//
+//        int a = 0;
+//        while (a <= (int)nums.size() - 4)
+//        {
+//            int b = a + 1;
+//            while (b <= (int)nums.size() - 3)
+//            {
+//                int left = b + 1, right = nums.size() - 1;
+//                int goal = target - nums[a] - nums[b];
+//                while (left < right)
+//                {
+//                    int sum = nums[left] + nums[right];
+//                    if (sum > goal)
+//                    {
+//                        right--;
+//                    }
+//                    else if (sum < goal)
+//                    {
+//                        left++;
+//                    }
+//                    else
+//                    {
+//                        table.push_back({ nums[a],nums[b], nums[left], nums[right] });
+//                        int num1 = nums[left];
+//                        int num2 = nums[right];
+//
+//                        left++;
+//                        right--;
+//                        while (nums[left] == num1 && left < right)
+//                        {
+//                            left++;
+//                        }
+//                        while (nums[right] == num2 && left < right)
+//                        {
+//                            right--;
+//                        }
+//                    }
+//                }
+//
+//                int num3 = nums[b];
+//                b++;
+//
+//                while (nums[b] == num3 && b <= nums.size() - 3)
+//                {
+//                    b++;
+//                }
+//            }
+//
+//            int num4 = nums[a];
+//            a++;
+//
+//            while (nums[a] == num4 && a <= nums.size() - 4)
+//            {
+//                a++;
+//            }
+//
+//        }
+//        return table;
+//
+//    }
+//};
+//
+//int main()
+//{
+//    vector<int> table = {0};
+//    Solution().fourSum(table,0);
+//
+//    return 0;
+//}
 
 //class Solution {
 //public:
