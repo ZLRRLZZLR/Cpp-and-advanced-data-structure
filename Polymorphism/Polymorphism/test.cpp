@@ -1,6 +1,22 @@
 #include<iostream>
+#include<algorithm>
 using namespace std;
 
+int main() {
+	int a = 3;
+	int b = 4;
+
+	double c = 1.0;
+	double d = 2.0;
+
+	swap(a, b);//交换int
+	swap(c, d);//交换double
+
+	cout << a << endl;//输出int
+	cout << c << endl;//输出double
+
+	return 0;
+}
 //int main()
 //{
 //	int i = 0;
@@ -267,13 +283,13 @@ using namespace std;
 //{
 //	Person ps;
 //	Student st;
-//	Func(ps);
-//	Func(st);
+//	Func(ps);//对于普通人买票全价
+//	Func(st);//对于学生买票半价
 //
 //	Cat cat;
 //	Dog dog;
-//	letsHear(cat);
-//	letsHear(dog);
+//	letsHear(cat);//狗的叫声是汪汪
+//	letsHear(dog);//猫的叫声是喵
 //
 //
 //	return 0;
