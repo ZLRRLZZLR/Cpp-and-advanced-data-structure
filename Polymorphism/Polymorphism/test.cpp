@@ -1,22 +1,104 @@
 #include<iostream>
 #include<algorithm>
 using namespace std;
-
-int main() {
-	int a = 3;
-	int b = 4;
-
-	double c = 1.0;
-	double d = 2.0;
-
-	swap(a, b);//交换int
-	swap(c, d);//交换double
-
-	cout << a << endl;//输出int
-	cout << c << endl;//输出double
-
+int main()
+{
+	int i = 0;
+	static int j = 1;
+	int* p1 = new int;
+	const char* p2 = "xxxxxxxx";
+	printf("栈:%p\n", &i);
+	printf("静态区:%p\n", &j);
+	printf("堆:%p\n", p1);
+	printf("常量区:%p\n", p2);
+	Base b;
+	Derive d;
+	Base* p3 = &b;
+	Derive* p4 = &d;
+	printf("Person虚表地址:%p\n", *(int*)p3);//强制转换成int*可以看虚表中存储函数前四个字节 
+	printf("Student虚表地址:%p\n", *(int*)p4);//的地址进而观察到虚表存储地址
+	printf("虚函数地址:%p\n", &Base::func1);
+	printf("普通函数地址:%p\n", &Base::func5);
 	return 0;
 }
+运行结果：
+栈 : 010FF954
+静态区 : 0071D000
+堆 : 0126D740
+常量区 : 0071ABA4
+Person虚表地址 : 0071AB44
+Student虚表地址 : 0071AB84
+虚函数地址 : 00711488
+普通函数地址 : 007114BF
+//class Base {
+//public:
+//	virtual void func1() { cout << "Base::func1" << endl; }
+//	virtual void func2() { cout << "Base::func2" << endl; }
+//	void func5() { cout << "Base::func5" << endl; }
+//protected:
+//	int a = 1;
+//};
+//
+//class Derive : public Base
+//{
+//public:
+//	// 重写基类的func1
+//	virtual void func1() { cout << "Derive::func1" << endl; }
+//	virtual void func3() { cout << "Derive::func1" << endl; }
+//	void func4() { cout << "Derive::func4" << endl; }
+//
+//protected:
+//	int b = 2;
+//};
+//
+//int main()
+//{
+//	Base b1;
+//	Base b2;
+//
+//	Derive d;
+//
+//
+//	return 0;
+}
+//class Person {
+//public:
+//	virtual void BuyTicket() { cout << "买票-全价" << endl; }
+//};
+//
+//class Student : public Person {
+//public:
+//	void BuyTicket() { cout << "买票-打折" << endl; }
+//};
+//
+//void Func(Person* ptr)
+//{
+//	ptr->BuyTicket();
+//}
+//int main()
+//{
+//	Person ps;
+//	Student st;
+//	Func(&ps);
+//	Func(&st);
+//	return 0;
+//}
+
+//int main() {
+//	int a = 3;
+//	int b = 4;
+//
+//	double c = 1.0;
+//	double d = 2.0;
+//
+//	swap(a, b);//交换int
+//	swap(c, d);//交换double
+//
+//	cout << a << endl;//输出int
+//	cout << c << endl;//输出double
+//
+//	return 0;
+//}
 //int main()
 //{
 //	int i = 0;
