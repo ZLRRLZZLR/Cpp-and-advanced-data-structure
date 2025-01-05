@@ -1,4 +1,27 @@
 
+///**环形链表II
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     ListNode *next;
+// *     ListNode(int x) : val(x), next(NULL) {}
+// * };
+// */
+//class Solution {
+//public:
+//    ListNode* detectCycle(ListNode* head) {
+//        set<ListNode*> s;
+//        ListNode* cur = head;
+//        while (cur) {
+//            if (s.count(cur))
+//                return cur;
+//            else
+//                s.insert(cur);
+//            cur = cur->next;
+//        }
+//        return nullptr;
+//    }
+//};
 //两个数组的交集
 //class Solution {
 //public:
