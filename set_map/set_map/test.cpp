@@ -1,3 +1,147 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+
+#include<iostream>
+#include<set>
+using namespace std;
+
+//int main() {
+//	set<int> s;
+//	set<int, greater<int>> s;
+//	s.insert(5);
+//
+//	set<int>::iterator it = s.begin();
+//	auto it = s.begin();
+//	while (it != s.end()) {
+//		cout << *it << " ";
+//	}
+//	cout << endl;
+//	s.insert({ 2,8,3,9,2 });
+//	for (auto e : s) {
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//	void insert(initializer_list<value_type> il);
+//	set<string> strset = {"sort","insert","add"};
+//	set<string> strset({ "sort","insert","add" });
+//
+//	for (auto& e : strset) {
+//		cout << e << "";
+//	}
+//	cout << endl;
+//
+//	return 0;
+//}
+//int main() {
+//	set<int> s = { 4,2,7,2,8,5,9 };
+//	for (auto e : s) {
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	s.erase(s.begin());
+//	for (auto e : s) {
+//		cout << e << " ";
+//	}
+//	cout << endl;
+//
+//	int x;
+//	cin >> x;
+//	int num = s.erase(x);
+//	if (num == 0) {
+//		cout << x << "不存在！" << endl;
+//	}
+//	else {
+//		cout << x << "删除成功!" << endl;
+//	}
+//	cin >> x;
+//	auto pos = s.find(x);
+//	if(pos != s.end()){
+//		s.erase(pos);
+//	}
+//	else {
+//		cout << x << "不存在" << endl;
+//	}
+//
+//	for (auto e : s) {
+//		cout << e << "";
+//	}
+//	cout << endl;
+//
+//	auto pos1 = find(s.begin(), s.end(),x);
+//
+//	auto pos2 = s.find(x);
+//
+//	cin >> x;
+//	if (s.count(x)) {
+//		cout << x << "在" << endl;
+//	}
+//	return 0;
+//}
+//
+//int main() {
+//	std::set<int> myset;
+//	for (int i = 1; i < 10; i++) {
+//		myset.insert(i * 10);
+//	}
+//	for (auto e : myset) {
+//		cout << e << "";
+//	}
+//	cout << endl;
+//
+//	auto itlow = myset.lower_bound(30);
+//	auto itlow = myset.upper_bound(50);
+//
+//	myset.erase(itlow, itup);
+//	for (auto e : myset) {
+//		cout << e << "";
+//	}
+//
+//	cout << endl;
+//
+//}
+//int main() {
+//	multiset<int> s = { 4,2,7,2,8,4,5,4,9 };
+//	auto it = s.begin();
+//	while (it != s.end()) {
+//		cout << *it << "";
+//		++it;
+//	}
+//	cout << endl;
+//
+//	int x;
+//	cin >> x;
+//	auto pos = s.find(x);
+//	while (pos != s.end() && *pos == x) {
+//		cout << *pos << "";
+//		++pos;
+//	}
+//	cout << endl;
+//	s.erase(x);
+//
+//	it = s.begin();
+//	while (it != s.end()) {
+//		cout << *it << "";
+//		++it;
+//	}
+//	cout << endl;
+//	return;
+//}
+//#include<map>
+//
+//int main() {
+//	map<string，string> dict = { {""} };
+//	pair<string, string>kv1();
+//
+//	dict.insert(kv1);
+//	dict.insert(pair<string, string>());
+//	dict.insert()
+//		map<string, string>::iterator it = dict.begin();
+//	while (it != dict.end()) {
+//		it->second += 'x';
+//
+//		cout << it->first << it->second
+//	}
+//}
 
 ///**环形链表II
 // * Definition for singly-linked list.
