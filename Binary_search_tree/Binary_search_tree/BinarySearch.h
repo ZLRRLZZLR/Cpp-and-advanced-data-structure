@@ -75,11 +75,11 @@ namespace key_value
 			return true;
 		}
 
-		Node* Find(const K& key) {
+		/*Node* Find(const K& key) {
 			Node* cur = _root;
 			while (cur) {
 				if (cur->_key < key) {
-					cur = cur¡ª > _right;
+					cur = cur->_right;
 				}
 				else if (cur->_key > key) {
 					cur = cur->_left;
@@ -90,9 +90,9 @@ namespace key_value
 			}
 
 			return nullptr;
-		}
+		}*/
 
-		bool Erase(const K& key) {
+		/*bool Erase(const K& key) {
 			Node* parent = nullptr;
 			Node* cur = _root;
 
@@ -154,23 +154,23 @@ namespace key_value
 				return true;
 				}
 			}
-		}
-		return false;
+			return false;
+		}*/
 
-		void InOrder() {
+		/*void InOrder() {
 			_InOrder(_root);
 			cout << endl;
-		}
-		private:
-			void _InOrder(Node* root) {
+		}*/
+private:
+			/*void _InOrder(Node* root) {
 				if (root == nullptr) {
 					return;
 				}
 				_InOrder(root->_left);
-				cout << root¡ª > key << "";
+				cout << root->_key << root->_value << "" << endl;;
 				_InOrder(root->right);
-			}
-			private:
+			}*/
+private:
 				Node _root = nullptr;
 	};
 }

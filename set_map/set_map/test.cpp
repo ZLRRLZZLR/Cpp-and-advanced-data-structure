@@ -4,6 +4,56 @@
 #include<set>
 using namespace std;
 
+
+///*随机链表的复制
+//// Definition for a Node.
+//class Node {
+//public:
+//    int val;
+//    Node* next;
+//    Node* random;
+//
+//    Node(int _val) {
+//        val = _val;
+//        next = NULL;
+//        random = NULL;
+//    }
+//};
+//*/
+//
+//class Solution {
+//public:
+//    Node* copyRandomList(Node* head) {
+//        map<Node*, Node*> nodetable;
+//        Node* copyhead = nullptr, * copytail = nullptr;
+//        Node* cur = head;
+//        while (cur) {
+//            if (copytail == nullptr) {
+//                copyhead = copytail = new Node(cur->val);
+//            }
+//            else {
+//                copytail->next = new Node(cur->val);
+//                copytail = copytail->next;
+//            }
+//            nodetable[cur] = copytail;
+//            cur = cur->next;
+//        }
+//
+//        cur = head;
+//        Node* copy = copyhead;
+//        while (cur) {
+//            if (cur->random == nullptr) {
+//                copy->random = nullptr;
+//            }
+//            else {
+//                copy->random = nodetable[cur->random];
+//            }
+//            cur = cur->next;
+//            copy = copy->next;
+//        }
+//        return copyhead;
+//    }
+//};
 //int main() {
 //	set<int> s;
 //	set<int, greater<int>> s;
