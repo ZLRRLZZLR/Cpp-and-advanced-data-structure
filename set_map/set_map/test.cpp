@@ -1,10 +1,62 @@
-#define _CRT_SECURE_NO_WARNINGS 1
-
-#include<iostream>
-#include<set>
+#include <iostream>
+#include<map>
+#include<vector>
+#include<algorithm>
+#include<string>
 using namespace std;
 
+//单词识别
+//struct Compare {
+//    bool operator()(const pair<string, int>& a, const pair<string, int>& b) {
+//        return a.second > b.second;
+//    }
+//};
+//
+//int main() {
+//    string s;
+//    while (getline(cin, s)) { // 注意 while 处理多个 case
+//        s[0] += 32;
+//        s[s.size() - 1] = ' ';
+//        size_t pos = s.find(' ', 0), prev = 0;
+//        map<string, int> wordtable;
+//        while (pos != -1) {
+//            wordtable[s.substr(prev, pos - prev)]++;
+//            prev = pos + 1;
+//            pos = s.find(' ', prev);
+//        }
+//        vector<pair<string, int>> tmp({ wordtable.begin(),wordtable.end() });
+//        stable_sort(tmp.begin(), tmp.end(), Compare());
+//        for (auto i : tmp) {
+//            cout << i.first << ':' << i.second << endl;
+//        }
+//    }
+//    return 0;
+//}
+//// 64 位输出请用 printf("%lld")
 
+
+
+//class Solution {
+//public:
+//    struct Compare {
+//        bool operator()(const pair<string, int>& a, const pair<string, int>& b) {
+//            return a.second > b.second;
+//        }
+//    };
+//    vector<string> topKFrequent(vector<string>& words, int k) {
+//        map<string, int> wordtable;
+//        for (auto i : words) {
+//            wordtable[i]++;
+//        }
+//        vector<pair<string, int>> tmp(wordtable.begin(), wordtable.end());
+//        stable_sort(tmp.begin(), tmp.end(), Compare());
+//        vector<string> ret;
+//        for (int i = 0; i < k; i++) {
+//            ret.push_back(tmp[i].first);
+//        }
+//        return ret;
+//    }
+//};
 ///*随机链表的复制
 //// Definition for a Node.
 //class Node {
