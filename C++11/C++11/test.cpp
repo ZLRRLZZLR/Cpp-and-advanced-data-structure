@@ -1,42 +1,75 @@
+#include<iostream>
 
-namespace bit
+using namespace std;
+
+template <class T>
+const T& GetArg(const T& x)
 {
-	string addStrings(string num1, string num2)
-	{
-		string str;
-		int end1 = num1.size() - 1, end2 = num2.size() - 1;
-		int next = 0;
-		while (end1 >= 0 || end2 >= 0)
-		{
-			int val1 = end1 >= 0 ? num1[end1--] - '0' : 0;
-			int val2 = end2 >= 0 ? num2[end2--] - '0' : 0;
-			int ret = val1 + val2 + next;
-			next = ret / 10;
-			ret = ret % 10;
-			str += ('0' + ret);
-		}
-		if (next == 1)
-			str += '1';
-		reverse(str.begin(), str.end());
-		cout << "******************************" << endl;
-		return str;
-	}
+	cout << x << " ";
+	return x;
 }
-// 场景1
+template <class ...Args>
+void Arguments(Args... args)
+{
+}
+template <class ...Args>
+void Print(Args... args)
+{
+	// 注意GetArg必须返回或者到的对象，这样才能组成参数包给Arguments
+	GetArg(args)...;
+}
+
+// 本质可以理解为编译器编译时，包的扩展模式
+// 将上面的函数模板扩展实例化为下面的函数
+// 是不是很抽象，C++11以后，只能说委员会的大佬设计语法思维跳跃得太厉害
+//void Print(int x, string y, double z)
+//{
+// Arguments(GetArg(x), GetArg(y), GetArg(z));
+//}
 int main()
 {
-	bit::string ret = bit::addStrings("11111", "2222");
-	cout << ret.c_str() << endl;
+	Print(1, string("xxxxx"), 2.2);
 	return 0;
 }
-// 场景2
-int main()
-{
-	bit::string ret;
-	ret = bit::addStrings("11111", "2222");
-	cout << ret.c_str() << endl;
-	return 0;
-}
+
+//namespace bit
+//{
+//	string addStrings(string num1, string num2)
+//	{
+//		string str;
+//		int end1 = num1.size() - 1, end2 = num2.size() - 1;
+//		int next = 0;
+//		while (end1 >= 0 || end2 >= 0)
+//		{
+//			int val1 = end1 >= 0 ? num1[end1--] - '0' : 0;
+//			int val2 = end2 >= 0 ? num2[end2--] - '0' : 0;
+//			int ret = val1 + val2 + next;
+//			next = ret / 10;
+//			ret = ret % 10;
+//			str += ('0' + ret);
+//		}
+//		if (next == 1)
+//			str += '1';
+//		reverse(str.begin(), str.end());
+//		cout << "******************************" << endl;
+//		return str;
+//	}
+//}
+//// 场景1
+//int main()
+//{
+//	bit::string ret = bit::addStrings("11111", "2222");
+//	cout << ret.c_str() << endl;
+//	return 0;
+//}
+//// 场景2
+//int main()
+//{
+//	bit::string ret;
+//	ret = bit::addStrings("11111", "2222");
+//	cout << ret.c_str() << endl;
+//	return 0;
+//}
 
 //#define _CRT_SECURE_NO_WARNINGS 1
 //#include<iostream>
