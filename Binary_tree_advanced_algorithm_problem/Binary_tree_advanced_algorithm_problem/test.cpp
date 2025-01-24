@@ -1,3 +1,36 @@
+
+//二叉树的前序遍历非递归版本
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     TreeNode *left;
+// *     TreeNode *right;
+// *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+// * };
+// */
+//class Solution {
+//public:
+//    vector<int> preorderTraversal(TreeNode* root) {
+//        stack<TreeNode*> st;
+//        vector<int> ret;
+//        TreeNode* cur = root;
+//        while (cur || st.size()) {
+//            while (cur) {
+//                st.push(cur);
+//                ret.push_back(cur->val);
+//                cur = cur->left;
+//            }
+//
+//            cur = st.top()->right;
+//            st.pop();
+//        }
+//
+//        return ret;
+//    }
+//};
 //从后序与中序遍历序列构造二叉树
 ///**
 // * Definition for a binary tree node.
