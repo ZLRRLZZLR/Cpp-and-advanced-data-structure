@@ -1,5 +1,95 @@
 
-
+//从前序与中序遍历序列构造二叉树
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     TreeNode *left;
+// *     TreeNode *right;
+// *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+// *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+// * };
+// */
+//class Solution {
+//public:
+//    TreeNode* _buildTree(vector<int>& preorder, vector<int>& inorder, int& prei, int inbegin, int inend) {
+//        if (inbegin > inend)
+//            return nullptr;
+//
+//        TreeNode* root = new TreeNode(preorder[prei]);
+//
+//        int rooti = inbegin;
+//        while (inorder[rooti] != preorder[prei]) {
+//            rooti++;
+//        }
+//
+//        prei++;
+//        root->left = _buildTree(preorder, inorder, prei, inbegin, rooti - 1);
+//        root->right = _buildTree(preorder, inorder, prei, rooti + 1, inend);
+//        return root;
+//    }
+//    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+//        int i = 0;
+//        return _buildTree(preorder, inorder, i, 0, inorder.size() - 1);
+//    }
+//};
+///*
+//// Definition for a Node.
+//class Node {
+//public:
+//    int val;
+//    Node* left;
+//    Node* right;
+//
+//    Node() {}
+//
+//    Node(int _val) {
+//        val = _val;
+//        left = NULL;
+//        right = NULL;
+//    }
+//
+//    Node(int _val, Node* _left, Node* _right) {
+//        val = _val;
+//        left = _left;
+//        right = _right;
+//    }
+//};
+//*/
+//class Solution {
+//public:
+//    void InOrder(Node* cur, Node*& prev) {
+//        if (cur == nullptr)
+//            return;
+//
+//        InOrder(cur->left, prev);
+//
+//        cur->left = prev;
+//        if (prev)
+//            prev->right = cur;
+//        prev = cur;
+//
+//        InOrder(cur->right, prev);
+//    }
+//    Node* treeToDoublyList(Node* root) {
+//        if (root == nullptr)
+//            return nullptr;
+//
+//        Node* prev = nullptr;
+//        InOrder(root, prev);
+//
+//        Node* head = root;
+//        while (head->left) {
+//            head = head->left;
+//        }
+//
+//        head->left = prev;
+//        prev->right = head;
+//
+//        return head;
+//    }
+//};
 //二叉树的最近公共祖先
 ///**
 // * Definition for a binary tree node.
@@ -57,7 +147,7 @@
 //
 //};
 
-//二叉树的最近公共祖先
+//二叉树的最近公共祖先O(N2)
 ///**
 // * Definition for a binary tree node.
 // * struct TreeNode {
