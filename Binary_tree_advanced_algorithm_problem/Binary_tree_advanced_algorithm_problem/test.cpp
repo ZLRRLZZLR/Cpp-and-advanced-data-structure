@@ -1,4 +1,62 @@
 
+
+//二叉树的最近公共祖先
+///**
+// * Definition for a binary tree node.
+// * struct TreeNode {
+// *     int val;
+// *     TreeNode *left;
+// *     TreeNode *right;
+// *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+// * };
+// */
+//class Solution {
+//public:
+//    bool Getpath(TreeNode* root, TreeNode* node, stack<TreeNode*>& path) {
+//
+//        if (root == nullptr)
+//            return false;
+//
+//        path.push(root);
+//
+//        if (root == node)
+//            return true;
+//
+//
+//        if (Getpath(root->left, node, path)) {
+//            return true;
+//        }
+//        if (Getpath(root->right, node, path)) {
+//            return true;
+//        }
+//
+//        path.pop();
+//        return false;
+//    }
+//    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+//        stack<TreeNode*> qpath, ppath;
+//        Getpath(root, q, qpath);
+//        Getpath(root, p, ppath);
+//
+//        while (qpath.size() != ppath.size()) {
+//            if (qpath.size() > ppath.size()) {
+//                qpath.pop();
+//            }
+//            else {
+//                ppath.pop();
+//            }
+//        }
+//
+//        while (qpath.top() != ppath.top()) {
+//            qpath.pop();
+//            ppath.pop();
+//        }
+//
+//        return qpath.top();
+//    }
+//
+//};
+
 //二叉树的最近公共祖先
 ///**
 // * Definition for a binary tree node.
