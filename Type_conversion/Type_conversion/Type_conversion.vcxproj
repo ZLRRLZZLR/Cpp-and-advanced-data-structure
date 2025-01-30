@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{8a1948ae-98c9-4ff1-b25b-bc5d7b1a1b16}</ProjectGuid>
-    <RootNamespace>abnormal</RootNamespace>
+    <ProjectGuid>{7dddbf0b-6412-45c3-aca6-e18ffba6121b}</ProjectGuid>
+    <RootNamespace>Typeconversion</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
