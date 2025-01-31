@@ -1,180 +1,222 @@
 
+template<class Iterator,class Ref,class Ptr>
+struct ReverseIterator {
+	typedef ReverseIterator<Iterator, Ref, Ptr> Self;
+
+	ReverseIterator(Iterator it)
+		:it(it)
+	{ }
+	Ref operator*() {
+		Iterator tmp = _it;
+		--tmp;
+		return *tmp;
+	}
+
+	Ptr operator->() {
+		return &(operator*());
+	}
+
+	Self& operator++() {
+		--_it;
+		return *this;
+	}
+
+	Self& operator--;
+	{
+		++_it;
+		return *this;
+	}
+	bool operator!=(const Self& s) {
+		return _it != s._it;
+	}
+
+	bool operator==(const Self& s) {
+		return _it == s._it;
+	}
+
+	Iterator _it;
+};
+
+
+
+
+
 // ReverseIterator.h
 // 所有容器的反向迭代器
 // 迭代器适配器
-namespace bit
-{
-	template<class Iterator, class Ref, class Ptr>
-	struct ReverseIterator
-	{
-		typedef ReverseIterator<Iterator, Ref, Ptr> Self;
-		// 正向迭代器
-		Iterator _it;
-		ReverseIterator(Iterator it)
-			:_it(it)
-		{
-		}
-		Ref operator*()
-		{
-			Iterator tmp = _it;
-			return *(--tmp);
-		}
-		Ptr operator->()
-		{
-			return &(operator*());
-		}
-		Self& operator++()
-		{
-			--_it;
-			return *this;
-		}
-		Self& operator--()
-		{
-			++_it;
-			return *this;
-		}
-		Self operator++(int)
-		{
-			Self tmp(*this);
-			--_it;
-			return tmp;
-		}
-		Self operator--(int)
-		{
-			Self tmp(*this);
-			--_it;
-			return tmp;
-		}
-		bool operator!=(const Self& s) const
-		{
-			return _it != s._it;
-		}
-		bool operator==(const Self& s) const
-		{
-			return _it != s._it;
-		}
-	};
-}
+//namespace bit
+//{
+//	template<class Iterator, class Ref, class Ptr>
+//	struct ReverseIterator
+//	{
+//		typedef ReverseIterator<Iterator, Ref, Ptr> Self;
+//		 正向迭代器
+//		Iterator _it;
+//		ReverseIterator(Iterator it)
+//			:_it(it)
+//		{
+//		}
+//		Ref operator*()
+//		{
+//			Iterator tmp = _it;
+//			return *(--tmp);
+//		}
+//		Ptr operator->()
+//		{
+//			return &(operator*());
+//		}
+//		Self& operator++()
+//		{
+//			--_it;
+//			return *this;
+//		}
+//		Self& operator--()
+//		{
+//			++_it;
+//			return *this;
+//		}
+//		Self operator++(int)
+//		{
+//			Self tmp(*this);
+//			--_it;
+//			return tmp;
+//		}
+//		Self operator--(int)
+//		{
+//			Self tmp(*this);
+//			--_it;
+//			return tmp;
+//		}
+//		bool operator!=(const Self& s) const
+//		{
+//			return _it != s._it;
+//		}
+//		bool operator==(const Self& s) const
+//		{
+//			return _it != s._it;
+//		}
+//	};
+//}
 // vector.h
-#include"ReverseIterator.h"
-namespace bit
-{
-	template<class T>
-	class vector
-	{
-	public:
-		typedef T* iterator;
-		typedef const T* const_iterator;
-		typedef ReverseIterator<iterator, T&, T*> reverse_iterator;
-		typedef ReverseIterator<const_iterator, const T&, const T*>
-			const_reverse_iterator;
-		reverse_iterator rbegin()
-		{
-			return reverse_iterator(end());
-		}
-		reverse_iterator rend()
-		{
-			return reverse_iterator(begin());
-		}
-		const_reverse_iterator rbegin() const
-		{
-			return const_reverse_iterator(end());
-		}
-		const_reverse_iterator rend() const
-		{
-			return const_reverse_iterator(begin());
-		}
-		iterator begin()
-		{
-			return _start;
-		}
-		iterator end()
-		{
-			return _finish;
-		}
-		const_iterator begin() const
-		{
-			return _start;
-		}
-		const_iterator end() const
-		{
-			return _finish;
-		}
-		// ....
-	private:
-		iterator _start = nullptr;
-		iterator _finish = nullptr;
-		iterator _endofstorage = nullptr;
-	};
-}
+//#include"ReverseIterator.h"
+//namespace bit
+//{
+//	template<class T>
+//	class vector
+//	{
+//	public:
+//		typedef T* iterator;
+//		typedef const T* const_iterator;
+//		typedef ReverseIterator<iterator, T&, T*> reverse_iterator;
+//		typedef ReverseIterator<const_iterator, const T&, const T*>
+//			const_reverse_iterator;
+//		reverse_iterator rbegin()
+//		{
+//			return reverse_iterator(end());
+//		}
+//		reverse_iterator rend()
+//		{
+//			return reverse_iterator(begin());
+//		}
+//		const_reverse_iterator rbegin() const
+//		{
+//			return const_reverse_iterator(end());
+//		}
+//		const_reverse_iterator rend() const
+//		{
+//			return const_reverse_iterator(begin());
+//		}
+//		iterator begin()
+//		{
+//			return _start;
+//		}
+//		iterator end()
+//		{
+//			return _finish;
+//		}
+//		const_iterator begin() const
+//		{
+//			return _start;
+//		}
+//		const_iterator end() const
+//		{
+//			return _finish;
+//		}
+//		 ....
+//	private:
+//		iterator _start = nullptr;
+//		iterator _finish = nullptr;
+//		iterator _endofstorage = nullptr;
+//	};
+//}
 // list.h
-#include"ReverseIterator.h"
-namespace bit
-{
-	template<class T>
-	class list
-	{
-		typedef ListNode<T> Node;
-	public:
-		typedef ListIterator<T, T&, T*> iterator;
-		typedef ListIterator<T, const T&, const T*> const_iterator;
-		typedef ReverseIterator<iterator, T&, T*> reverse_iterator;
-		typedef ReverseIterator<const_iterator, const T&, const T*>
-			const_reverse_iterator;
-		reverse_iterator rbegin()
-		{
-			return reverse_iterator(end());
-		}
-		reverse_iterator rend()
-		{
-			return reverse_iterator(begin());
-		}
-		const_reverse_iterator rbegin() const
-		{
-			return const_reverse_iterator(end());
-		}
-		const_reverse_iterator rend() const
-		{
-			return const_reverse_iterator(begin());
-		}
-		iterator begin()
-		{
-			return _head->_next;
-		}
-		iterator end()
-		{
-			return _head;
-		}
-		const_iterator begin() const
-		{
-			return _head->_next;
-		}
-		const_iterator end() const
-		{
-			return _head;
-		}
-		// ...
-	private:
-		Node* _head;
-		size_t _size;
-	};
-}
+//#include"ReverseIterator.h"
+//namespace bit
+//{
+//	template<class T>
+//	class list
+//	{
+//		typedef ListNode<T> Node;
+//	public:
+//		typedef ListIterator<T, T&, T*> iterator;
+//		typedef ListIterator<T, const T&, const T*> const_iterator;
+//		typedef ReverseIterator<iterator, T&, T*> reverse_iterator;
+//		typedef ReverseIterator<const_iterator, const T&, const T*>
+//			const_reverse_iterator;
+//		reverse_iterator rbegin()
+//		{
+//			return reverse_iterator(end());
+//		}
+//		reverse_iterator rend()
+//		{
+//			return reverse_iterator(begin());
+//		}
+//		const_reverse_iterator rbegin() const
+//		{
+//			return const_reverse_iterator(end());
+//		}
+//		const_reverse_iterator rend() const
+//		{
+//			return const_reverse_iterator(begin());
+//		}
+//		iterator begin()
+//		{
+//			return _head->_next;
+//		}
+//		iterator end()
+//		{
+//			return _head;
+//		}
+//		const_iterator begin() const
+//		{
+//			return _head->_next;
+//		}
+//		const_iterator end() const
+//		{
+//			return _head;
+//		}
+//		 ...
+//	private:
+//		Node* _head;
+//		size_t _size;
+//	};
+//}
 // test.cpp
-#include"list.h"
-#include"vector.h"
-int main()
-{
-	bit::list<int> lt = { 1,2,3,4 };
-	bit::list<int>::reverse_iterator rit = lt.rbegin();
-	while (rit != lt.rend())
-	{
-		//*rit = 1;
-		cout << *rit << " ";
-		++rit;
-	}
-	cout << endl;
-	return 0;
-}
+//#include"list.h"
+//#include"vector.h"
+//int main()
+//{
+//	bit::list<int> lt = { 1,2,3,4 };
+//	bit::list<int>::reverse_iterator rit = lt.rbegin();
+//	while (rit != lt.rend())
+//	{
+//		*rit = 1;
+//		cout << *rit << " ";
+//		++rit;
+//	}
+//	cout << endl;
+//	return 0;
+//}
 //int main()
 //{
 // bit::vector<int> v = { 1,2,3,4 };
@@ -189,7 +231,7 @@ int main()
 //
 // return 0;
 //}
-
+//
 //// stl_list.h
 //template <class T, class Alloc = alloc>
 //class list {
@@ -449,7 +491,7 @@ int main()
 //	Reference operator[](Distance n) const { return *(*this + n); }
 //};
 //#endif //__STL_CLASS_PARTIAL_SPECIALIZATION
-
+//
 //class Solution {
 //public:
 //	//map<char, int> _operatorPrecedence = { { '+', 1 }, { '-', 1 }, { '*', 2
@@ -602,7 +644,7 @@ int main()
 //	return evalRPN(v);
 //}
 //};
-
+//
 //class Solution {
 //public:
 //	//map<char, int> _operatorPrecedence = { { '+', 1 }, { '-', 1 }, { '*', 2
@@ -705,7 +747,7 @@ int main()
 //	cout << endl;
 //	return 0;
 //}
-
+//
 //class Solution {
 //public:
 //	int evalRPN(const vector<string>& tokens) {
