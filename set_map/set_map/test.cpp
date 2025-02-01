@@ -3,7 +3,84 @@
 #include<vector>
 #include<algorithm>
 #include<string>
+#include<set>
 using namespace std;
+
+
+
+//int main() {
+//	set<int> s;
+//	set<int, greater<int>> s;
+//	s.insert(5);
+//
+//
+//	set<int>::iterator it = s.begin();
+//	auto it = s.begin();
+//	while (it != s.end()) {
+//		cout << *it << " ";
+//		++it;
+//	}
+//
+//	s.insert({ 2,8,3,9,2 });
+//	for (auto e : s) {
+//		cout << e << " ";
+//	}
+//	set<string> strset = { "sort","insert","add" };
+//
+//	for (auto& e : strset) {
+//		cout << e << "";
+//	}
+//	cout << endl;
+//	s.erase(s.begin());
+//	for (auto e : s) {
+//		cout << e << "";
+//	}
+//
+//	int num = s.erase(x);
+//	auto pos1 = find(s.begin(), s.end(), x);
+//
+//	auto pos2 = s.find(x);
+//
+//	cin >> x;
+//
+//	auto itlow = myset.lower_bound(30);
+//	auto itlow = myset.lower_bound(50);
+//
+//	multiset<int> s = { 4,2,7,2,4,8,4,5,4,9 };
+//	auto it = s.begin();
+//	while (it != s.end()) {
+//		cout << *it << "";
+//		++it;
+//	}
+//	cout << endl;
+//
+//	int x;
+//	cin > .x;
+//	auto pos = s.find(s);
+//
+//	while (pos != s.end() && *pos == x) {
+//		cout << *pos << "";
+//		++pos;
+//	}
+//	cout << endl;
+//
+//
+//
+//	map<string, string> dict = ({ "left","左边" });
+//	pair<string, string> kvl("first", "第一个");
+//	dict.insert(kv1);
+//
+//	dict.insert(pair<string, string>("second", "第二个"));
+//	dict.insert(make_pair("sort", "排序"));
+//
+//	dict.insert({ "auto","自动的" });
+//	
+//	cout << (*it).first << ;
+//	cout->first;
+//	it.operator->()->first;
+//	return 0;
+//}
+
 
 //class Solution {
 //public:

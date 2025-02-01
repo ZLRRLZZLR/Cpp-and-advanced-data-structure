@@ -1,4 +1,24 @@
+enum Colur {
+	RED,
+	BLACK]
+};
 
+template<class K, class V>
+struct RBTreeNode {
+	pair<K, V> _kv;
+	RBTreeNode<K, V>* _left;
+	RBTreeNode<K, V>* _right;
+	RBTreeNode<K, V>* _parent;
+	Colour _col;
+
+	RBTreeNode(const pair<K, V>& kv)
+		:_kv(kv)
+		, _left(nullptr)
+		, _right(nullptr)
+		, _parent(nullptr)
+	{
+	
+};
 
 
 //pair<iterator, bool> insert(const value_type& val);
