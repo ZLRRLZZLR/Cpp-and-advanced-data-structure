@@ -3,6 +3,55 @@
 
 using namespace std;
 
+
+//两数相加（medium）
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     ListNode *next;
+// *     ListNode() : val(0), next(nullptr) {}
+// *     ListNode(int x) : val(x), next(nullptr) {}
+// *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+// * };
+// */
+//class Solution {
+//public:
+//    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+//        ListNode* l1cur = l1, * l2cur = l2;
+//        int ret = 0, tmp = 0;
+//        ListNode* newhead = new ListNode;
+//        ListNode* newtail = newhead;
+//        while (l1cur != NULL && l2cur != NULL) {
+//            tmp = l1cur->val + l2cur->val + ret;
+//            ret = tmp / 10;
+//            newtail->next = new ListNode(tmp % 10);
+//            newtail = newtail->next;
+//            l1cur = l1cur->next;
+//            l2cur = l2cur->next;
+//        }
+//        while (l1cur != NULL) {
+//            tmp = l1cur->val + ret;
+//            ret = tmp / 10;
+//            newtail->next = new ListNode(tmp % 10);
+//            newtail = newtail->next;
+//            l1cur = l1cur->next;
+//        }
+//        while (l2cur != NULL) {
+//            tmp = l2cur->val + ret;
+//            ret = tmp / 10;
+//            newtail->next = new ListNode(tmp % 10);
+//            newtail = newtail->next;
+//            l2cur = l2cur->next;
+//        }
+//        if (ret != 0) {
+//            newtail->next = new ListNode(ret);
+//            newtail = newtail->next;
+//            ret = 0;
+//        }
+//        return newhead->next;
+//    }
+//};
 //翻转对（hard）
 //class Solution {
 //	vector<int> tmp;
