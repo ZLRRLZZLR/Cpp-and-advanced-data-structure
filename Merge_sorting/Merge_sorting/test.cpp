@@ -3,7 +3,45 @@
 
 using namespace std;
 
-
+//两数相加（medium）
+///**
+// * Definition for singly-linked list.
+// * struct ListNode {
+// *     int val;
+// *     ListNode *next;
+// *     ListNode() : val(0), next(nullptr) {}
+// *     ListNode(int x) : val(x), next(nullptr) {}
+// *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+// * };
+// */
+//class Solution {
+//public:
+//    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+//        ListNode* l1cur = l1, * l2cur = l2;
+//        int ret = 0, tmp = 0;
+//        ListNode* newhead = new ListNode;
+//        ListNode* newtail = newhead;
+//        while (l1cur != NULL || l2cur != NULL || ret) {
+//            if (l1cur) {
+//                tmp += l1cur->val;
+//                l1cur = l1cur->next;
+//            }
+//            if (l2cur) {
+//                tmp += l2cur->val;
+//                l2cur = l2cur->next;
+//            }
+//            if (ret) {
+//                tmp += ret;
+//            }
+//            newtail->next = new ListNode(tmp % 10);
+//            newtail = newtail->next;
+//            ret = tmp / 10;
+//            tmp = 0;
+//        }
+//
+//        return newhead->next;
+//    }
+//};
 //两数相加（medium）
 ///**
 // * Definition for singly-linked list.
