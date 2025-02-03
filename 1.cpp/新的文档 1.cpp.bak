@@ -1,12 +1,5 @@
 #include"mystring.h"
-文件操作
-66666
-后缀
-mv src dst
-less
-区间查找
-时间戳
-666666
+
 
 namespace bit {
     bool operator<(const string& s1, const string& s2) {
