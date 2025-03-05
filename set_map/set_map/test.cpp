@@ -6,7 +6,115 @@
 #include<set>
 using namespace std;
 
+//#include<map>
+//using namespace std;
+//
+//int main() {
+//
+//	//默认构造
+//	map<string, string> dict1;
+//
+//	//使用列表初始化构造
+//	map<string,string> dict2 = { {"left", "左边"}, {"right", "右边"}, {"insert", "插入"},{ "string", "字符串" } };
+//
+//	//拷贝构造
+//	map<string, string> dict3(dict2);
+//
+//	//迭代器区间构造
+//	map<string, string> dict4(dict2.begin(), dict2.end());
+//
+//	return 0;
+//}
 
+
+
+
+// insert插入一个pair<key, T>对象
+// 1、如果key已经在map中，插入失败，则返回一个pair<iterator,bool>对象，返回pair对象
+//first是key所在结点的迭代器，second是false
+// 2、如果key不在在map中，插入成功，则返回一个pair<iterator,bool>对象，返回pair对象
+//first是新插入key所在结点的迭代器，second是true
+// 也就是说无论插入成功还是失败，返回pair<iterator,bool>对象的first都会指向key所在的迭
+//代器
+// 那么也就意味着insert插入失败时充当了查找的功能，正是因为这一点，insert可以用来实现
+//operator[]
+// 需要注意的是这里有两个pair，不要混淆了，一个是map底层红黑树节点中存的pair<key, T>，另
+//一个是insert返回值pair<iterator, bool>
+//pair<iterator, bool> insert(const value_type& val);
+
+
+
+
+
+
+
+
+//#include<map>
+//
+//int main()
+//{
+//	map<string, string> dict1;//使用缺省值构造
+//
+//	//{"left", "左边"}等用{}括起来的数据先隐式构造一个pair对象，然后这些数据在通过列表初始化构造map对象
+//	map<string, string> dict2 = { {"left", "左边"}, {"right", "右边"}, {"insert", "插入"},{ "string", "字符串" } };
+//
+//	//通过初始化列表构造
+//	pair<string, string> kv1("first", "第一个");
+//	map<string, string> dict3 = {kv1, pair<string, string>("second", "第二个")};
+//
+//
+//	pair<string, string> kv1("first", "第一个");
+//	dict1.insert(kv1);
+//
+//	dict1.insert(pair<string, string>("second", "第二个"));
+//
+//	//C++11出来之前受欢迎的写法
+//	dict1.insert(make_pair("sort", "排序"));
+//
+//	// C++11的写法，通过{}构造pair对象，再通过列表初始化构造，最方便
+//	dict1.insert({ "auto", "自动的" });
+//
+//	// 插入时只看key，value不相等不会更新
+//	dict1.insert({ "auto", "自动的xxxx" });
+//
+//	//出现
+//	map<string, string>::iterator it = dict1.begin();
+//	//auto it = dict1.begin();
+//	while (it != dict1.end())
+//	{
+//		// 可以修改value，不支持修改key
+//		//it->first += 'x';
+//		it->second += 'x';
+//
+//		//cout << (*it).first <<":"<< (*it).second<< endl;
+//		cout << it->first << ":" << it->second << endl;
+//		//cout << it.operator->()->first << ":" << it.operator->()->second << endl;
+//		++it;
+//	}
+//	cout << endl;
+//
+//	return 0;
+//}
+
+//int main() {
+//	map<string, string> dict1 = { {"left", "左边"}, {"right", "右边"}, {"insert", "插入"},{ "string", "字符串" } };//初始化列表初始化
+//	//map<string, string> dict2({ "left", "左边" });
+//
+//	//map<string, string> dict3("right", "右边");
+//	return 0;
+//}
+
+//int main() {
+//
+//
+//
+//	pair<int, int> example(3, 2025);
+//
+//	cout << example.first << endl;//.first取出第一个元素
+//	cout << example.second << endl;//.second取出第二个元素
+//
+//	return 0;
+//}
 
 //int main() {
 //	set<int> s;
