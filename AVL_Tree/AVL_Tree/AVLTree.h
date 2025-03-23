@@ -64,6 +64,7 @@ public:
 		}
 
 		cur = new Node(data);
+
 		if (parent->_data > data) parent->_left = cur;
 		else  parent->_right = cur;
 
@@ -72,13 +73,9 @@ public:
 		while(parent)
 		{
 			if(cur == parent->_left)
-			{
 				parent->_bf--;
-			}
 			else
-			{
 				parent->_bf++;
-			}
 
 			if(parent->_bf == 0)
 			{
@@ -90,6 +87,7 @@ public:
 				cur = parent;
 				parent = parent->_parent;
 			}
+
 			else if(parent->_bf == -2 || parent->_bf == 2)
 			{
 				if(parent->_bf == -2 && cur->_bf == -1)
@@ -112,8 +110,10 @@ public:
 				{
 					assert("false");
 				}
+
 				break;
 			}
+
 			else
 			{
 				assert("false");
@@ -236,6 +236,7 @@ private:
 		subL->_parent = parent->_parent;
 
 		parent->_left = subLR;
+
 		if (subLR)
 			subLR->_parent = parent;
 
@@ -245,6 +246,7 @@ private:
 		if(parent == _root)
 		{
 			_root = subL;
+			subL->_parent = nullptr;
 		}
 		else
 		{
@@ -275,7 +277,7 @@ private:
 			subRL->_parent = parent;
 
 		parent->_parent = subR;
-		subR->_right = parent;
+		subR->_left = parent;
 
 		if (parent == _root)
 		{
@@ -304,8 +306,8 @@ private:
 		Node* subRL = subR->_left;
 
 		int bf = subRL->_bf;
-		RotateL(subR);
-		RotateR(parent);
+		RotateR(subR);
+		RotateL(parent);
 
 		if (bf == -1)
 		{

@@ -18,7 +18,7 @@ void TestAVLTree1()
 		t.Insert(e);
 	}
 	t.InOrder();
-	std::cout << t.IsAVLTree() << endl;
+	cout << t.IsAVLTree() << endl;
 }
 // 插入一堆随机值，测试平衡，顺便测试一下高度和性能等
 void TestAVLTree2()
@@ -61,8 +61,8 @@ void TestAVLTree2()
 
 int main()
 {
-	//TestAVLTree1();
-	//TestAVLTree2();
+	TestAVLTree1();
+	TestAVLTree2();
 	return 0;
 }
 
