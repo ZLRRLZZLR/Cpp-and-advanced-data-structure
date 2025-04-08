@@ -130,12 +130,12 @@ public:
 						{
 							RotateR(parent);
 							RotateL(grandfather);
-							grandfather->_col = RED;
 							cur->_col = BLACK;
+							grandfather->_col = RED;
 						}
 						else
 						{
-							RotateL(parent);
+							RotateL(grandfather);
 							parent->_col = BLACK;
 							grandfather->_col = RED;
 						}
@@ -145,6 +145,7 @@ public:
 			}
 
 		_root->_col = BLACK;
+
 		return true;
 	}
 
@@ -180,7 +181,6 @@ public:
 
 			subL->_parent = pParent;
 		}
-
 	}
 
 	void RotateL(Node* parent)
@@ -255,6 +255,7 @@ private:
 			if (refNum != blackNum)
 			{
 				cout << "存在黑色结点的数量不相等的路径" << endl;
+				cout << refNum << blackNum << endl;
 				return false;
 			}
 			return true;
@@ -287,7 +288,7 @@ private:
 		}
 
 		_InOrder(root->_left);
-		cout << root->_kv.first << root->_col << " " ;
+		cout << root->_kv.first << ":" << root->_kv.second << endl;
 		_InOrder(root->_right);
 	}
 private:
