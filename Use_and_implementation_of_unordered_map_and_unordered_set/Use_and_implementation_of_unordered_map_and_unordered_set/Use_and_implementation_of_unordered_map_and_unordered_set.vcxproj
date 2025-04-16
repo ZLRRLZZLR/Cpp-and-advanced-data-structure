@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="testcpp.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="unordered_map_unordered_set.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
