@@ -1,5 +1,252 @@
+#pragma once
+#include<vector>
 
 
+namespace hash_bucket
+{
+	template<class T>
+	struct HashNode
+	{
+		T _data;
+		HashNode<T>* _next;
+
+		HashNode(const T& data)
+			:_data(data)
+			,_next(nulpptr)
+		{ }
+	};
+
+	template<class K,class T, class KeyOfT, class Hash>
+	class HashTable;
+
+	template<class K,class T,class Ref,class Ptr,class KeyOfT, class Hash>
+	struct HTIterator
+	{
+		typedef HashNode<T> Node;
+		typedef HashTable<K,T,KeyOfT,Hash> HT;
+		typedef HashNode<K,TRef,Ptr,KeyOfT,Hash> Self;
+
+		Node* _node;
+		const HT* _ht;
+
+		HTIterator(Node* node, const HT* ht)
+			:_node(node)
+			, _ht(ht)
+		{}
+
+		Ref operator*()
+		{
+			return _node->_data;
+		}
+
+		Ptr operator->()
+		{
+			return &_node->_data;
+		}
+
+		bool operator!=(const Self& s)
+		{
+			return _node != s._node;
+		}
+
+		Self& operator++()
+		{
+			if(_node->next)
+			{
+				_node = _node->_next;
+			}
+			else
+			{
+				KeyOfT Kot;
+				Hash hash;
+				size_t hashi = hash(kot(_node->_data)) % _ht->_tables.size();
+				++hashi;
+				while(hashi < _ht->_tables.size())
+				{
+					_node = _ht->_tables[hashi];
+
+					if (_node)
+						break;
+					else
+						++hashi;
+				}
+
+				if(hashi == _ht->_tables.size())
+				{
+					_node = nullptr;
+				}
+			}
+
+			return *this;
+		}
+	};
+
+	template<class K,class T,class KeyOfT,class Hash>
+	class HashTable
+	{
+		template<class K, class T, class Ref, class Ptr, class KeyOfT, class Hash>
+		friend struct HTIterator;
+
+		typedef HashNode<T> Node;
+	public:
+		typedef HTIterator<K, T, T&, T*, KeyOfT, Hash> Iterator;
+		typedef HTIterator<K, T, const T&, const T*, KeyOfT, Hash> ConstIterator;
+
+		Iterator Begin()
+		{
+			if (_n == 0)
+				return End();
+			for (size_t i = 0; i < _tables.size(); i++)
+			{
+				Node* cur = _tables[i];
+				if (cur)
+				{
+					return Iterator(cur, this);
+				}
+			}
+
+			return End();
+		}
+
+		Iterator End()
+		{
+			return Iterator(nullptr, this);
+		}
+
+		ConstIterator Begin() const
+		{
+			if (_n == 0)
+				return End();
+
+			for (size_t i = 0; i < _tables.size(); i++)
+			{
+				Node* cur = _tables[i];
+				if (cur)
+				{
+					return ConstIterator(cur, this);
+				}
+			}
+
+			return End();
+		}
+
+		ConstIterator End() const
+		{
+			return ConstIterator(nullptr, this);
+		}
+
+		HashTable()
+			:_tables(_stl_next_prime(0))
+			, _n(0)
+		{}
+
+		~HashTable()
+		{
+			for(size_t i = 0;i < _tables.size();i++)
+			{
+				Node* cur = _tables[i];
+				while(cur)
+				{
+					Node* next = cur->_next;
+					delete cur;
+
+					cur = next;
+				}
+			}
+			_tables[i] = nullptr;
+		}
+
+		pair<Iterator,bool> Insert(const T& data)
+		{
+			KeyOfT kot;
+			Iterator it = Find(kot(data));
+			if (it != End())
+				return { it,false };
+			Hash hash;
+
+			if (_n == _tables.size())
+			{
+				vector<Node*> newTable(__stl_next_prime(_tables.size() + 1));
+				for (size_t i = 0; i < _tables.size(); i++)
+				{
+					Node* cur = _tables[i];
+					while (cur)
+					{
+						Node* next = cur->_next;
+						// 头插到新表
+						size_t hashi = hash(kot(cur->_data)) % newTable.size();
+						cur->_next = newTable[hashi];
+						newTable[hashi] = cur;
+
+						cur = next;
+					}
+					_tables[i] = nullptr;
+				}
+
+				_tables.swap(newTable);
+			}
+
+			size_t hashi = hash(kot(data)) % _tables.size();
+
+			Node* newnode = new Node(data);
+			newnode->_next = _tables[hashi];
+			_tables[hashi] = newnode;
+			++_n;
+			return { Iterator(newnode, this), false };
+		}
+
+		Iterator Find(const K& key)
+		{
+			KeyOfT kot;
+			Hash hash;
+			size_t hashi = hash(key) % _tables.szie();
+			Node* cur = _tables[hashi];
+			while(cur)
+			{
+				if(kot(cur->data) == key)
+				{
+					return Iterator(cur, this);
+				}
+				cur = cur->_next;
+			}
+			return End();
+		}
+		bool Erase(const K& key)
+		{
+			KeyOfT kot;
+			size_t hashi = key % _tables.size();
+			Node* prev = nullptr;
+			Node* cur = _tables[hashi];
+			while(cur)
+			{
+				if(kot(cur->data) == key)
+				{
+					if(prev == nullptr)
+					{
+						_tables[hashi] = cur->_next;
+					}
+					else
+					{
+						prev->_next = cur->_next;
+					}
+					delete cur;
+					--_n;
+
+					return true;
+				}
+				else
+				{
+					prev = cur;
+					cur = cur->_next;
+				}
+			}
+			return false;
+		}
+private:
+	vector<Node*> _tables;
+	size_t  _n = 0;
+	};
+}
 
 ////enum State
 ////{
