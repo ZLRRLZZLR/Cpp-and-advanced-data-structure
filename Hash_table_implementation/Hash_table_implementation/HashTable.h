@@ -1,4 +1,10 @@
-﻿
+﻿#pragma
+#include<iostream>
+#include<vector>
+#include<assert.h>
+
+using namespace std;
+
 namespace hash_bucket
 {
 	template<class T>
@@ -9,8 +15,87 @@ namespace hash_bucket
 		HashNode(const T& data)
 			:_data(data)
 			, _next(nullptr)
+		{}
+	};
+
+	// 前置声明
+	template<class K, class T, class KeyOfT, class Hash>
+	class HashTable;
+
+	template<class K, class T, class Ref, class Ptr, class KeyOfT, class Hash>
+	struct HTIterator
+	{
+		typedef HashNode<T> Node;
+		typedef HashTable<K, T, KeyOfT, Hash> HT;
+		typedef HTIterator<K, T, Ref, Ptr, KeyOfT, Hash> Self;
+
+		Node* _node;
+		const HT* _ht;
+
+		HTIterator(Node* node, const HT* ht)
+			:_node(node)
+			, _ht(ht)
+		{}
+
+		Ref operator*()
 		{
+			return _node->_data;
 		}
+
+		Ptr operator->()
+		{
+			return &_node->_data;
+		}
+
+		bool operator==(const Self& s)
+		{
+			return s._node == _node;
+		}
+
+
+		bool operator!=(const Self& s)
+		{
+			return s._node != _node;
+		}
+
+		Self& operator++()
+		{
+			if (_node == nullptr) assert();
+			else
+			{
+				if(_node->_next)
+				{
+					_node = _node->_next;
+				}
+				else
+				{
+					KeyOfT kt;
+					Hash hash;
+					int hash0 = hash(kt(this->_node)) % _ht->_tables.size() + 1;
+					while(hash0 < _ht->_tables.size())
+					{
+						if(_ht->_tables[hash0])
+						{
+							_node = _ht->_tables[hash0];
+						}
+						else
+						{
+							++hash0;
+						}
+					}
+					if (hash0 >= _ht->_tables.size()) _node = nullptr;
+				}
+				return *this;
+			}
+		}
+
+		Self& operator++(int)
+		{
+			HTIterator tmp = *this;
+			++this;
+			return tmp;
+		}
+
 	};
 
 
@@ -21,6 +106,12 @@ namespace hash_bucket
 	template<class K, class T, class KeyOfT, class Hash>
 	class HashTable
 	{
+		template<class K, class T, class Ref, class Ptr, class KeyOfT, class Hash>
+		friend struct HTIterator;
+
+		typedef HTIterator<const K, T, T&, T*, KeyOfT, Hash> HTIterator;
+		typedef HTIterator<const K, T, const T&, const T*, KeyOfT, Hash> ConstHTIterator;
+
 
 		typedef HashNode<T> Node;
 	public:
@@ -30,18 +121,102 @@ namespace hash_bucket
 		}
 
 		// 哈希桶的销毁
-		~HashTable();
+		~HashTable()
+		{
+			int n = _tables.size();
+			for(int i = 0;i < n;i++)
+			{
+				Node* next = nullptr;
+				Node* cur = _tables[i];
+				while(cur)
+				{
+					next = cur->_next;
+					delete cur;
+					cur = next;
+				}
+				_tables[i] = nullptr;
+			}
+		}
 
 		// 插入值为data的元素，如果data存在则不插入
-		bool Insert(const T& data);
+		pair<HTIterator,bool> Insert(const T& data)
+		{
+			HTIterator tmp = Find(data);
+			if (tmp) return { tmp,false };
+			else
+			{
+				if(_n / _tables.size() >= 1)
+				{
+					HashTable newHashtable.resize(_tables.size() * 2 + 1);
+					int n = _tables.size();
+					for (int i = 0; i < n; i++)
+					{
+						Node* cur = _tables[i];
+						while (cur)
+						{
+							newHashtable.Insert(cur->_data);
+							cur = cur->_next;
+						}
+					}
+					_tables.swap(newHashtable._tables);
+				}
+				KeyOfT kt;
+				Hash hash;
+				int hash0 = hash(kt(data)) % _tables.size();
+				Node* newnode = new Node(data);
+				newnode->_next = _tables[hash0];
+				_tables[hash0] = newnode;
+				_n++;
+				return { HTIterator(newnode,_tables),false};
+			}
+		}
 
 		// 在哈希桶中查找值为key的元素，存在返回true否则返回false﻿
-		bool Find(const K& key);
+		HTIterator Find(const K& key)
+		{
+			Hash hash;
+			int hash0 = hash(key) % _tables.size();
+			Node* cur = _tables[hash0];
+			while (cur)
+			{
+				if (kt(cur->_data) == key) return HTIterator(cur, _tables);
+				cur = cur->_next;
+			}
+			return HTIterator(nullptr, _tables);
+		}
 
 		// 哈希桶中删除key的元素，删除成功返回true，否则返回false
-		bool Erase(const K& key);
+		bool Erase(const K& key)
+		{
+			HTIterator tmp = Find(data);
+			if (!tmp) return false;
+			else
+			{
+				Hash hash;
+				int hash0 = hash(key) % _tables.size();
+				Node* prev = nullptr;
+				Node* cur = _tables[hash0];
+				while (cur)
+				{
+					if (kt(cur->_data) == key) break;
+					prev = cur;
+					cur = cur->next;
+				}
+				if (prev == nullptr)
+				{
+					_tables[hash0] = cur->_next;
+				}
+				else
+				{
+					prev->_next = cur->_next;
+				}
+				delete cur;
+				--_n;
+				return true;
+			}
+		}
 
-	private:
+private:
 		vector<Node*> _tables;  // 指针数组
 		size_t _n = 0;			// 表中存储数据个数
 	};

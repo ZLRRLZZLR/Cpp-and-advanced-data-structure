@@ -18,8 +18,19 @@
     <ClCompile Include="test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="HashTable.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="HashTable.h">
+      <Filter>头文件</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Unordered_map.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Unordered_set.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HashTablecopy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
