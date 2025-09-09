@@ -162,11 +162,23 @@ namespace matrix
 
 		void _DFS(size_t srci, vector<bool>& visited)
 		{
+			cout << srci << ":" << _vertexs[srci] << endl;
+			visited[srci] = true;
 
+
+			// 找一个srci相邻的没有访问过的点，去往深度遍历
+			for (int i = 0; i < _vertexs.size(); i++) {
+				if (_martix[srci][i] != MAX_W && !visited[i]) {
+					_DFS(i, visited);
+				}
+			}
 		}
 
 		void DFS(const V& src)
 		{
+			vector<bool> visited(_vertexs.size(), false);
+			size_t srci = GetVertexIndex(src);
+			_DFS(srci, visited);
 		}
 
 		struct Edge
