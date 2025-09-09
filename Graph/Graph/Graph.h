@@ -3,6 +3,7 @@
 #include<vector>
 #include<functional>
 #include<string>
+#include<queue>
 
 using namespace std;
 
@@ -23,20 +24,52 @@ namespace matrix
 		// 3、手动添加边
 		Graph(const V* a, size_t n)
 		{
+			_vertexs.reserve(n);
+
+			for (int i = 0; i < n; i++) {
+				_vertexs.push_back(a[i]);
+				_indexMap[a[i]] = i;
+			}
+
+			_martix.resize(n);
+			for (int i = 0; i < n; i++) {
+				_martix[i].resize(n, MAX_W);
+			}
 
 		}
 
 		size_t GetVertexIndex(const V& v)
 		{
+			auto it = _indexMap.find(v);
+
+			if (it != _indexMap.end()) {
+				return it->second;
+			}
+			else {
+
+				cout << "不存在顶点" << ":" << v << endl;
+				throw invalid_argument("顶点不存在");
+
+				return -1;
+			}
 		}
 
 
 		void _AddEdge(size_t srci, size_t dsti, const W& w)
 		{
+			_martix[srci][dsti] = w;
+
+			//无向图
+			if (Direction == false) {
+				_martix[dsti][srci] = w;
+			}
 		}
 
 		void AddEdge(const V& src, const V& dst, const W& w)
 		{
+			size_t srci = GetVertexIndex(src);
+			size_t dsti = GetVertexIndex(dst);
+			_AddEdge(srci, dsti, w);
 		}
 
 		void Print()
@@ -94,6 +127,37 @@ namespace matrix
 
 		void BFS(const V& src)
 		{
+			size_t srci = GetVertexIndex(src);
+
+			//队列和标记数组
+			queue<int> q;
+			vector<bool> visited(_vertexs.size(), false);
+
+			q.push(srci);
+			visited[srci] = true;
+
+			int levelsize = q.size();
+
+			int n = _vertexs.size();
+			while (q.size()) {
+
+				while (levelsize--) {
+					int front = q.front();
+					q.pop();
+					cout << front << ":" << _vertexs[front] << " ";
+					// 把front顶点的邻接顶点入队列
+					for (int i = 0; i < n; i++) {
+						if (_martix[front][i] != MAX_W && !visited[i]) {
+							q.push(i);
+							visited[i] = true;
+						}
+					}
+				}
+
+				cout << endl;
+				levelsize = q.size();
+			}
+			cout << endl;
 		}
 
 		void _DFS(size_t srci, vector<bool>& visited)
@@ -172,8 +236,7 @@ namespace link_table {
 				_indexMap[a[i]] = i;
 			}
 
-			_tables.resize(n, nullptr);
-
+			_tables.resize(n);
 		}
 
 		size_t GetVertexIndex(const V& v)//找到数据的映射下标
