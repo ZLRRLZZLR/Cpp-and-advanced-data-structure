@@ -4,6 +4,7 @@
 #include<functional>
 #include<string>
 #include<queue>
+#include"UnionFindSet.h"
 
 using namespace std;
 
@@ -183,26 +184,169 @@ namespace matrix
 
 		struct Edge
 		{
+			size_t _srci;
+			size_t _dsti;
+			W _w;
+
+			Edge(size_t srci,size_t dsti,W w)
+				:_srci(srci)
+				,_dsti(dsti)
+				,_w(w)
+			{}
+
+			//边的比较直接比较权值
+			bool operator>(const Edge& e) const
+			{
+				return _w > e._w;
+			}
 
 		};
 
+		//最小生成树
 		W Kruskal(Self& minTree)
 		{
+			size_t n = _vertexs.size();
+
+			//最小数的初始化
+			minTree._vertexs = _vertexs;
+			minTree._indexMap = _indexMap;
+			minTree._martix.resize(n, nullptr);
+			for (int i = 0; i < n; i++) {
+				minTree._martix[i].resize(n, nullptr);
+			}
+
+			
+			priority_queue<Edge, vector<Edge>, greater<Edge>> minque;
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					if (i < j && _martix[i][j] != MAX_W) {
+						minque.emplace(i, j, _martix[i][j]);
+					}
+				}
+			}
+
+			//选边
+			UnionFindSet ufs(n);
+
+			W totalW = W();
+			int size = 0;
+			while(!minque.size()) {
+				Edge min = minque.top();
+
+				minque.pop();
+
+				if (!ufs.InSet(min._srci, min._dsti)) {
+					cout << _vertexs[min._srci] << "->" << _vertexs[min._dsti] <<":"<<min._w << endl;
+					minTree._AddEdge(min._srci, min._dsti, min._w);
+					ufs.Union(min._srci, min._dsti);
+					size++;
+					totalW += min._w;
+				}
+				else {
+					cout << "构成环：";
+					cout << _vertexs[min._srci] << "->" << _vertexs[min._dsti] << ":" << min._w << endl;
+				}
+			}
+
+			//没有选到合适的n-1个边，无法生成最小生成树
+			if (size != n - 1) {
+				return W();
+			}
+			else {
+				return totalW;
+			}
 
 		}
 
 		W Prim(Self& minTree, const V& src)
 		{
+			size_t n = _vertexs.size();
+			size_t srci = GetVertexIndex(src);
+
+			//最小数的初始化
+			minTree._vertexs = _vertexs;
+			minTree._indexMap = _indexMap;
+			minTree._martix.resize(n);
+			for (int i = 0; i < n; i++) {
+				minTree._martix[i].resize(n, MAX_W);
+			}
+
+
+			vector<bool> X(n,false);
+			vector<bool> Y(n,false);
+			X[srci] = true;
+			Y[srci] = false;
+
+			// 从X->Y集合中连接的边里面选出最小的边
+			priority_queue<Edge, vector<Edge>, greater<Edge>> minq;
+			// 先把srci连接的边添加到队列中
+			for (int i = 0; i < n; i++) {
+				if (_martix[srci][i] != MAX_W) {
+					minq.emplace(srci, i, _martix[srci][i]);
+				}
+			}
+
+			cout << "Prim开始选边" << endl;
+			size_t size = 0;
+			W totalW = W();
+			while (!minq.size()) {
+				Edge min = minq.top();
+				minq.pop();
+
+				if (X[min._dsti]) {
+					cout << "构成环:";
+					cout << _vertexs[min._srci] << "->" << _vertexs[min._dsti] << ":" << min._w << endl;
+				}
+
+				else {
+					minTree._AddEdge(min._srci, min._dsti, min._w);
+					X[min._dsti] = true;
+					Y[min._dsti] = false;
+					size++;
+					totalW += min._w;
+
+					if (size == n - 1) {
+						break;
+					}
+
+					for (int i = 0; i < n; i++) {
+						if (_martix[min._dsti][i] != MAX_W && Y[i]) {
+							minq.emplace(min._dsti,i, _martix[min._dsti][i]);
+						}
+					}
+
+				}
+			}
+
+			if (size == n - 1) {
+				return totalW;
+			}
+			else {
+				return W();
+			}
 
 		}
 
+		//最短路径
 		void PrintShortPath(const V& src, const vector<W>& dist, const vector<int>& pPath)
 		{
 
 		}
 
+		// 顶点个数是N  -> 时间复杂度：O（N^2）空间复杂度：O（N）
 		void Dijkstra(const V& src, vector<W>& dist, vector<int>& pPath)
 		{
+
+		}
+
+		// 时间复杂度：O(N^3) 空间复杂度：O（N）
+		bool BellmanFord(const V& src, vector<W>& dist, vector<int>& pPath)
+		{
+		}
+
+		void FloydWarshall(vector<vector<W>>& vvDist, vector<vector<int>>& vvpPath)
+		{
+
 		}
 
 	private:
