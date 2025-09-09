@@ -327,15 +327,67 @@ namespace matrix
 
 		}
 
-		//最短路径
 		void PrintShortPath(const V& src, const vector<W>& dist, const vector<int>& pPath)
 		{
+			size_t srci = GetVertexIndex(src);
+			size_t n = _vertexs.size();
+
+			for (size_t i = 0; i < n; i++) {
+				if (i != srci) {
+					//找出i顶点的路径
+					vector<int> path;
+					size_t parenti = i;
+					while (parenti != srci) {
+						path.push_back(parenti);
+						parenti = pPath[parenti];
+					}
+					path.push_back(srci);
+					reverse(path.begin(), path.end());
+
+					for (auto index : path) {
+						cout << _vertexs[index] << "->";
+					}
+					cout << "权值和：" << dist[i] << endl;
+				}
+			}
 
 		}
 
+		//最短路径
 		// 顶点个数是N  -> 时间复杂度：O（N^2）空间复杂度：O（N）
 		void Dijkstra(const V& src, vector<W>& dist, vector<int>& pPath)
 		{
+			size_t srci = GetVertexIndex(src);
+			size_t n = _vertexs.size();
+			dist.resize(n, MAX_W);
+			pPath.resize(n, -1);
+
+			dist[srci] = 0;
+			pPath[srci] = srci;
+
+			vector<bool> S(n, false);
+			// 选最短路径顶点且不在S,更新其他路径
+			for (int i = 0; i < n; i++) {
+				int u = 0;
+				W min = MAX_W;
+
+				if (!S[i] && dist[i] < min) {
+					u = i;
+					min = dist[i];
+				}
+			}
+
+
+				S[u] = true;
+
+				// 松弛更新u连接顶点v  srci->u + u->v <  srci->v  更新
+				for (int i = 0; i < n; i++) {
+					if (!S[i] && _martix[u][i] != MAX_W
+						&&_martix[u][i] + dist[u] < dist[i]) {
+						dist[i] = _martix[u][i] + dist[u];
+						pPath[i] = u;
+					}
+				}
 
 		}
 
