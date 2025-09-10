@@ -67,6 +67,12 @@ public:
 		return n;
 	}
 
+	//判断两个数据是否在同一个合集中
+	bool InSet(int x1, int x2)
+	{
+		return FindRoot(x1) == FindRoot(x2);
+	}
+
 private:
 	std::vector<int> _set;
 };

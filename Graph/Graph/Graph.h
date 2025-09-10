@@ -92,13 +92,13 @@ namespace matrix
 			}
 			cout << endl;
 
-			for (size_t i = 0; i < _matrix.size(); ++i)
+			for (size_t i = 0; i < _martix.size(); ++i)
 			{
 				cout << i << " "; // 竖下标
-				for (size_t j = 0; j < _matrix[i].size(); ++j)
+				for (size_t j = 0; j < _martix[i].size(); ++j)
 				{
 					//cout << _matrix[i][j] << " ";
-					if (_matrix[i][j] == MAX_W)
+					if (_martix[i][j] == MAX_W)
 					{
 						//cout << "* ";
 						printf("%4c", '*');
@@ -106,20 +106,20 @@ namespace matrix
 					else
 					{
 						//cout << _matrix[i][j] << " ";
-						printf("%4d", _matrix[i][j]);
+						printf("%4d", _martix[i][j]);
 					}
 				}
 				cout << endl;
 			}
 			cout << endl;
 
-			for (size_t i = 0; i < _matrix.size(); ++i)
+			for (size_t i = 0; i < _martix.size(); ++i)
 			{
-				for (size_t j = 0; j < _matrix[i].size(); ++j)
+				for (size_t j = 0; j < _martix[i].size(); ++j)
 				{
-					if (i < j && _matrix[i][j] != MAX_W)
+					if (i < j && _martix[i][j] != MAX_W)
 					{
-						cout << _vertexs[i] << "->" << _vertexs[j] << ":" << _matrix[i][j] << endl;
+						cout << _vertexs[i] << "->" << _vertexs[j] << ":" << _martix[i][j] << endl;
 					}
 				}
 			}
@@ -367,10 +367,9 @@ namespace matrix
 
 			vector<bool> S(n, false);
 			// 选最短路径顶点且不在S,更新其他路径
+			int u = 0;
+			W min = MAX_W;
 			for (int i = 0; i < n; i++) {
-				int u = 0;
-				W min = MAX_W;
-
 				if (!S[i] && dist[i] < min) {
 					u = i;
 					min = dist[i];
@@ -394,10 +393,131 @@ namespace matrix
 		// 时间复杂度：O(N^3) 空间复杂度：O（N）
 		bool BellmanFord(const V& src, vector<W>& dist, vector<int>& pPath)
 		{
+			size_t srci = GetVertexIndex(src);
+			size_t n = _vertexs.size();
+
+			// vector<W> dist,记录srci-其他顶点最短路径权值数组
+			dist.resize(n, MAX_W);
+
+			// vector<int> pPath 记录srci-其他顶点最短路径父顶点数组
+			pPath.resize(n, -1);
+
+			// 先更新srci->srci为缺省值
+			dist[srci] = W();
+
+			// 总体最多更新n轮
+			for (int k = 0; k < n; k++) {
+				// i->j 更新松弛
+				bool update = false;
+				cout << "更新第:" << k << "轮" << endl;
+				for (int i = 0; i < n; i++) {
+					for (int j = 0; j < n; j++) {
+						// srci -> i + i ->j
+						if (_martix[i][j] != MAX_W && dist[i] != MAX_W && dist[i] + _martix[i][j] < dist[j]) {
+							update = true;
+							dist[j] = dist[i] + _martix[i][j];
+							pPath[j] = i;
+						}
+					}
+				}
+
+				// 如果这个轮次中没有更新出更短路径，那么后续轮次就不需要再走了
+				if (update == 0) {
+					break;
+				}
+			}
+
+			// 还能更新就是带负权回路
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					// srci -> i + i ->j
+					if (_martix[i][j] != MAX_W && dist[i] != MAX_W && dist[i] + _martix[i][j] < dist[j]) {
+						return false;
+					}
+				}
+			}
+
+			return true;
 		}
 
 		void FloydWarshall(vector<vector<W>>& vvDist, vector<vector<int>>& vvpPath)
 		{
+			size_t n = _vertexs.size();
+			vvDist.resize(n);
+			vvpPath.resize(n);
+
+			// 初始化权值和路径矩阵
+			for (int i = 0; i < n; i++) {
+				vvDist[i].resize(n,MAX_W);
+				vvpPath[i].resize(n,-1);
+			}
+
+			// 直接相连的边更新一下
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					if (_martix[i][j] != MAX_W)
+					{
+						vvDist[i][j] = _martix[i][j];
+						vvpPath[i][j] = i;
+					}
+
+					if (i == j) {
+						vvDist[i][j] = W();
+					}
+				}
+			}
+
+
+		// abcdef  a {} f ||  b {} c
+		// 最短路径的更新i-> {其他顶点} ->j
+			for (int k = 0; k < n; k++) {
+				for (int i = 0; i < n; i++) {
+					for (int j = 0; j < n; j++) {
+						if (vvDist[i][k] != MAX_W && vvDist[k][j] != MAX_W
+							&& vvDist[i][k] + vvDist[k][j] < vvDist[i][j]) {
+							vvDist[i][j] = vvDist[i][k] + vvDist[k][j];
+
+
+							// 找跟j相连的上一个邻接顶点
+							// 如果k->j 直接相连，上一个点就k，vvpPath[k][j]存就是k
+							// 如果k->j 没有直接相连，k->...->x->j，vvpPath[k][j]存就是x
+
+							vvpPath[i][j] = vvpPath[k][j];
+						}
+					}
+				}
+			}
+
+			// 打印权值和路径矩阵观察数据
+			for (size_t i = 0; i < n; ++i)
+			{
+				for (size_t j = 0; j < n; ++j)
+				{
+					if (vvDist[i][j] == MAX_W)
+					{
+						//cout << "*" << " ";
+						printf("%3c", '*');
+					}
+					else
+					{
+						//cout << vvDist[i][j] << " ";
+						printf("%3d", vvDist[i][j]);
+					}
+				}
+				cout << endl;
+			}
+			cout << endl;
+
+			for (size_t i = 0; i < n; ++i)
+			{
+				for (size_t j = 0; j < n; ++j)
+				{
+					//cout << vvParentPath[i][j] << " ";
+					printf("%3d", vvpPath[i][j]);
+				}
+				cout << endl;
+			}
+			cout << "=================================" << endl;
 
 		}
 
