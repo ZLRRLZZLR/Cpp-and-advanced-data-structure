@@ -1,9 +1,37 @@
-
-
-#pragma once
 #include<assert.h>
 #include<list>
 #include<string>
+#include<unordered_map>
+
+using namespace std;
+
+
+class LRUCache {
+public:
+	LRUCache(int capacity) {
+		_capacity = capacity;
+	}
+
+	int get(int key) {
+
+
+
+	}
+
+	void put(int key,int value) {
+
+
+	}
+
+
+private:
+	list<pair<int, int>> _list;
+	size_t _capacity;
+	unordered_map<int, list<int, int>::iterator> _hashmap;
+};
+
+
+
 
 
 // ÷À∫vector
