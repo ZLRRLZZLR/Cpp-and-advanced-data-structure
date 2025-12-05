@@ -2,61 +2,108 @@
 #include<list>
 #include<string>
 #include<unordered_map>
+#include<mutex>
 
 using namespace std;
 
-
-class LRUCache {
+class lazy
+{
 public:
-	LRUCache(int capacity) {
-		_capacity = capacity;
-	}
-
-	int get(int key) {
-		auto hashit = _hashmap.find(key);
-		if (hashit != _hashmap.end()) {
-			auto listit = hashit->second;
-			pair<int, int> value = *listit;
-			_list.erase(listit);
-			_list.push_front(value);
-			_hashmap[key] = _list.begin();
-			return value.first;
-		}
-		else {
-			return -1;
-		}
-
-	}
-
-	void put(int key,int value) {
-		auto hashit = _hashmap.find(key);
-		if (hashit != _hashmap.end()) {
-			auto listit = hashit->second;
-			pair<int, int> value = *listit;
-			_list.erase(listit);
-			_list.push_front(value);
-			_hashmap[key] = _list.begin();
-
-		}
-		else {
-			pair<int, int> listit = _list.back();
-			if (_hashmap.size() >= _capacity)
-			{
-				_list.pop_back();
-				_hashmap.erase(listit.first);
+	static lazy* getinstance() {
+		if (_instance == nullptr) {
+			_mtx.lock();
+			if (_instance == nullptr) {
+				_instance = new lazy();
 			}
-			_list.push_front(make_pair(key, value));
-			_hashmap[key] = _list.begin();
+			_mtx.unlock();
 		}
-
+		return _instance;
 	}
-
+private:
+	lazy(){}
+	lazy(const lazy&) = delete;
+	lazy& operator=(const lazy&) = delete;
 
 private:
-	list<pair<int, int>> _list;
-	size_t _capacity;
-	unordered_map<int, list<pair<int, int>>::iterator> _hashmap;
+	static mutex _mtx;
+	static lazy* _instance;
 };
+
+lazy* lazy::_instance = nullptr;
+mutex lazy::_mtx;
+
+
+class hunger
+{
+public:
+	static hunger* getinstance() {
+		return &_instance;
+	}
+
+private:
+	hunger(){}
+	hunger(const hunger&) = delete;
+	hunger& operator=(const hunger&) = delete;
+
+private:
+	static hunger _instance;
+};
+
+hunger hunger::_instance;
+
+
+//
+//class LRUCache {
+//public:
+//	LRUCache(int capacity) {
+//		_capacity = capacity;
+//	}
+//
+//	int get(int key) {
+//		auto hashit = _hashmap.find(key);
+//		if (hashit != _hashmap.end()) {
+//			auto listit = hashit->second;
+//			pair<int, int> value = *listit;
+//			_list.erase(listit);
+//			_list.push_front(value);
+//			_hashmap[key] = _list.begin();
+//			return value.first;
+//		}
+//		else {
+//			return -1;
+//		}
+//
+//	}
+//
+//	void put(int key,int value) {
+//		auto hashit = _hashmap.find(key);
+//		if (hashit != _hashmap.end()) {
+//			auto listit = hashit->second;
+//			pair<int, int> value = *listit;
+//			_list.erase(listit);
+//			_list.push_front(value);
+//			_hashmap[key] = _list.begin();
+//
+//		}
+//		else {
+//			pair<int, int> listit = _list.back();
+//			if (_hashmap.size() >= _capacity)
+//			{
+//				_list.pop_back();
+//				_hashmap.erase(listit.first);
+//			}
+//			_list.push_front(make_pair(key, value));
+//			_hashmap[key] = _list.begin();
+//		}
+//
+//	}
+//
+//
+//private:
+//	list<pair<int, int>> _list;
+//	size_t _capacity;
+//	unordered_map<int, list<pair<int, int>>::iterator> _hashmap;
+//};
 
 
 
@@ -264,37 +311,3 @@ private:
 //}
 
 
-
-//单例模式
-// 将默认构造设置为私有，这样外部无法直接new
-// 饿汉实现
-//template<typename T>
-//class Singleton {
-//public:
-//	static T* GetInstance() {
-//		return &data;
-//	}
-//	~Singleton();
-//
-//private:
-//	Singleton();
-//	static T data;
-//};
-//
-//template <typename T>
-//class Singleton {
-//懒汉实现
-//private:
-//	static T* inst;
-//	Singleton();
-//
-//public:
-//	static T* GetInstance() {
-//		if (inst == nullptr) {
-//			inst = new T();
-//		}
-//		return inst;
-//	}
-//
-//	~Singleton();
-//};
