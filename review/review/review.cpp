@@ -6,50 +6,187 @@
 
 using namespace std;
 
-class lazy
-{
-public:
-	static lazy* getinstance() {
-		if (_instance == nullptr) {
-			_mtx.lock();
-			if (_instance == nullptr) {
-				_instance = new lazy();
-			}
-			_mtx.unlock();
-		}
-		return _instance;
-	}
-private:
-	lazy(){}
-	lazy(const lazy&) = delete;
-	lazy& operator=(const lazy&) = delete;
+////手撕strcmp
+//int strcmp(char* str1,char* str2) {
+//	while (*str1 == *str2 && *str1 != '\0') {
+//		++str1;
+//		++str2;
+//	}
+//	return *str1 - *str2;
+//}
+////手撕strcat
+//char* mystrcat(char* dst,char*src) {
+//	char* res = dst;
+//	while (*dst != '\0') ++dst;
+//	while (*src != '\0') {
+//		*dst = *src;
+//		src++;
+//		dst++;
+//	}
+//	*dst = '\0';
+//	return res;
+//}
 
-private:
-	static mutex _mtx;
-	static lazy* _instance;
-};
+//手撕strcpy
+//char* mystrcpy(char* dest, const char* src) {
+//	assert(dest);
+//	assert(src);
+//	char* tmp = dest;
+//	while (*src != '\0') {
+//		*dest = *src;
+//		dest++;
+//		src++;
+//	}
+//	return tmp;
+//}
+////strstr手撕
+//char* mystrstr(const char* str1,const char* str2) 
+//{
+//	assert(str1);
+//	assert(str2);
+//	if (*str2)
+//		return (char*)str1;
+//	char* cp = (char*)str1;
+//
+//	while (*cp) {
+//		char* s1 = cp;
+//		char* s2 = (char*)str2;
+//		while (*s1 && *s2 && *s1 == *s2) {
+//			s1++;
+//			s2++;
+//			if (!*s2) return cp;
+//		}
+//		cp++;
+//	}
+//	return NULL;
+//}
+////memmove手撕
+//void* mymemmove(void* destination, const void* source, size_t num) {
+//	void* res = destination;
+//	assert(destination);
+//	assert(source);
+//	if ((char*)destination <= (char*)source || (char*)source + num <= destination) {
+//		*(char*)destination = *(char*)source;
+//		source = (char*)source + 1;
+//		destination = (char*)destination + 1;
+//	}
+//	else
+//	{
+//		source = (char*)source + num - 1;
+//		destination = (char*)destination + num - 1;
+//		while (num--) {
+//			*(char*)destination = *(char*)source;
+//			source = (char*)source - 1;
+//			destination = (char*)destination - 1;
+//		}
+//	}
+//	return res;
+//}
 
-lazy* lazy::_instance = nullptr;
-mutex lazy::_mtx;
+////memcpy手撕
+//void* mymemcpy(void* destination, const void* source, size_t num) {
+//	void* res = destination;
+//	assert(destination);
+//	assert(source);
+//	while (num--) {
+//		*(char*)destination = *(char*)source;
+//		destination = (char*)destination + 1;
+//		source = (char*)source + 1;
+//	}
+//	return res;
+//}
 
 
-class hunger
-{
-public:
-	static hunger* getinstance() {
-		return &_instance;
-	}
+////枚举
+//enum Sex
+//{
+//	RED = 1,
+//	GREEN = 2,
+//	BLUE = 4
+//};
+//
+////联合体
+//union un {
+//	int a;
+//};
 
-private:
-	hunger(){}
-	hunger(const hunger&) = delete;
-	hunger& operator=(const hunger&) = delete;
+//判断当前及其的字节序是什么(判断大小端)
 
-private:
-	static hunger _instance;
-};
+//struct A
+//{
+//	int _a : 2;
+//	int _b : 5;
+//	int _c : 10;
+//	int _d : 30;
+//};
 
-hunger hunger::_instance;
+//int main() {
+//	union {
+//		int i;
+//		char c;
+//	}un;
+//
+//	un.i = 1;
+//	return un.c;
+//}
+
+//int main()
+//{
+//	int a = 1;
+//	char* p = (char*)&a;
+//	if (*p == 1) {
+//		printf("小端\n");
+//	}
+//	else {
+//		printf("大端\n");
+//	}
+//
+//}
+
+//class lazy
+//{
+//public:
+//	static lazy* getinstance() {
+//		if (_instance == nullptr) {
+//			_mtx.lock();
+//			if (_instance == nullptr) {
+//				_instance = new lazy();
+//			}
+//			_mtx.unlock();
+//		}
+//		return _instance;
+//	}
+//private:
+//	lazy(){}
+//	lazy(const lazy&) = delete;
+//	lazy& operator=(const lazy&) = delete;
+//
+//private:
+//	static mutex _mtx;
+//	static lazy* _instance;
+//};
+//
+//lazy* lazy::_instance = nullptr;
+//mutex lazy::_mtx;
+//
+//
+//class hunger
+//{
+//public:
+//	static hunger* getinstance() {
+//		return &_instance;
+//	}
+//
+//private:
+//	hunger(){}
+//	hunger(const hunger&) = delete;
+//	hunger& operator=(const hunger&) = delete;
+//
+//private:
+//	static hunger _instance;
+//};
+//
+//hunger hunger::_instance;
 
 
 //
